@@ -1,0 +1,16 @@
+{
+            "TransactionType": "Organization To Organization Transfer",
+            "TransID": "PJ92ZLXZVW",
+            "TransTime": "20211009130105",
+            "TransAmount": "6000.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "2820061",
+            "InvoiceNumber": "",
+            "OrgAccountBalance": "436550.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "254716903145",
+            "FirstName": "Victor Ochieng       ",
+            "MiddleName": "",
+            "LastName": ""
+        }
+        

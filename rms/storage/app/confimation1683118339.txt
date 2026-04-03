@@ -1,0 +1,14 @@
+{
+            "TransactionType": "Pay Bill",
+            "TransID": "RE30MIRB02",
+            "TransTime": "20230503155218",
+            "TransAmount": "14561.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "1177934779",
+            "InvoiceNumber": "",
+            "OrgAccountBalance": "269161.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "2547 ***** 735",
+            "FirstName": "IMMACULATE"
+        }
+        

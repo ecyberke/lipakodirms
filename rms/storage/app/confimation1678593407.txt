@@ -1,0 +1,14 @@
+{
+            "TransactionType": "Pay Bill",
+            "TransID": "RCC7LA31H5",
+            "TransTime": "20230312065645",
+            "TransAmount": "1.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "test",
+            "InvoiceNumber": "",
+            "OrgAccountBalance": "1.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "2547 ***** 331",
+            "FirstName": "BEDAH"
+        }
+        

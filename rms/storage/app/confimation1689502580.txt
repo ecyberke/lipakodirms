@@ -1,0 +1,14 @@
+{
+            "TransactionType": "Pay Bill",
+            "TransID": "RGG8O0724Q",
+            "TransTime": "20230716131618",
+            "TransAmount": "8000.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "2820960",
+            "InvoiceNumber": "",
+            "OrgAccountBalance": "8000.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "2547 ***** 442",
+            "FirstName": "ANCILA"
+        }
+        

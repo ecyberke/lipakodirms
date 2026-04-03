@@ -1,0 +1,14 @@
+{
+            "TransactionType": "Pay Bill",
+            "TransID": "RG955LLS5P",
+            "TransTime": "20230709235010",
+            "TransAmount": "2800.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "2820860",
+            "InvoiceNumber": "",
+            "OrgAccountBalance": "398100.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "2547 ***** 414",
+            "FirstName": "GODLEAVA"
+        }
+        

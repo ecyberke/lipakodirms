@@ -1,0 +1,14 @@
+{
+            "TransactionType": "Pay Bill",
+            "TransID": "RG56R0HITK",
+            "TransTime": "20230705125526",
+            "TransAmount": "12000.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "2820001",
+            "InvoiceNumber": "",
+            "OrgAccountBalance": "180850.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "2547 ***** 813",
+            "FirstName": "METRINE"
+        }
+        

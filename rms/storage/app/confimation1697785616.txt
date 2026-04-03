@@ -1,0 +1,14 @@
+{
+            "TransactionType": "Pay Bill",
+            "TransID": "RJK9ZH3W8T",
+            "TransTime": "20231020100654",
+            "TransAmount": "5000.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "less agency",
+            "InvoiceNumber": "",
+            "OrgAccountBalance": "5000.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "2547 ***** 310",
+            "FirstName": "RACHAEL"
+        }
+        

@@ -1,0 +1,14 @@
+{
+            "TransactionType": "Pay Bill",
+            "TransID": "RGO9ASC671",
+            "TransTime": "20230724105524",
+            "TransAmount": "3000.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "2820932",
+            "InvoiceNumber": "",
+            "OrgAccountBalance": "3000.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "2547 ***** 893",
+            "FirstName": "ELECTINE"
+        }
+        

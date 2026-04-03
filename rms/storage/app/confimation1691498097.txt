@@ -1,0 +1,14 @@
+{
+            "TransactionType": "Pay Bill",
+            "TransID": "RH80KNK2AU",
+            "TransTime": "20230808153456",
+            "TransAmount": "7000.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "2820588",
+            "InvoiceNumber": "",
+            "OrgAccountBalance": "240600.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "2547 ***** 581",
+            "FirstName": "Jackline"
+        }
+        

@@ -1,0 +1,14 @@
+{
+            "TransactionType": "Pay Bill",
+            "TransID": "RKN64J4AVS",
+            "TransTime": "20231123102714",
+            "TransAmount": "30250.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "Lesarent",
+            "InvoiceNumber": "",
+            "OrgAccountBalance": "30250.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "2547 ***** 805",
+            "FirstName": "RICHARD"
+        }
+        

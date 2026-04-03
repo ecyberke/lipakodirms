@@ -1,0 +1,16 @@
+{
+            "TransactionType": "Organization To Organization Transfer",
+            "TransID": "QBR0UDJOIQ",
+            "TransTime": "20220227235127",
+            "TransAmount": "100.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "2820575",
+            "InvoiceNumber": "",
+            "OrgAccountBalance": "200.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "254707166769",
+            "FirstName": "JOHN BOSCO OTIENO             ",
+            "MiddleName": "",
+            "LastName": ""
+        }
+        

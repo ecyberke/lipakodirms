@@ -1,0 +1,16 @@
+{
+            "TransactionType": "Pay Bill",
+            "TransID": "PI98OLC2BS",
+            "TransTime": "20210909153933",
+            "TransAmount": "6000.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "lesa",
+            "InvoiceNumber": "",
+            "OrgAccountBalance": "7500.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "254758130230",
+            "FirstName": "DIANA",
+            "MiddleName": "NABWIRE",
+            "LastName": "NAMUNJE"
+        }
+        

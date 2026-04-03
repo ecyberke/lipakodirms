@@ -1,0 +1,14 @@
+{
+            "TransactionType": "Pay Bill",
+            "TransID": "RHH4CETR98",
+            "TransTime": "20230817140400",
+            "TransAmount": "4000.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "2820819",
+            "InvoiceNumber": "",
+            "OrgAccountBalance": "4000.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "2547 ***** 186",
+            "FirstName": "DIANDA"
+        }
+        

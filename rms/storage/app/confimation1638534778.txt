@@ -1,0 +1,16 @@
+{
+            "TransactionType": "Pay Bill",
+            "TransID": "PL36K5D4N6",
+            "TransTime": "20211203153257",
+            "TransAmount": "3500.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "1177934779",
+            "InvoiceNumber": "",
+            "OrgAccountBalance": "72500.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "254769163909",
+            "FirstName": "OMONDI",
+            "MiddleName": "REAGAN",
+            "LastName": "OLUMBE"
+        }
+        

@@ -1,0 +1,14 @@
+{
+            "TransactionType": "Organization To Organization Transfer",
+            "TransID": "RGF0K5N8CW",
+            "TransTime": "20230715025819",
+            "TransAmount": "200.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "2820746",
+            "InvoiceNumber": "",
+            "OrgAccountBalance": "900.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "2547 ***** 243",
+            "FirstName": "CHEBRA CONNECTIONS"
+        }
+        

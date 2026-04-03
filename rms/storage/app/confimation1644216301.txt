@@ -1,0 +1,16 @@
+{
+            "TransactionType": "Pay Bill",
+            "TransID": "QB75RIRSHD",
+            "TransTime": "20220207094459",
+            "TransAmount": "2500.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "2820218",
+            "InvoiceNumber": "",
+            "OrgAccountBalance": "461650.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "254711448016",
+            "FirstName": "EDWARD",
+            "MiddleName": "NDISYA",
+            "LastName": "KIVINDU"
+        }
+        

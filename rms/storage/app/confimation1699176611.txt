@@ -1,0 +1,14 @@
+{
+            "TransactionType": "Pay Bill",
+            "TransID": "RK58HLCLOI",
+            "TransTime": "20231105123009",
+            "TransAmount": "6500.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "2821000",
+            "InvoiceNumber": "0",
+            "OrgAccountBalance": "16500.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "2547 ***** 075",
+            "FirstName": "WYCLIFE"
+        }
+        

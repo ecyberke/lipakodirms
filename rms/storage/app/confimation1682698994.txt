@@ -1,0 +1,14 @@
+{
+            "TransactionType": "Pay Bill",
+            "TransID": "RDS89NAO2A",
+            "TransTime": "20230428192312",
+            "TransAmount": "480.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "2820629",
+            "InvoiceNumber": "",
+            "OrgAccountBalance": "22780.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "2547 ***** 173",
+            "FirstName": "ILOGE"
+        }
+        

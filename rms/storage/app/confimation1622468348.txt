@@ -1,0 +1,16 @@
+{
+            "TransactionType": "Pay Bill",
+            "TransID": "PEV5KR98UB",
+            "TransTime": "20210531163905",
+            "TransAmount": "6000.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "lesa",
+            "InvoiceNumber": "",
+            "OrgAccountBalance": "6000.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "254718367945",
+            "FirstName": "robert",
+            "MiddleName": "baya",
+            "LastName": "mbaru"
+        }
+        

@@ -1,0 +1,16 @@
+{
+            "TransactionType": "Pay Bill",
+            "TransID": "PDC8R24TP6",
+            "TransTime": "20210412192616",
+            "TransAmount": "7000.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "2820121",
+            "InvoiceNumber": "",
+            "OrgAccountBalance": "13100.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "254727321821",
+            "FirstName": "EMMANUEL",
+            "MiddleName": "MARK SHIKUKU",
+            "LastName": "WANDERA"
+        }
+        

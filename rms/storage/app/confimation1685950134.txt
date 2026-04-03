@@ -1,0 +1,14 @@
+{
+            "TransactionType": "Pay Bill",
+            "TransID": "RF549UK8W0",
+            "TransTime": "20230605102853",
+            "TransAmount": "5000.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "2820887",
+            "InvoiceNumber": "",
+            "OrgAccountBalance": "101250.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "2547 ***** 783",
+            "FirstName": "HEZRON"
+        }
+        

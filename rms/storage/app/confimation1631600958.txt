@@ -1,0 +1,16 @@
+{
+            "TransactionType": "Pay Bill",
+            "TransID": "PIE3VJ48AB",
+            "TransTime": "20210914092917",
+            "TransAmount": "850.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "2820430",
+            "InvoiceNumber": "",
+            "OrgAccountBalance": "5350.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "254113297767",
+            "FirstName": "Wilberforce",
+            "MiddleName": "Okumu",
+            "LastName": ""
+        }
+        

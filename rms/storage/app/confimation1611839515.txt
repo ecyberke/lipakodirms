@@ -1,0 +1,16 @@
+{
+            "TransactionType": "Pay Bill",
+            "TransID": "PAS439SQRG",
+            "TransTime": "20210128161152",
+            "TransAmount": "2000.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "2820214",
+            "InvoiceNumber": "",
+            "OrgAccountBalance": "2000.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "254704547204",
+            "FirstName": "Fiona",
+            "MiddleName": "Akinyi",
+            "LastName": ""
+        }
+        

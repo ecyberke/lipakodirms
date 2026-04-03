@@ -1,0 +1,16 @@
+{
+            "TransactionType": "Pay Bill",
+            "TransID": "PII22HREKC",
+            "TransTime": "20210918080557",
+            "TransAmount": "300.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "2820432",
+            "InvoiceNumber": "",
+            "OrgAccountBalance": "2231.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "254794417228",
+            "FirstName": "BONFACE",
+            "MiddleName": "CHEGE",
+            "LastName": "NJERI"
+        }
+        

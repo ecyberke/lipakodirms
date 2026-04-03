@@ -1,0 +1,16 @@
+{
+            "TransactionType": "Pay Bill",
+            "TransID": "PEC2V71ILY",
+            "TransTime": "20210512163510",
+            "TransAmount": "3000.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "Joram",
+            "InvoiceNumber": "",
+            "OrgAccountBalance": "3500.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "254726505433",
+            "FirstName": "JORAM",
+            "MiddleName": "OMUCHELE",
+            "LastName": "OPERE"
+        }
+        

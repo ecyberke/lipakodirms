@@ -1,0 +1,14 @@
+{
+            "TransactionType": "Organization To Organization Transfer",
+            "TransID": "RL578WHFAF",
+            "TransTime": "20231205075724",
+            "TransAmount": "4500.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "2820855",
+            "InvoiceNumber": "EUGINE BULUMA MAKHULI",
+            "OrgAccountBalance": "54750.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "2547 ***** 144",
+            "FirstName": "LOOP B2C."
+        }
+        

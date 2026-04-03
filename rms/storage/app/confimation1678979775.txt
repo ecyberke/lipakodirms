@@ -1,0 +1,14 @@
+{
+            "TransactionType": "Pay Bill",
+            "TransID": "RCG8XFVFR2",
+            "TransTime": "20230316181614",
+            "TransAmount": "6500.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "less property agent",
+            "InvoiceNumber": "",
+            "OrgAccountBalance": "6500.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "2547 ***** 824",
+            "FirstName": "BRAMUEL"
+        }
+        

@@ -1,0 +1,14 @@
+{
+            "TransactionType": "Organization To Organization Transfer",
+            "TransID": "RD58FZALCU",
+            "TransTime": "20230405124422",
+            "TransAmount": "4000.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "28020773",
+            "InvoiceNumber": "",
+            "OrgAccountBalance": "270620.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "2547 ***** 020",
+            "FirstName": "Wycliffe Ochieng Michael"
+        }
+        

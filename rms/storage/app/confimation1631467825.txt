@@ -1,0 +1,16 @@
+{
+            "TransactionType": "Pay Bill",
+            "TransID": "PIC6TMRZAS",
+            "TransTime": "20210912203023",
+            "TransAmount": "800.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "2820469",
+            "InvoiceNumber": "",
+            "OrgAccountBalance": "6000.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "254706463151",
+            "FirstName": "KENNETH",
+            "MiddleName": "OUMA",
+            "LastName": "OKUMU"
+        }
+        

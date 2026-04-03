@@ -1,0 +1,16 @@
+{
+            "TransactionType": "Pay Bill",
+            "TransID": "RAP54ZUS17",
+            "TransTime": "20230125074301",
+            "TransAmount": "3500.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "2820364",
+            "InvoiceNumber": "",
+            "OrgAccountBalance": "4000.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "254711401057",
+            "FirstName": "JOHN",
+            "MiddleName": "SAMWEL EPAYE",
+            "LastName": "ERONI"
+        }
+        

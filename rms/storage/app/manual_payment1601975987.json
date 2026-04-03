@@ -1,0 +1,16 @@
+{
+            "TransactionType": "Pay Bill",
+            "TransID": "OJ618AELDP",
+            "TransTime": "20201006121944",
+            "TransAmount": "3500.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "2820128",
+            "InvoiceNumber": "",
+            "OrgAccountBalance": "99050.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "254728575820",
+            "FirstName": "JULIUS",
+            "MiddleName": "WAMUGUNDA",
+            "LastName": "MATHENGE"
+        }
+        

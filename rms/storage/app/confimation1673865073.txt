@@ -1,0 +1,16 @@
+{
+            "TransactionType": "Pay Bill",
+            "TransID": "RAG8I40IBM",
+            "TransTime": "20230116133111",
+            "TransAmount": "10.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "2820648",
+            "InvoiceNumber": "",
+            "OrgAccountBalance": "33480.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "254797748141",
+            "FirstName": "FREDRICK",
+            "MiddleName": "WANDERA",
+            "LastName": "WABWIRE"
+        }
+        

@@ -1,0 +1,14 @@
+{
+            "TransactionType": "Pay Bill",
+            "TransID": "RHM6QHHECA",
+            "TransTime": "20230822110234",
+            "TransAmount": "8000.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "lesa agency",
+            "InvoiceNumber": "",
+            "OrgAccountBalance": "15000.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "2547 ***** 435",
+            "FirstName": "CAROLINE"
+        }
+        

@@ -1,0 +1,14 @@
+{
+            "TransactionType": "Pay Bill",
+            "TransID": "RLJ3K553DR",
+            "TransTime": "20231219002525",
+            "TransAmount": "300.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "2820592",
+            "InvoiceNumber": "0",
+            "OrgAccountBalance": "7800.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "2547 ***** 326",
+            "FirstName": "Okiri"
+        }
+        

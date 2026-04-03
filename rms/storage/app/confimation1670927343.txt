@@ -1,0 +1,16 @@
+{
+            "TransactionType": "Pay Bill",
+            "TransID": "QLD42VSZ4Y",
+            "TransTime": "20221213132902",
+            "TransAmount": "6000.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "2820651",
+            "InvoiceNumber": "",
+            "OrgAccountBalance": "33350.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "254769555657",
+            "FirstName": "GODFREY",
+            "MiddleName": "WANYAMA MALENGO",
+            "LastName": "MARUSI"
+        }
+        

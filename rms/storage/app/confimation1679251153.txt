@@ -1,0 +1,14 @@
+{
+            "TransactionType": "Pay Bill",
+            "TransID": "RCJ1791HGB",
+            "TransTime": "20230319213911",
+            "TransAmount": "100.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "2820638",
+            "InvoiceNumber": "",
+            "OrgAccountBalance": "100.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "2547 ***** 660",
+            "FirstName": "fronica"
+        }
+        

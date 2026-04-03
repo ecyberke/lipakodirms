@@ -1,0 +1,14 @@
+{
+            "TransactionType": "Pay Bill",
+            "TransID": "REA88TX5O4",
+            "TransTime": "20230510202711",
+            "TransAmount": "2400.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "2820828",
+            "InvoiceNumber": "",
+            "OrgAccountBalance": "656530.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "2547 ***** 097",
+            "FirstName": "BENTA"
+        }
+        

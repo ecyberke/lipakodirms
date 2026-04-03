@@ -1,0 +1,14 @@
+{
+            "TransactionType": "Organization To Organization Transfer",
+            "TransID": "SA6994UBJ1",
+            "TransTime": "20240106141712",
+            "TransAmount": "14750.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "2821073",
+            "InvoiceNumber": "SILAS W OLUOCH::AB2578A6D124",
+            "OrgAccountBalance": "116250.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "",
+            "FirstName": "COOP TO PAYBILL"
+        }
+        

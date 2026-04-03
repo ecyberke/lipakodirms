@@ -1,0 +1,16 @@
+{
+            "TransactionType": "Organization To Organization Transfer",
+            "TransID": "QLA3VMUO5V",
+            "TransTime": "20221210213542",
+            "TransAmount": "6000.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "2820772",
+            "InvoiceNumber": "SIMON GIKONYO KAHENYA -254742300309",
+            "OrgAccountBalance": "9000.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "",
+            "FirstName": "NCBA  Bank M-pesa",
+            "MiddleName": "",
+            "LastName": ""
+        }
+        

@@ -1,0 +1,16 @@
+{
+            "TransactionType": "Pay Bill",
+            "TransID": "QGB09P6XDE",
+            "TransTime": "20220711110047",
+            "TransAmount": "4150.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "2820391",
+            "InvoiceNumber": "",
+            "OrgAccountBalance": "71250.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "254705932650",
+            "FirstName": "MIRIAM",
+            "MiddleName": "MUKOLWE",
+            "LastName": "CHAPIA"
+        }
+        

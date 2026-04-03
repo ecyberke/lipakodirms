@@ -1,0 +1,16 @@
+{
+            "TransactionType": "Pay Bill",
+            "TransID": "OJ6288HDSS",
+            "TransTime": "20201006113330",
+            "TransAmount": "7000.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "2820038",
+            "InvoiceNumber": "",
+            "OrgAccountBalance": "95550.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "254711553182",
+            "FirstName": "SHIRLEY",
+            "MiddleName": "NASIMIYU",
+            "LastName": "NASONGO"
+        }
+        

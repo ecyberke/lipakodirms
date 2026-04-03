@@ -1,0 +1,16 @@
+{
+            "TransactionType": "Pay Bill",
+            "TransID": "QI65HQU3UT",
+            "TransTime": "20220906173339",
+            "TransAmount": "12500.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "Cynthia Anne Okombo",
+            "InvoiceNumber": "",
+            "OrgAccountBalance": "170200.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "254791754017",
+            "FirstName": "Cynthia",
+            "MiddleName": "Anne",
+            "LastName": "Okombo"
+        }
+        

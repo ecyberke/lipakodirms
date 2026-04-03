@@ -1,0 +1,16 @@
+{
+            "TransactionType": "Pay Bill",
+            "TransID": "PC86GAS8B8",
+            "TransTime": "20210308120813",
+            "TransAmount": "2000.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "2820255",
+            "InvoiceNumber": "",
+            "OrgAccountBalance": "77150.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "254704937595",
+            "FirstName": "BENARD",
+            "MiddleName": "OUMA",
+            "LastName": "NYONGESA"
+        }
+        

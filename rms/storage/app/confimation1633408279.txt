@@ -1,0 +1,16 @@
+{
+            "TransactionType": "Pay Bill",
+            "TransID": "PJ57SMS4ZZ",
+            "TransTime": "20211005073117",
+            "TransAmount": "3000.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "2820369",
+            "InvoiceNumber": "",
+            "OrgAccountBalance": "143450.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "254729275869",
+            "FirstName": "OKOITI",
+            "MiddleName": "JOSEPH DINDI",
+            "LastName": ""
+        }
+        

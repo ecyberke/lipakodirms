@@ -1,0 +1,16 @@
+{
+            "TransactionType": "Pay Bill",
+            "TransID": "QJR9Q0WFBP",
+            "TransTime": "20221027192514",
+            "TransAmount": "7500.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "Less Agencies",
+            "InvoiceNumber": "",
+            "OrgAccountBalance": "22500.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "254725678092",
+            "FirstName": "Loice",
+            "MiddleName": "Nasimiyu",
+            "LastName": "Wafula"
+        }
+        

@@ -1,0 +1,14 @@
+{
+            "TransactionType": "Organization To Organization Transfer",
+            "TransID": "RE33NDXK6X",
+            "TransTime": "20230503194725",
+            "TransAmount": "2000.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "2820939",
+            "InvoiceNumber": "geoffrey maiba",
+            "OrgAccountBalance": "285161.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "2547 ***** 255",
+            "FirstName": "Airtel Mobile -Lipa Na M-PESA Interops"
+        }
+        

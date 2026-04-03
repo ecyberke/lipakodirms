@@ -1,0 +1,16 @@
+{
+            "TransactionType": "Pay Bill",
+            "TransID": "QD71YZKPWF",
+            "TransTime": "20220407151618",
+            "TransAmount": "8100.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "2820392",
+            "InvoiceNumber": "",
+            "OrgAccountBalance": "209790.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "254724066542",
+            "FirstName": "PERPETUA",
+            "MiddleName": "TOTO",
+            "LastName": "OPUKO"
+        }
+        

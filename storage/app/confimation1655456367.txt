@@ -1,0 +1,16 @@
+{
+            "TransactionType": "Pay Bill",
+            "TransID": "QFH1VGK699",
+            "TransTime": "20220617115925",
+            "TransAmount": "16500.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "Less Agencies",
+            "InvoiceNumber": "",
+            "OrgAccountBalance": "16500.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "254716567245",
+            "FirstName": "JOSEPH",
+            "MiddleName": "MBOGWA",
+            "LastName": "MWANGI"
+        }
+        

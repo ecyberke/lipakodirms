@@ -1,0 +1,16 @@
+{
+            "TransactionType": "Pay Bill",
+            "TransID": "PE36IPX8NO",
+            "TransTime": "20210503132434",
+            "TransAmount": "2500.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "Mathew opili",
+            "InvoiceNumber": "",
+            "OrgAccountBalance": "2500.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "254792796183",
+            "FirstName": "mathew",
+            "MiddleName": "opili",
+            "LastName": "omokori"
+        }
+        

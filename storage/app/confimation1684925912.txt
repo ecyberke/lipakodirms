@@ -1,0 +1,14 @@
+{
+            "TransactionType": "Pay Bill",
+            "TransID": "REO8BC1PD6",
+            "TransTime": "20230524135831",
+            "TransAmount": "3000.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "James Kamau/ lesa",
+            "InvoiceNumber": "0",
+            "OrgAccountBalance": "3000.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "2547 ***** 636",
+            "FirstName": "JAMES"
+        }
+        

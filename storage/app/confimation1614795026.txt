@@ -1,0 +1,16 @@
+{
+            "TransactionType": "Pay Bill",
+            "TransID": "PC38ALOE8G",
+            "TransTime": "20210303211025",
+            "TransAmount": "6000.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "2820076",
+            "InvoiceNumber": "",
+            "OrgAccountBalance": "43000.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "254720267851",
+            "FirstName": "SAMSON",
+            "MiddleName": "LALYA DISHON",
+            "LastName": ""
+        }
+        

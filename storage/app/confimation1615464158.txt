@@ -1,0 +1,16 @@
+{
+            "TransactionType": "Pay Bill",
+            "TransID": "PCB4KERYNQ",
+            "TransTime": "20210311150237",
+            "TransAmount": "8000.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "1177934779",
+            "InvoiceNumber": "",
+            "OrgAccountBalance": "60100.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "254796752537",
+            "FirstName": "LYDIA",
+            "MiddleName": "PENINA",
+            "LastName": "AMBUGA"
+        }
+        

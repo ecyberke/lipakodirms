@@ -1,0 +1,16 @@
+{
+            "TransactionType": "Organization To Organization Transfer",
+            "TransID": "PCB2K3DT8Y",
+            "TransTime": "20210311103940",
+            "TransAmount": "2000.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "2820011",
+            "InvoiceNumber": "",
+            "OrgAccountBalance": "29100.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "254704721171",
+            "FirstName": "Godfrey Macheso Ngichabe                                   ",
+            "MiddleName": "",
+            "LastName": ""
+        }
+        

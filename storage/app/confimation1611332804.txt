@@ -1,0 +1,16 @@
+{
+            "TransactionType": "Pay Bill",
+            "TransID": "PAM1VP8WMX",
+            "TransTime": "20210122192642",
+            "TransAmount": "300.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "2820021",
+            "InvoiceNumber": "",
+            "OrgAccountBalance": "300.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "254713077509",
+            "FirstName": "EZEKIEL",
+            "MiddleName": "TAABU",
+            "LastName": "OSIKUKU"
+        }
+        

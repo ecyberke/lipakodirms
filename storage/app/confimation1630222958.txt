@@ -1,0 +1,16 @@
+{
+            "TransactionType": "Pay Bill",
+            "TransID": "PHT97OLIQD",
+            "TransTime": "20210829104236",
+            "TransAmount": "7500.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "2420162",
+            "InvoiceNumber": "",
+            "OrgAccountBalance": "20400.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "254708432049",
+            "FirstName": "BRENDA",
+            "MiddleName": "IBWAKO",
+            "LastName": "OSWANA"
+        }
+        

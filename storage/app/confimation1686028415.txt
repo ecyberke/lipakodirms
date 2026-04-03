@@ -1,0 +1,14 @@
+{
+            "TransactionType": "Pay Bill",
+            "TransID": "RF60CHQBMM",
+            "TransTime": "20230606081334",
+            "TransAmount": "6000.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "2820010",
+            "InvoiceNumber": "",
+            "OrgAccountBalance": "201300.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "2547 ***** 537",
+            "FirstName": "LYDIA"
+        }
+        

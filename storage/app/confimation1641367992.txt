@@ -1,0 +1,16 @@
+{
+            "TransactionType": "Pay Bill",
+            "TransID": "QA575XNLCN",
+            "TransTime": "20220105103311",
+            "TransAmount": "6500.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "leso",
+            "InvoiceNumber": "",
+            "OrgAccountBalance": "238350.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "254729499786",
+            "FirstName": "Ducan",
+            "MiddleName": "Micah",
+            "LastName": ""
+        }
+        

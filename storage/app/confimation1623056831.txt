@@ -1,0 +1,16 @@
+{
+            "TransactionType": "Pay Bill",
+            "TransID": "PF76U3Z2Z6",
+            "TransTime": "20210607120709",
+            "TransAmount": "2500.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "2820219",
+            "InvoiceNumber": "",
+            "OrgAccountBalance": "154731.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "254724620875",
+            "FirstName": "SCOVIA",
+            "MiddleName": "WANYAMA",
+            "LastName": "ACHONGA"
+        }
+        

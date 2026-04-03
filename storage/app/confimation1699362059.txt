@@ -1,0 +1,14 @@
+{
+            "TransactionType": "Pay Bill",
+            "TransID": "RK73OLCFDX",
+            "TransTime": "20231107160058",
+            "TransAmount": "4400.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "2820780",
+            "InvoiceNumber": "",
+            "OrgAccountBalance": "55180.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "2547 ***** 016",
+            "FirstName": "VIRGINIA"
+        }
+        

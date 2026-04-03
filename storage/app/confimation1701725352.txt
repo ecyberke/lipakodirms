@@ -1,0 +1,14 @@
+{
+            "TransactionType": "Organization To Organization Transfer",
+            "TransID": "RL578MEA3P",
+            "TransTime": "20231205002909",
+            "TransAmount": "8000.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "2820869",
+            "InvoiceNumber": "FAITH AKOTH EKISA::AB1F761A7423",
+            "OrgAccountBalance": "8500.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "",
+            "FirstName": "COOP TO PAYBILL"
+        }
+        

@@ -1,0 +1,14 @@
+{
+            "TransactionType": "Pay Bill",
+            "TransID": "RFF0444X8W",
+            "TransTime": "20230615121158",
+            "TransAmount": "15712.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "Rmmsa",
+            "InvoiceNumber": "",
+            "OrgAccountBalance": "15712.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "2547 ***** 744",
+            "FirstName": "SLEEM"
+        }
+        

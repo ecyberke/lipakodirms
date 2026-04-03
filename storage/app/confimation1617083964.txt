@@ -1,0 +1,16 @@
+{
+            "TransactionType": "Pay Bill",
+            "TransID": "PCU193WGG5",
+            "TransTime": "20210330085921",
+            "TransAmount": "6000.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "lesa",
+            "InvoiceNumber": "",
+            "OrgAccountBalance": "23000.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "254746150902",
+            "FirstName": "EVERLINE",
+            "MiddleName": "WERIMO",
+            "LastName": "INGUTIA"
+        }
+        

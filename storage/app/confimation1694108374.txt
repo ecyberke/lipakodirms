@@ -1,0 +1,14 @@
+{
+            "TransactionType": "Pay Bill",
+            "TransID": "RI726TGWR2",
+            "TransTime": "20230907203933",
+            "TransAmount": "5200.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "lesa",
+            "InvoiceNumber": "",
+            "OrgAccountBalance": "198750.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "2547 ***** 016",
+            "FirstName": "VIRGINIA"
+        }
+        

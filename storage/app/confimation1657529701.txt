@@ -1,0 +1,16 @@
+{
+            "TransactionType": "Pay Bill",
+            "TransID": "QGB29T280O",
+            "TransTime": "20220711115459",
+            "TransAmount": "2500.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "2820215",
+            "InvoiceNumber": "",
+            "OrgAccountBalance": "76250.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "254721443599",
+            "FirstName": "EMMANUEL",
+            "MiddleName": "KENNETH OTIENO SIRMA",
+            "LastName": "MAINGA"
+        }
+        

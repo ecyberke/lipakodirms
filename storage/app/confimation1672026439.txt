@@ -1,0 +1,16 @@
+{
+            "TransactionType": "Pay Bill",
+            "TransID": "QLQ21T6S4E",
+            "TransTime": "20221226064717",
+            "TransAmount": "5000.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "lesa",
+            "InvoiceNumber": "",
+            "OrgAccountBalance": "23500.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "254725736016",
+            "FirstName": "VIRGINIA",
+            "MiddleName": "NJERI WAWERU",
+            "LastName": ""
+        }
+        

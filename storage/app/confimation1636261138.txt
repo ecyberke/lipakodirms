@@ -1,0 +1,16 @@
+{
+            "TransactionType": "Pay Bill",
+            "TransID": "PK79BHT4HL",
+            "TransTime": "20211107075857",
+            "TransAmount": "1500.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "2820247",
+            "InvoiceNumber": "",
+            "OrgAccountBalance": "307600.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "254724555887",
+            "FirstName": "GEOFREY",
+            "MiddleName": "KIPKOECH",
+            "LastName": ""
+        }
+        

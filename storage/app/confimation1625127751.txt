@@ -1,0 +1,16 @@
+{
+            "TransactionType": "Pay Bill",
+            "TransID": "PG12S45Y42",
+            "TransTime": "20210701112229",
+            "TransAmount": "6000.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "2820146",
+            "InvoiceNumber": "",
+            "OrgAccountBalance": "19400.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "254746150902",
+            "FirstName": "EVERLINE",
+            "MiddleName": "WERIMO",
+            "LastName": "INGUTIA"
+        }
+        

@@ -1,0 +1,14 @@
+{
+            "TransactionType": "Organization To Organization Transfer",
+            "TransID": "RK94TL7FFM",
+            "TransTime": "20231109075055",
+            "TransAmount": "10000.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "2820831",
+            "InvoiceNumber": "JOHNALBERT APOLU NAMBUBI::AB1ADD112723",
+            "OrgAccountBalance": "124550.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "",
+            "FirstName": "COOP TO PAYBILL"
+        }
+        

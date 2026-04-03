@@ -1,0 +1,14 @@
+{
+            "TransactionType": "Pay Bill",
+            "TransID": "RHA7RCQY17",
+            "TransTime": "20230810183532",
+            "TransAmount": "12500.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "LESA",
+            "InvoiceNumber": "",
+            "OrgAccountBalance": "426200.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "2547 ***** 120",
+            "FirstName": "DOMNIC"
+        }
+        

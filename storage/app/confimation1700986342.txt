@@ -1,0 +1,14 @@
+{
+            "TransactionType": "Organization To Organization Transfer",
+            "TransID": "RKQ5EGH7FL",
+            "TransTime": "20231126111220",
+            "TransAmount": "10000.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "LESA AGENCY ",
+            "InvoiceNumber": "DORINE ODUNGA -254759609935",
+            "OrgAccountBalance": "11700.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "",
+            "FirstName": "NCBA  Bank M-pesa"
+        }
+        

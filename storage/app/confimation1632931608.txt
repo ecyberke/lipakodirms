@@ -1,0 +1,16 @@
+{
+            "TransactionType": "Pay Bill",
+            "TransID": "PIT5JZKPSN",
+            "TransTime": "20210929190646",
+            "TransAmount": "5000.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "2820233",
+            "InvoiceNumber": "",
+            "OrgAccountBalance": "21500.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "254711559063",
+            "FirstName": "CLINTON",
+            "MiddleName": "MATINI",
+            "LastName": "MUSIRIMBA"
+        }
+        

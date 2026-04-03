@@ -1,0 +1,16 @@
+{
+            "TransactionType": "Pay Bill",
+            "TransID": "QA4844CWP6",
+            "TransTime": "20220104092341",
+            "TransAmount": "3750.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "1177934779",
+            "InvoiceNumber": "",
+            "OrgAccountBalance": "111300.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "254795693591",
+            "FirstName": "Scholastica",
+            "MiddleName": "Atieno",
+            "LastName": "Obongo"
+        }
+        

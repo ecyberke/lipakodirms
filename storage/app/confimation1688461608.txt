@@ -1,0 +1,14 @@
+{
+            "TransactionType": "Pay Bill",
+            "TransID": "RG41NVJFG7",
+            "TransTime": "20230704120646",
+            "TransAmount": "6500.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "lesa agency",
+            "InvoiceNumber": "",
+            "OrgAccountBalance": "34250.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "2547 ***** 949",
+            "FirstName": "LEVIS"
+        }
+        

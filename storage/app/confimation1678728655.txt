@@ -1,0 +1,14 @@
+{
+            "TransactionType": "Pay Bill",
+            "TransID": "RCD8PWYX72",
+            "TransTime": "20230313203054",
+            "TransAmount": "700.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "2820663",
+            "InvoiceNumber": "",
+            "OrgAccountBalance": "5200.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "2547 ***** 189",
+            "FirstName": "JANE"
+        }
+        

@@ -1,0 +1,14 @@
+{
+            "TransactionType": "Pay Bill",
+            "TransID": "RLC0ZG2AD4",
+            "TransTime": "20231212222359",
+            "TransAmount": "2000.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "2820291",
+            "InvoiceNumber": "",
+            "OrgAccountBalance": "66300.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "2547 ***** 954",
+            "FirstName": "PRISCA"
+        }
+        

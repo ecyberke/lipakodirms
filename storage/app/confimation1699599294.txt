@@ -1,0 +1,14 @@
+{
+            "TransactionType": "Pay Bill",
+            "TransID": "RKA0X6GDVQ",
+            "TransTime": "20231110095453",
+            "TransAmount": "20000.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "2820804",
+            "InvoiceNumber": "",
+            "OrgAccountBalance": "182550.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "2547 ***** 168",
+            "FirstName": "LEVIS"
+        }
+        

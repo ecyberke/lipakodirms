@@ -1,0 +1,16 @@
+{
+            "TransactionType": "Pay Bill",
+            "TransID": "OL426YFRMS",
+            "TransTime": "20201204142936",
+            "TransAmount": "9000.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "1177934779",
+            "InvoiceNumber": "",
+            "OrgAccountBalance": "14500.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "254799919825",
+            "FirstName": "LEWIS",
+            "MiddleName": "KIBET",
+            "LastName": "TOROITICH"
+        }
+        

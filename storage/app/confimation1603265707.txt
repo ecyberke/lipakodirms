@@ -1,0 +1,16 @@
+{
+            "TransactionType": "Pay Bill",
+            "TransID": "OJL5OYFNHH",
+            "TransTime": "20201021103504",
+            "TransAmount": "5000.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "1177934779",
+            "InvoiceNumber": "",
+            "OrgAccountBalance": "9000.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "254704025097",
+            "FirstName": "MERCY",
+            "MiddleName": "WAMBUI",
+            "LastName": "MWANGI"
+        }
+        

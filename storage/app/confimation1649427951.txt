@@ -1,0 +1,16 @@
+{
+            "TransactionType": "Pay Bill",
+            "TransID": "QD802ALPFC",
+            "TransTime": "20220408172550",
+            "TransAmount": "3000.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "2820616",
+            "InvoiceNumber": "",
+            "OrgAccountBalance": "280140.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "254701517819",
+            "FirstName": "EDWIN",
+            "MiddleName": "MUYOTI",
+            "LastName": "TINDI"
+        }
+        

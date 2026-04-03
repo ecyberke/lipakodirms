@@ -1,0 +1,16 @@
+{
+            "TransactionType": "Pay Bill",
+            "TransID": "QKS8UT3Q96",
+            "TransTime": "20221128200719",
+            "TransAmount": "3000.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "Felix Usolo",
+            "InvoiceNumber": "",
+            "OrgAccountBalance": "31400.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "254111407042",
+            "FirstName": "FELIX",
+            "MiddleName": "OKARA WAWIRE",
+            "LastName": "USOLO"
+        }
+        

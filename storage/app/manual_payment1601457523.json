@@ -1,0 +1,16 @@
+{
+            "TransactionType": "Pay Bill",
+            "TransID": "OIU418QV76",
+            "TransTime": "20200930121841",
+            "TransAmount": "5.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "LA0001",
+            "InvoiceNumber": "",
+            "OrgAccountBalance": "5.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "254728519621",
+            "FirstName": "ERIC",
+            "MiddleName": "NDUNGU",
+            "LastName": "RIBIA"
+        }
+        

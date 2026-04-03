@@ -1,0 +1,16 @@
+{
+            "TransactionType": "Organization To Organization Transfer",
+            "TransID": "QF5486NFC0",
+            "TransTime": "20220605171155",
+            "TransAmount": "3500.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "2820645",
+            "InvoiceNumber": "MERCYLINE NALIAKA AGUNDA -254726128403",
+            "OrgAccountBalance": "57750.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "",
+            "FirstName": "NCBA  Bank M-pesa",
+            "MiddleName": "",
+            "LastName": ""
+        }
+        

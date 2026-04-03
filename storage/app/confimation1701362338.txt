@@ -1,0 +1,14 @@
+{
+            "TransactionType": "Pay Bill",
+            "TransID": "RKU7T996UT",
+            "TransTime": "20231130193856",
+            "TransAmount": "2650.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "2821055",
+            "InvoiceNumber": "",
+            "OrgAccountBalance": "3950.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "2547 ***** 173",
+            "FirstName": "Petronilar"
+        }
+        

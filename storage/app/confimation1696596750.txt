@@ -1,0 +1,14 @@
+{
+            "TransactionType": "Pay Bill",
+            "TransID": "RJ63QDCO8P",
+            "TransTime": "20231006155228",
+            "TransAmount": "3500.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "2820093",
+            "InvoiceNumber": "",
+            "OrgAccountBalance": "59500.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "2547 ***** 006",
+            "FirstName": "WILIMINA"
+        }
+        

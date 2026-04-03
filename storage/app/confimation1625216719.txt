@@ -1,0 +1,16 @@
+{
+            "TransactionType": "Pay Bill",
+            "TransID": "PG28TMWICK",
+            "TransTime": "20210702120517",
+            "TransAmount": "7500.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "2820162",
+            "InvoiceNumber": "",
+            "OrgAccountBalance": "7500.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "254708432049",
+            "FirstName": "BRENDA",
+            "MiddleName": "IBWAKO",
+            "LastName": "OSWANA"
+        }
+        

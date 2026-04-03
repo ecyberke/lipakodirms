@@ -1,0 +1,14 @@
+{
+            "TransactionType": "Organization To Organization Transfer",
+            "TransID": "RKA6ZIN4ME",
+            "TransTime": "20231110204230",
+            "TransAmount": "5000.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "2820916",
+            "InvoiceNumber": "Mathews OUMA",
+            "OrgAccountBalance": "242050.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "2547 ***** 556",
+            "FirstName": "Airtel Mobile -Lipa Na M-PESA Interops"
+        }
+        

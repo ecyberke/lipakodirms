@@ -1,0 +1,14 @@
+{
+            "TransactionType": "Pay Bill",
+            "TransID": "RJK6Z76S32",
+            "TransTime": "20231020082117",
+            "TransAmount": "4500.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "2820823",
+            "InvoiceNumber": "",
+            "OrgAccountBalance": "8370.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "2547 ***** 186",
+            "FirstName": "DIANDA"
+        }
+        

@@ -1,0 +1,16 @@
+{
+            "TransactionType": "Pay Bill",
+            "TransID": "OJ192AJR83",
+            "TransTime": "20201001101101",
+            "TransAmount": "1.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "LA0191",
+            "InvoiceNumber": "",
+            "OrgAccountBalance": "1.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "254714264331",
+            "FirstName": "BEDAH",
+            "MiddleName": "OUMA",
+            "LastName": "OTIENO"
+        }
+        

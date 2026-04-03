@@ -1,0 +1,16 @@
+{
+            "TransactionType": "Pay Bill",
+            "TransID": "OJ608W42PE",
+            "TransTime": "20201006194539",
+            "TransAmount": "6000.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "LA0185",
+            "InvoiceNumber": "",
+            "OrgAccountBalance": "124050.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "254724599461",
+            "FirstName": "WILSON",
+            "MiddleName": "MUKUNA KITOTO",
+            "LastName": "NAMONYWA"
+        }
+        

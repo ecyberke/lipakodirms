@@ -1,0 +1,16 @@
+{
+            "TransactionType": "Pay Bill",
+            "TransID": "PC33A2FG5P",
+            "TransTime": "20210303160533",
+            "TransAmount": "14000.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "2820088",
+            "InvoiceNumber": "",
+            "OrgAccountBalance": "33500.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "254721544383",
+            "FirstName": "COLLINS",
+            "MiddleName": "CALEB",
+            "LastName": "NDEDA"
+        }
+        

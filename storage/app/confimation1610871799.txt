@@ -1,0 +1,16 @@
+{
+            "TransactionType": "Pay Bill",
+            "TransID": "PAH3PE30C9",
+            "TransTime": "20210117112310",
+            "TransAmount": "8000.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "2820110",
+            "InvoiceNumber": "",
+            "OrgAccountBalance": "8300.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "254725336791",
+            "FirstName": "CONCEPTA",
+            "MiddleName": "NABWIRE",
+            "LastName": "OWORI"
+        }
+        

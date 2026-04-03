@@ -1,0 +1,14 @@
+{
+            "TransactionType": "Pay Bill",
+            "TransID": "RF67DTEVWX",
+            "TransTime": "20230606162558",
+            "TransAmount": "7000.00",
+            "BusinessShortCode": "743994",
+            "BillRefNumber": "2820088",
+            "InvoiceNumber": "",
+            "OrgAccountBalance": "282550.00",
+            "ThirdPartyTransID": "",
+            "MSISDN": "2547 ***** 383",
+            "FirstName": "COLLINS"
+        }
+        

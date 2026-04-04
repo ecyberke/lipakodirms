@@ -830,6 +830,46 @@ class ApiController extends Controller
             // ->rawColumns(['view', 'actions'])
             ->toJson();
     }
+    public function getTenantPayments()
+    {
+        $tenantUser = Auth::guard('tenant')->user();
+        if (!$tenantUser) {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+        $orgId = config('app.org_id', 1);
+        $tenant = \App\Tenant::where('account_number', $tenantUser->account_number)
+            ->where('org_id', $orgId)->first();
+
+        $query = ManagerPayment::where('InvoiceNumber', $tenant->account_number ?? '')
+            ->orWhere('tenant_id', $tenant->id ?? 0);
+
+        return DataTables::of($query)
+            ->addIndexColumn()
+            ->addColumn('status', function ($q) {
+                if ($q->status == 0) return '<span class="badge badge-primary">Pending</span>';
+                elseif ($q->status == 1) return '<span class="badge badge-success">Approved</span>';
+                else return '<span class="badge badge-danger">Rejected</span>';
+            })
+            ->addColumn('action', function ($q) {
+                return '<div class="text-right">
+                    <div class="dropdown dropdown-action">
+                        <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                            <i class="fa fa-ellipsis-v"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <div class="dropdown-item">
+                                <a class="btn btn-sm btn-info btn-block" href="' . route('tenant.receipt', $q->id) . '">
+                                    <i class="fe fe-download"></i> Download Receipt
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>';
+            })
+            ->rawColumns(['status', 'action'])
+            ->toJson();
+    }
+
     public function getAllManagerPayments()
     {
         // $query=Landlord::withCount('apartments')->get();

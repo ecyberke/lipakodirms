@@ -17,7 +17,6 @@
     <link href="{{URL::asset('assets/plugins/web-fonts/font-awesome/font-awesome.min.css')}}" rel="stylesheet">
     <link href="{{URL::asset('assets/plugins/web-fonts/plugin.css')}}" rel="stylesheet" />
     <style>
-        .super-badge { background: #F47920; color: #fff; padding: 3px 10px; border-radius: 20px; font-size: 0.75rem; }
         .org-status { padding: 3px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; }
         .status-active { background: #d4edda; color: #155724; }
         .status-suspended { background: #fff3cd; color: #856404; }
@@ -30,131 +29,133 @@
 <body class="app sidebar-mini light-mode default-sidebar">
 <div class="page">
     <div class="page-main">
-        <!-- Sidebar -->
-        <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
-        <aside class="app-sidebar app-sidebar3">
+
+        {{-- Logo Sidebar --}}
+        <div class="app-sidebar app-sidebar2">
             <div class="app-sidebar__logo">
-                <a href="{{ route('super.dashboard') }}" class="header-brand">
+                <a class="header-brand" href="{{ route('super.dashboard') }}">
                     <img src="{{URL::asset('assets/images/lipakodi_main_logo.png')}}" style="width:100px;height:60px;" class="header-brand-img desktop-lgo" alt="Lipakodi">
                     <img src="{{URL::asset('assets/images/lipakodi_main_logo.png')}}" style="width:100px;height:60px;" class="header-brand-img dark-logo" alt="Lipakodi">
+                    <img src="{{URL::asset('assets/images/lipakodi_main_logo.png')}}" class="header-brand-img mobile-logo" alt="Lipakodi">
+                    <img src="{{URL::asset('assets/images/lipakodi_main_logo.png')}}" class="header-brand-img darkmobile-logo" alt="Lipakodi">
                 </a>
             </div>
-            <div class="app-sidebar3" style="overflow-y:auto;">
-                <ul class="side-menu">
-                    <li class="slide">
-                        <a class="side-menu__item {{ request()->routeIs('super.dashboard') ? 'active' : '' }}" href="{{ route('super.dashboard') }}">
-                            <i class="side-menu__icon fe fe-home"></i>
-                            <span class="side-menu__label">Dashboard</span>
-                        </a>
-                    </li>
-                    <li class="menutitles">Organizations</li>
-                    <li class="slide">
-                        <a class="side-menu__item {{ request()->routeIs('super.organizations.*') ? 'active' : '' }}" href="{{ route('super.organizations.index') }}">
-                            <i class="side-menu__icon fe fe-briefcase"></i>
-                            <span class="side-menu__label">All Organizations</span>
-                        </a>
-                    </li>
-                    <li class="slide">
-                        <a class="side-menu__item" href="{{ route('super.organizations.create') }}">
-                            <i class="side-menu__icon fe fe-plus-circle"></i>
-                            <span class="side-menu__label">Add Organization</span>
-                        </a>
-                    </li>
-                    <li class="menutitles">Billing</li>
-                    <li class="slide">
-                        <a class="side-menu__item {{ request()->routeIs('super.plans.*') ? 'active' : '' }}" href="{{ route('super.plans.index') }}">
-                            <i class="side-menu__icon fe fe-tag"></i>
-                            <span class="side-menu__label">Subscription Plans</span>
-                        </a>
-                    </li>
-                    <li class="slide">
-                        <a class="side-menu__item {{ request()->routeIs('super.subscriptions.*') ? 'active' : '' }}" href="{{ route('super.subscriptions.index') }}">
-                            <i class="side-menu__icon fe fe-file-text"></i>
-                            <span class="side-menu__label">All Subscriptions</span>
-                        </a>
-                    </li>
-                    <li class="menutitles">System</li>
-                    @if(session('impersonating_org'))
-                    <li class="slide">
-                        <a class="side-menu__item" href="{{ route('super.impersonate.stop') }}">
-                            <i class="side-menu__icon fe fe-log-out"></i>
-                            <span class="side-menu__label">Stop Impersonating</span>
-                        </a>
-                    </li>
-                    @endif
-                    <li class="slide">
-                        <a class="side-menu__item" href="{{ route('logout') }}"
-                            onclick="event.preventDefault(); document.getElementById('sa-logout').submit();">
-                            <i class="side-menu__icon fe fe-power"></i>
-                            <span class="side-menu__label">Logout</span>
-                        </a>
-                        <form id="sa-logout" action="{{ route('logout') }}" method="POST" class="d-none">@csrf</form>
-                    </li>
-                </ul>
-            </div>
+        </div>
+
+        {{-- Menu Sidebar --}}
+        <aside class="app-sidebar app-sidebar3">
+            <ul class="side-menu">
+                <li class="menutitles">Main</li>
+                <li class="slide">
+                    <a class="side-menu__item {{ request()->routeIs('super.dashboard') ? 'active' : '' }}" href="{{ route('super.dashboard') }}">
+                        <svg class="side-menu__icon" xmlns="http://www.w3.org/2000/svg" width="24" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                        <span class="side-menu__label">Dashboard</span>
+                    </a>
+                </li>
+                <li class="menutitles">Organizations</li>
+                <li class="slide">
+                    <a class="side-menu__item {{ request()->routeIs('super.organizations.index') ? 'active' : '' }}" href="{{ route('super.organizations.index') }}">
+                        <svg class="side-menu__icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                        <span class="side-menu__label">All Organizations</span>
+                    </a>
+                </li>
+                <li class="slide">
+                    <a class="side-menu__item {{ request()->routeIs('super.organizations.create') ? 'active' : '' }}" href="{{ route('super.organizations.create') }}">
+                        <svg class="side-menu__icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+                        <span class="side-menu__label">Add Organization</span>
+                    </a>
+                </li>
+                <li class="menutitles">Billing</li>
+                <li class="slide">
+                    <a class="side-menu__item {{ request()->routeIs('super.plans.*') ? 'active' : '' }}" href="{{ route('super.plans.index') }}">
+                        <svg class="side-menu__icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                        <span class="side-menu__label">Subscription Plans</span>
+                    </a>
+                </li>
+                <li class="slide">
+                    <a class="side-menu__item {{ request()->routeIs('super.subscriptions.*') ? 'active' : '' }}" href="{{ route('super.subscriptions.index') }}">
+                        <svg class="side-menu__icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                        <span class="side-menu__label">All Subscriptions</span>
+                    </a>
+                </li>
+                <li class="menutitles">System</li>
+                @if(session('impersonating_org'))
+                <li class="slide">
+                    <a class="side-menu__item" href="{{ route('super.impersonate.stop') }}">
+                        <svg class="side-menu__icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                        <span class="side-menu__label">Stop Impersonating</span>
+                    </a>
+                </li>
+                @endif
+                <li class="slide">
+                    <a class="side-menu__item" href="{{ route('logout') }}"
+                        onclick="event.preventDefault(); document.getElementById('sa-logout').submit();">
+                        <svg class="side-menu__icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                        <span class="side-menu__label">Logout</span>
+                    </a>
+                    <form id="sa-logout" action="{{ route('logout') }}" method="POST" class="d-none">@csrf</form>
+                </li>
+            </ul>
         </aside>
 
-        <!-- Main Content -->
+        {{-- Main Content --}}
         <div class="app-content main-content">
             <div class="side-app">
-                <!-- Header -->
-                <div class="app-header header sticky">
-                    <div class="container-fluid">
-                        <div class="d-flex">
-                            <a class="app-sidebar__toggle" data-toggle="sidebar" href="#"></a>
-                            <div class="d-flex order-lg-2 ml-auto">
-                                @if(session('impersonating_org'))
-                                <span class="badge bg-warning text-dark align-self-center me-3">
-                                    <i class="fe fe-user"></i> Impersonating
-                                </span>
-                                @endif
-                                <span class="super-badge align-self-center me-3">
-                                    <i class="fe fe-shield"></i> {{ Auth::user()->name ?? 'Super Admin' }}
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
-                <!-- Page Header -->
+                {{-- Reuse existing header --}}
+                @include('super_admin.layouts.header')
+
+                {{-- Alerts --}}
+                @if(session('success'))
+                <div class="alert alert-success alert-dismissible fade show mx-4 mt-2">
+                    {{ session('success') }}
+                    <button type="button" class="close" data-dismiss="alert"><span>&times;</span></button>
+                </div>
+                @endif
+                @if(session('error'))
+                <div class="alert alert-danger alert-dismissible fade show mx-4 mt-2">
+                    {{ session('error') }}
+                    <button type="button" class="close" data-dismiss="alert"><span>&times;</span></button>
+                </div>
+                @endif
+                @if($errors->any())
+                <div class="alert alert-danger mx-4 mt-2">
+                    @foreach($errors->all() as $e)<div>{{ $e }}</div>@endforeach
+                </div>
+                @endif
+
+                {{-- Page Header --}}
                 <div class="page-header">
                     <div class="page-leftheader">
                         <h4 class="page-title">@yield('page-title', 'Dashboard')</h4>
+                        <small class="text-muted">
+                            <span class="badge badge-warning">Super Admin</span>
+                            {{ Auth::user()->name ?? '' }}
+                            @if(session('impersonating_org'))
+                                &mdash; <span class="badge badge-danger">Impersonating</span>
+                            @endif
+                        </small>
+                    </div>
+                    <div class="page-rightheader ml-auto d-lg-flex d-none">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{{ route('super.dashboard') }}">Super Admin</a></li>
+                            <li class="breadcrumb-item active">@yield('page-title', 'Dashboard')</li>
+                        </ol>
                     </div>
                 </div>
 
-                <!-- Content -->
+                {{-- Content --}}
                 <div class="container-fluid">
-                    @if(session('success'))
-                        <div class="alert alert-success alert-dismissible fade show">
-                            {{ session('success') }}
-                            <button type="button" class="close" data-dismiss="alert"><span>&times;</span></button>
-                        </div>
-                    @endif
-                    @if(session('error'))
-                        <div class="alert alert-danger alert-dismissible fade show">
-                            {{ session('error') }}
-                            <button type="button" class="close" data-dismiss="alert"><span>&times;</span></button>
-                        </div>
-                    @endif
-                    @if($errors->any())
-                        <div class="alert alert-danger">
-                            @foreach($errors->all() as $e)<div>{{ $e }}</div>@endforeach
-                        </div>
-                    @endif
                     @yield('content')
                 </div>
+
+                @include('super_admin.layouts.footer')
             </div>
         </div>
     </div>
 </div>
 
-<!-- Scripts -->
-<script src="{{URL::asset('assets/plugins/jquery/jquery.min.js')}}"></script>
-<script src="{{URL::asset('assets/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-<script src="{{URL::asset('assets/plugins/p-scrollbar/p-scrollbar.js')}}"></script>
-<script src="{{URL::asset('assets/js/sidemenu.js')}}"></script>
-<script src="{{URL::asset('assets/js/custom.js')}}"></script>
+@include('layouts.footer-scripts')
 @yield('scripts')
 </body>
 </html>

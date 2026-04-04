@@ -34,8 +34,9 @@ trait DocTrait
                 ->where('created_at', '>=', $from)
                 ->where('created_at', '<=', $to. " 23:59:59")->get();
         } else {
+            $tnt = Tenant::where('id', $tenant_id)->first();
             $invoices = Invoice::where('tenant_id', $tenant_id)->get();
-            $payments = ManualPayment::where('InvoiceNumber', $tnt->account_number)->get();
+            $payments = ManualPayment::where('InvoiceNumber', $tnt->account_number ?? '')->get();
         }
         //  $rent = Invoice::where('tenant_id', $tenant_id)->get();
         //  foreach($rent as $rn){

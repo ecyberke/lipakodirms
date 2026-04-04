@@ -2,36 +2,73 @@
 @section('title', 'Submit Notice')
 
 @section('content')
-<div class="row justify-content-center">
-<div class="col-md-7">
-<div class="content-card">
-    <h6 class="mb-1"><i class="fas fa-door-open text-danger"></i> Submit Vacating Notice</h6>
-    <p class="text-muted small mb-4">Please provide at least 30 days notice before vacating.</p>
+<div class="row">
+    <div class="col-lg-12 col-md-12">
+        <form method="POST" action="{{ route('tenant.notice.submit') }}" class="card">
+            @csrf
+            <div class="card-body">
+                @if(session('success'))
+                <div class="alert alert-success alert-dismissible fade show">
+                    {{ session('success') }}
+                    <button type="button" class="close" data-dismiss="alert"><span>&times;</span></button>
+                </div>
+                @endif
+                @if($errors->any())
+                <div class="alert alert-danger">
+                    @foreach($errors->all() as $e)<div>{{ $e }}</div>@endforeach
+                </div>
+                @endif
 
-    <div class="alert alert-warning">
-        <i class="fas fa-exclamation-triangle"></i>
-        <strong>Important:</strong> Submitting this notice will notify management and your landlord. This action cannot be undone. All outstanding balances will be reconciled before vacating.
+                <div class="alert alert-warning">
+                    <i class="fe fe-alert-triangle"></i>
+                    <strong>Important:</strong> Submitting this notice will notify management and your landlord immediately.
+                    All outstanding balances will be reconciled before vacating.
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>Notice Date <span class="text-danger">*</span></label>
+                            <div class="cal-icon">
+                                <input type="date" class="form-control" name="notice_date"
+                                    min="{{ now()->format('Y-m-d') }}"
+                                    value="{{ now()->format('Y-m-d') }}" required>
+                            </div>
+                            <small class="text-muted">Cannot be a past date</small>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>Intended Vacating Date <span class="text-danger">*</span></label>
+                            <div class="cal-icon">
+                                <input type="date" class="form-control" name="vacating_date"
+                                    min="{{ now()->addDays(30)->format('Y-m-d') }}" required>
+                            </div>
+                            <small class="text-muted">Minimum 30 days from today</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>Reasons for Moving <span class="text-danger">*</span></label>
+                            <textarea class="form-control" name="reason" rows="5"
+                                placeholder="Please state your reasons for vacating..." required></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-primary"
+                            onclick="return confirm('Are you sure you want to submit this notice? Management will be notified immediately.')">
+                            <i class="fe fe-send"></i> Submit Notice
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
     </div>
-
-    <form method="POST" action="{{ route('tenant.notice.submit') }}">
-        @csrf
-        <div class="mb-3">
-            <label class="form-label">Intended Vacating Date</label>
-            <input type="date" name="vacating_date" class="form-control"
-                min="{{ now()->addDays(30)->format('Y-m-d') }}" required>
-            <small class="text-muted">Minimum 30 days from today</small>
-        </div>
-        <div class="mb-4">
-            <label class="form-label">Reason for Vacating</label>
-            <textarea name="reason" class="form-control" rows="4" required
-                placeholder="Please provide your reason for vacating..."></textarea>
-        </div>
-        <button type="submit" class="btn btn-danger w-100"
-            onclick="return confirm('Are you sure you want to submit a vacating notice? This will notify management immediately.')">
-            <i class="fas fa-paper-plane"></i> Submit Vacating Notice
-        </button>
-    </form>
-</div>
-</div>
 </div>
 @endsection

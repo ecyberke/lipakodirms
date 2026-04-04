@@ -567,8 +567,17 @@ Route::prefix('tenant-portal')->name('tenant.')->group(function () {
     Route::middleware('auth:tenant')->group(function () {
         Route::get('/dashboard', 'Tenant\TenantDashboardController@index')->name('dashboard');
         Route::get('/invoices', 'Tenant\TenantDashboardController@invoices')->name('invoices');
-        Route::get('/service-requests', 'Tenant\TenantDashboardController@serviceRequests')->name('service-requests');
+        Route::get('/service-requests', 'Tenant\TenantDashboardController@createServiceRequest')->name('service-requests');
+        Route::get('/payments', 'Tenant\TenantDashboardController@payments')->name('payments');
+        Route::get('/api/payments', 'ApiController@getTenantPayments')->name('api.tenant.payments');
+        Route::get('/receipt/{id}', 'Tenant\TenantDashboardController@downloadReceipt')->name('receipt');
+        Route::get('/invoice/{id}', 'Tenant\TenantInvoiceController@show')->name('invoice.show');
+        Route::get('/statement', 'Tenant\TenantStatementController@index')->name('statement');
         Route::post('/service-requests', 'Tenant\TenantDashboardController@submitServiceRequest')->name('service-requests.store');
+        Route::get('/service-requests/list', 'Tenant\TenantDashboardController@serviceRequests')->name('service-requests.list');
+        Route::get('/api/service-requests', 'ApiController@getTenantServiceRequests')->name('api.service-requests');
+        Route::post('/service-requests/{id}/resolve', 'Tenant\TenantDashboardController@markResolved')->name('service-requests.resolve');
+        Route::get('/service-requests/create', 'Tenant\TenantDashboardController@createServiceRequest')->name('service-requests.create');
         Route::get('/notice', function() {
             $org = config('app.organization');
             return view('tenant.notice', compact('org'));
@@ -608,3 +617,5 @@ Route::get('/suspended', function() {
     $org = config('app.organization');
     return view('suspended', compact('org'));
 })->name('suspended');
+
+// Tenant portal API

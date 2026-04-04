@@ -1545,4 +1545,9 @@ $total_agency_bills = $agency_bills->sum('total_owned');
         return $pdf->download($fl_nm);
        
     }
+    // Public wrapper for tenant portal access
+    public function getTenantDataPublic($tenant_id, $dates = [])
+    {
+        return $this->getTenantData($tenant_id, $dates);
+    }
 }

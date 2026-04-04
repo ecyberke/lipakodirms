@@ -60,16 +60,17 @@
 						<li class="slide">
 							<a class="side-menu__item" data-toggle="slide" href="<?php echo e(url('/' . $page='#')); ?>">
 							<svg class="side-menu__icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
-							<span class="side-menu__label">Bills</span><i class="angle fa fa-angle-right"></i></a>
+							<span class="side-menu__label">Expenses</span><i class="angle fa fa-angle-right"></i></a>
 							<ul class="slide-menu">
-							
-								<li><a href="<?php echo e(route('bill.create')); ?>" class="slide-item"> Add Bill</a></li>
-							
-								<li><a href="<?php echo e(route('bill.pay')); ?>" class="slide-item"> Pay Bill</a></li>
-								<li><a href="<?php echo e(route('payowners.list')); ?>" class="slide-item"> List Bills</a></li>
-								<?php if(Auth::user()->is_admin==2 ): ?>
-								<li><a href="<?php echo e(route('bill.payments')); ?>" class="slide-item">List Payments</a></li>
-								<li><a href="<?php echo e(route('bill.paymentlist')); ?>" class="slide-item">Approve Payments</a></li><?php endif; ?>
+							    
+								<li><a href="<?php echo e(route('bill.create')); ?>" class="slide-item"> Add Expense</a></li>
+						
+							      <li><a href="<?php echo e(route('payowners.list')); ?>" class="slide-item"> List Expenses</a></li>
+								<!--<li><a href="<?php echo e(route('bill.pay')); ?>" class="slide-item"> Pay Bill</a></li>-->
+								
+								<?php if(Auth::user()->is_admin==2 || Auth::user()->is_admin==1): ?>
+								<li><a href="<?php echo e(route('bill.approve')); ?>" class="slide-item">Approve Expenses</a></li>
+								<?php endif; ?>
 								
 							</ul>
 						</li>
@@ -78,11 +79,11 @@
 							<svg class="side-menu__icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
 							<span class="side-menu__label">Invoices</span><i class="angle fa fa-angle-right"></i></a>
 							<ul class="slide-menu">
-								<li><a href="<?php echo e(route('manualinvoice.create')); ?>" class="slide-item">Add Invoice</a></li>
+								<!--<li><a href="<?php echo e(route('manualinvoice.create')); ?>" class="slide-item">Add Invoice</a></li>-->
 							
 								<li><a href="<?php echo e(route('manualinvoice.pay')); ?>" class="slide-item">Pay Invoice</a></li>
 								<li><a href="<?php echo e(route('manualinvoice.list')); ?>" class="slide-item"> List Invoices</a></li>
-								<?php if(Auth::user()->is_admin==2 ): ?>
+								<?php if(Auth::user()->is_admin==2 || Auth::user()->is_admin==1): ?>
 								<li><a href="<?php echo e(route('manualinvoice.payments')); ?>" class="slide-item">List Payments</a></li>
 								<li><a href="<?php echo e(route('manualinvoice.paymentlist')); ?>" class="slide-item">Approve Payments</a></li><?php endif; ?>
 							
@@ -96,11 +97,26 @@
 							<ul class="slide-menu">
 								<li><a href="<?php echo e(route('servicerequests.create')); ?>" class="slide-item"> Add Request</a></li>
 								<li><a href="<?php echo e(route('servicerequests.index')); ?>" class="slide-item"> List Requests</a></li>
+								<li><a href="<?php echo e(route('bill.property_bills')); ?>" class="slide-item"> Add Property Bill</a></li>
+									<li><a href="<?php echo e(route('payowners.list')); ?>" class="slide-item"> List Bills</a></li>
+									<li><a href="<?php echo e(route('billscategories.create')); ?>" class="slide-item"> Add bill Categories</a></li>
+							
+							</ul>
+						</li>
+							<li class="slide">
+							<a class="side-menu__item" data-toggle="slide" href="<?php echo e(url('/' . $page='#')); ?>">
+						<svg class="side-menu__icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+							<span class="side-menu__label">Service Providers</span><i class="angle fa fa-angle-right"></i></a>
+							<ul class="slide-menu">
+								<li><a href="<?php echo e(route('service-providers.create')); ?>" class="slide-item"> Add Service Provider</a></li>
+								<li><a href="<?php echo e(route('service-providers.index')); ?>" class="slide-item"> List Service Provider</a></li>
+									
+								
 							
 							</ul>
 						</li>
 						
-						<?php if(Auth::user()->is_admin==2 ): ?>
+						<?php if(Auth::user()->is_admin==2 || Auth::user()->is_admin==1): ?>
 						<li class="slide">
 							<a class="side-menu__item"  href="<?php echo e(route('sms.custom')); ?>">
 							<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="side-menu__icon"><path d="M17.388,4.751H2.613c-0.213,0-0.389,0.175-0.389,0.389v9.72c0,0.216,0.175,0.389,0.389,0.389h14.775c0.214,0,0.389-0.173,0.389-0.389v-9.72C17.776,4.926,17.602,4.751,17.388,4.751 M16.448,5.53L10,11.984L3.552,5.53H16.448zM3.002,6.081l3.921,3.925l-3.921,3.925V6.081z M3.56,14.471l3.914-3.916l2.253,2.253c0.153,0.153,0.395,0.153,0.548,0l2.253-2.253l3.913,3.916H3.56z M16.999,13.931l-3.921-3.925l3.921-3.925V13.931z"></path></svg>
@@ -121,7 +137,7 @@
 							
 						<!--</li>-->
 						
-						<?php if(Auth::user()->is_admin==2 ): ?>
+						<?php if(Auth::user()->is_admin==2 || Auth::user()->is_admin==1): ?>
 						<li class="slide">
 							<a class="side-menu__item"  href="<?php echo e(route('softdeletes.index')); ?>">
 							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="side-menu__icon"><path d="M17.114,3.923h-4.589V2.427c0-0.252-0.207-0.459-0.46-0.459H7.935c-0.252,0-0.459,0.207-0.459,0.459v1.496h-4.59c-0.252,0-0.459,0.205-0.459,0.459c0,0.252,0.207,0.459,0.459,0.459h1.51v12.732c0,0.252,0.207,0.459,0.459,0.459h10.29c0.254,0,0.459-0.207,0.459-0.459V4.841h1.511c0.252,0,0.459-0.207,0.459-0.459C17.573,4.127,17.366,3.923,17.114,3.923M8.394,2.886h3.214v0.918H8.394V2.886z M14.686,17.114H5.314V4.841h9.372V17.114z "></path><path d="M12.525,7.306v7.344c0,0.252-0.207,0.459-0.46,0.459s-0.458-0.207-0.458-0.459V7.306c0-0.254,0.205-0.459,0.458-0.459S12.525,7.051,12.525,7.306M8.394,7.306v7.344c0,0.252-0.207,0.459-0.459,0.459s-0.459-0.207-0.459-0.459V7.306c0-0.254,0.207-0.459,0.459-0.459S8.394,7.051,8.394,7.306"></path></svg>
@@ -140,9 +156,9 @@
 							<span class="side-menu__label">List Logs</span></a>
 								
 							
-						</li><br><?php endif; ?>
+						</li><br>
 						
-							<li class="menutitles">Tenants</li>
+						<li class="menutitles">Tenants</li>
 						<li class="slide">
 							<a class="side-menu__item"  href="<?php echo e(route('tenant.create')); ?>">
 							<svg class="side-menu__icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path fill="none" d="M13.388,9.624h-3.011v-3.01c0-0.208-0.168-0.377-0.376-0.377S9.624,6.405,9.624,6.613v3.01H6.613c-0.208,0-0.376,0.168-0.376,0.376s0.168,0.376,0.376,0.376h3.011v3.01c0,0.208,0.168,0.378,0.376,0.378s0.376-0.17,0.376-0.378v-3.01h3.011c0.207,0,0.377-0.168,0.377-0.376S13.595,9.624,13.388,9.624z M10,1.344c-4.781,0-8.656,3.875-8.656,8.656c0,4.781,3.875,8.656,8.656,8.656c4.781,0,8.656-3.875,8.656-8.656C18.656,5.219,14.781,1.344,10,1.344z M10,17.903c-4.365,0-7.904-3.538-7.904-7.903S5.635,2.096,10,2.096S17.903,5.635,17.903,10S14.365,17.903,10,17.903z"></path></svg>
@@ -161,18 +177,11 @@
 							<span class="side-menu__label">List Tenants</span></a>
 						
 						</li>
-							<li class="slide">
-							<a class="side-menu__item" data-toggle="slide" href="<?php echo e(url('/' . $page='#')); ?>">
-							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="side-menu__icon"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
-							<span class="side-menu__label">House View</span><i class="angle fa fa-angle-right"></i></a>
-							<ul class="slide-menu">
-								<li><a href="<?php echo e(route('houseviewing.create')); ?>" class="slide-item"> Add Prospective Tenant</a></li>
-								<li><a href="<?php echo e(route('houseviewing.list')); ?>" class="slide-item"> List Prospective Tenant</a></li>
-								<li><a href="<?php echo e(route('houseviewing.assign_room')); ?>" class="slide-item"> Assign Prospective Tenant House</a></li>
-							
-							</ul>
-						</li>
+						
 						<br>
+					
+						
+					
 						<li class="menutitles">Property Owners</li>
 						<li class="slide">
 							<a class="side-menu__item"  href="<?php echo e(route('landlord.create')); ?>">
@@ -185,7 +194,20 @@
 							<svg class="side-menu__icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path fill="none" d="M2.25,12.584c-0.713,0-1.292,0.578-1.292,1.291s0.579,1.291,1.292,1.291c0.713,0,1.292-0.578,1.292-1.291S2.963,12.584,2.25,12.584z M2.25,14.307c-0.238,0-0.43-0.193-0.43-0.432s0.192-0.432,0.43-0.432c0.238,0,0.431,0.193,0.431,0.432S2.488,14.307,2.25,14.307z M5.694,6.555H18.61c0.237,0,0.431-0.191,0.431-0.43s-0.193-0.431-0.431-0.431H5.694c-0.238,0-0.43,0.192-0.43,0.431S5.457,6.555,5.694,6.555z M2.25,8.708c-0.713,0-1.292,0.578-1.292,1.291c0,0.715,0.579,1.292,1.292,1.292c0.713,0,1.292-0.577,1.292-1.292C3.542,9.287,2.963,8.708,2.25,8.708z M2.25,10.43c-0.238,0-0.43-0.192-0.43-0.431c0-0.237,0.192-0.43,0.43-0.43c0.238,0,0.431,0.192,0.431,0.43C2.681,10.238,2.488,10.43,2.25,10.43z M18.61,9.57H5.694c-0.238,0-0.43,0.192-0.43,0.43c0,0.238,0.192,0.431,0.43,0.431H18.61c0.237,0,0.431-0.192,0.431-0.431C19.041,9.762,18.848,9.57,18.61,9.57z M18.61,13.443H5.694c-0.238,0-0.43,0.193-0.43,0.432s0.192,0.432,0.43,0.432H18.61c0.237,0,0.431-0.193,0.431-0.432S18.848,13.443,18.61,13.443z M2.25,4.833c-0.713,0-1.292,0.578-1.292,1.292c0,0.713,0.579,1.291,1.292,1.291c0.713,0,1.292-0.578,1.292-1.291C3.542,5.412,2.963,4.833,2.25,4.833z M2.25,6.555c-0.238,0-0.43-0.191-0.43-0.43s0.192-0.431,0.43-0.431c0.238,0,0.431,0.192,0.431,0.431S2.488,6.555,2.25,6.555z"></path></svg>
 							<span class="side-menu__label">List Owners</span></a>
 							
+						</li>
+						<li class="slide">
+							<a class="side-menu__item"  href="<?php echo e(route('bill.remittence')); ?>">
+							<svg class="side-menu__icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path fill="none" d="M2.25,12.584c-0.713,0-1.292,0.578-1.292,1.291s0.579,1.291,1.292,1.291c0.713,0,1.292-0.578,1.292-1.291S2.963,12.584,2.25,12.584z M2.25,14.307c-0.238,0-0.43-0.193-0.43-0.432s0.192-0.432,0.43-0.432c0.238,0,0.431,0.193,0.431,0.432S2.488,14.307,2.25,14.307z M5.694,6.555H18.61c0.237,0,0.431-0.191,0.431-0.43s-0.193-0.431-0.431-0.431H5.694c-0.238,0-0.43,0.192-0.43,0.431S5.457,6.555,5.694,6.555z M2.25,8.708c-0.713,0-1.292,0.578-1.292,1.291c0,0.715,0.579,1.292,1.292,1.292c0.713,0,1.292-0.577,1.292-1.292C3.542,9.287,2.963,8.708,2.25,8.708z M2.25,10.43c-0.238,0-0.43-0.192-0.43-0.431c0-0.237,0.192-0.43,0.43-0.43c0.238,0,0.431,0.192,0.431,0.43C2.681,10.238,2.488,10.43,2.25,10.43z M18.61,9.57H5.694c-0.238,0-0.43,0.192-0.43,0.43c0,0.238,0.192,0.431,0.43,0.431H18.61c0.237,0,0.431-0.192,0.431-0.431C19.041,9.762,18.848,9.57,18.61,9.57z M18.61,13.443H5.694c-0.238,0-0.43,0.193-0.43,0.432s0.192,0.432,0.43,0.432H18.61c0.237,0,0.431-0.193,0.431-0.432S18.848,13.443,18.61,13.443z M2.25,4.833c-0.713,0-1.292,0.578-1.292,1.292c0,0.713,0.579,1.291,1.292,1.291c0.713,0,1.292-0.578,1.292-1.291C3.542,5.412,2.963,4.833,2.25,4.833z M2.25,6.555c-0.238,0-0.43-0.191-0.43-0.43s0.192-0.431,0.43-0.431c0.238,0,0.431,0.192,0.431,0.431S2.488,6.555,2.25,6.555z"></path></svg>
+							<span class="side-menu__label">Remmitance</span></a>
+						
+						</li>
+						<li class="slide">
+							<a class="side-menu__item"  href="<?php echo e(route('payowners.list')); ?>">
+							<svg class="side-menu__icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path fill="none" d="M2.25,12.584c-0.713,0-1.292,0.578-1.292,1.291s0.579,1.291,1.292,1.291c0.713,0,1.292-0.578,1.292-1.291S2.963,12.584,2.25,12.584z M2.25,14.307c-0.238,0-0.43-0.193-0.43-0.432s0.192-0.432,0.43-0.432c0.238,0,0.431,0.193,0.431,0.432S2.488,14.307,2.25,14.307z M5.694,6.555H18.61c0.237,0,0.431-0.191,0.431-0.43s-0.193-0.431-0.431-0.431H5.694c-0.238,0-0.43,0.192-0.43,0.431S5.457,6.555,5.694,6.555z M2.25,8.708c-0.713,0-1.292,0.578-1.292,1.291c0,0.715,0.579,1.292,1.292,1.292c0.713,0,1.292-0.577,1.292-1.292C3.542,9.287,2.963,8.708,2.25,8.708z M2.25,10.43c-0.238,0-0.43-0.192-0.43-0.431c0-0.237,0.192-0.43,0.43-0.43c0.238,0,0.431,0.192,0.431,0.43C2.681,10.238,2.488,10.43,2.25,10.43z M18.61,9.57H5.694c-0.238,0-0.43,0.192-0.43,0.43c0,0.238,0.192,0.431,0.43,0.431H18.61c0.237,0,0.431-0.192,0.431-0.431C19.041,9.762,18.848,9.57,18.61,9.57z M18.61,13.443H5.694c-0.238,0-0.43,0.193-0.43,0.432s0.192,0.432,0.43,0.432H18.61c0.237,0,0.431-0.193,0.431-0.432S18.848,13.443,18.61,13.443z M2.25,4.833c-0.713,0-1.292,0.578-1.292,1.292c0,0.713,0.579,1.291,1.292,1.291c0.713,0,1.292-0.578,1.292-1.291C3.542,5.412,2.963,4.833,2.25,4.833z M2.25,6.555c-0.238,0-0.43-0.191-0.43-0.43s0.192-0.431,0.43-0.431c0.238,0,0.431,0.192,0.431,0.431S2.488,6.555,2.25,6.555z"></path></svg>
+							<span class="side-menu__label">List Bills</span></a>
+						
 						</li><br>
+						<br>
 						<li class="menutitles">Properties</li>
 						<li class="slide">
 							<a class="side-menu__item"  href="<?php echo e(route('apartment.create')); ?>">
@@ -205,6 +227,8 @@
 							<span class="side-menu__label">List Properties</span></a>
 						
 						</li>
+					
+						
 						<li class="slide">
 							<a class="side-menu__item"  href="<?php echo e(route('house.list')); ?>">
 							<svg class="side-menu__icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path fill="none" d="M2.25,12.584c-0.713,0-1.292,0.578-1.292,1.291s0.579,1.291,1.292,1.291c0.713,0,1.292-0.578,1.292-1.291S2.963,12.584,2.25,12.584z M2.25,14.307c-0.238,0-0.43-0.193-0.43-0.432s0.192-0.432,0.43-0.432c0.238,0,0.431,0.193,0.431,0.432S2.488,14.307,2.25,14.307z M5.694,6.555H18.61c0.237,0,0.431-0.191,0.431-0.43s-0.193-0.431-0.431-0.431H5.694c-0.238,0-0.43,0.192-0.43,0.431S5.457,6.555,5.694,6.555z M2.25,8.708c-0.713,0-1.292,0.578-1.292,1.291c0,0.715,0.579,1.292,1.292,1.292c0.713,0,1.292-0.577,1.292-1.292C3.542,9.287,2.963,8.708,2.25,8.708z M2.25,10.43c-0.238,0-0.43-0.192-0.43-0.431c0-0.237,0.192-0.43,0.43-0.43c0.238,0,0.431,0.192,0.431,0.43C2.681,10.238,2.488,10.43,2.25,10.43z M18.61,9.57H5.694c-0.238,0-0.43,0.192-0.43,0.43c0,0.238,0.192,0.431,0.43,0.431H18.61c0.237,0,0.431-0.192,0.431-0.431C19.041,9.762,18.848,9.57,18.61,9.57z M18.61,13.443H5.694c-0.238,0-0.43,0.193-0.43,0.432s0.192,0.432,0.43,0.432H18.61c0.237,0,0.431-0.193,0.431-0.432S18.848,13.443,18.61,13.443z M2.25,4.833c-0.713,0-1.292,0.578-1.292,1.292c0,0.713,0.579,1.291,1.292,1.291c0.713,0,1.292-0.578,1.292-1.291C3.542,5.412,2.963,4.833,2.25,4.833z M2.25,6.555c-0.238,0-0.43-0.191-0.43-0.43s0.192-0.431,0.43-0.431c0.238,0,0.431,0.192,0.431,0.431S2.488,6.555,2.25,6.555z"></path></svg>
@@ -232,28 +256,37 @@
 							    <?php endif; ?>
 							</ul>
 						</li>
-						<?php if(Auth::user()->is_admin==2 ): ?>
+					    	<?php if(Auth::user()->is_admin==2 || Auth::user()->is_admin==1 ): ?>
 						<li class="slide">
 							<a class="side-menu__item" data-toggle="slide" href="<?php echo e(url('/' . $page='#')); ?>">
 							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="side-menu__icon"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
 							<span class="side-menu__label">Owners</span><i class="angle fa fa-angle-right"></i></a>
 							<ul class="slide-menu">
+							    <?php if(Auth::user()->is_admin==2 || Auth::user()->is_admin==1): ?>
 								<li><a href="<?php echo e(route('report.landlordform')); ?>" class="slide-item"> Get Statement</a></li>
-								<?php if(Auth::user()->is_admin==2 || Auth::user()->is_admin==1 ): ?>
-								<li><a href="<?php echo e(route('report.property_status')); ?>" class="slide-item"> Property Status</a></li>
-								<li><a href="<?php echo e(route('report.prop_income')); ?>" class="slide-item"> All Properties Income</a></li>
-								<!--<li><a href="<?php echo e(route('report.month_income')); ?>" class="slide-item"> Monthly Properties Income</a></li>-->
+								<li><a href="<?php echo e(route('report.property_income_expense')); ?>" class="slide-item"> Properties Income Expense</a></li>
+								<li><a href="<?php echo e(route('report.occupancy_expense')); ?>" class="slide-item"> Maintenance</a></li>
 								<?php endif; ?>
+							
+								<li><a href="<?php echo e(route('report.property_status')); ?>" class="slide-item"> Property Status</a></li>
+								<li><a href="<?php echo e(route('report.rent')); ?>" class="slide-item"> Rent Report</a></li>
+								<li><a href="<?php echo e(route('report.prop_income')); ?>" class="slide-item"> All Properties Income</a></li>
+								
+								<!--<li><a href="<?php echo e(route('report.month_income')); ?>" class="slide-item"> Monthly Properties Income</a></li>-->
+								
 									<li><a href="<?php echo e(route('report.vacant_report')); ?>" class="slide-item"> Vacant Houses</a></li>
 									<li><a href="<?php echo e(route('report.occupied_report')); ?>" class="slide-item"> Occupied Houses</a></li>
 									<li><a href="<?php echo e(route('report.notice_report')); ?>" class="slide-item"> Houses on Notice</a></li>
-									<!--<li><a href="<?php echo e(route('report.all_properties')); ?>" class="slide-item"> All Properties</a></li>-->
-									<!--<li><a href="<?php echo e(route('report.all_owners')); ?>" class="slide-item"> All Owners</a></li>-->
-									<!--<li><a href="<?php echo e(route('report.all_houses')); ?>" class="slide-item"> All Houses</a></li>-->
-								
+									   <?php if(Auth::user()->is_admin==2 || Auth::user()->is_admin==1): ?>
+									<li><a href="<?php echo e(route('report.all_properties')); ?>" class="slide-item"> All Properties</a></li>
+									<li><a href="<?php echo e(route('report.all_owners')); ?>" class="slide-item"> All Owners</a></li>
+									<li><a href="<?php echo e(route('report.all_houses')); ?>" class="slide-item"> All Houses</a></li>
+							          <?php endif; ?>
 							
 							</ul>
 						</li>
+						<?php endif; ?>
+						 <?php if(Auth::user()->is_admin==2 || Auth::user()->is_admin==1): ?>
 						<li class="slide">
 						    <a class="side-menu__item" data-toggle="slide" href="<?php echo e(url('/' . $page='#')); ?>">
 							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="side-menu__icon"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path></svg>
@@ -261,12 +294,12 @@
 							<ul class="slide-menu">
 								<li><a href="<?php echo e(route('report.agencyform')); ?>" class="slide-item">Get Statement</a></li>
 								<li><a href="<?php echo e(route('report.agency_status')); ?>" class="slide-item"> Agency Status</a></li>
-								<!--<li><a href="<?php echo e(route('report.houses_reports')); ?>" class="slide-item"> More Reports</a></li>-->
+								<li><a href="<?php echo e(route('report.agency_income_expense')); ?>" class="slide-item">Agency Income Expense</a></li>
 								<!--<li><a href="<?php echo e(route('report.preprintedform')); ?>" class="slide-item" target="blank"> Preprinted form</a></li>-->
 							
 							</ul>
 						</li><?php endif; ?><br>
-					    <?php if(Auth::user()->is_admin==2  ): ?>
+					    <?php if(Auth::user()->is_admin==2 || Auth::user()->is_admin==1): ?>
 						<li class="menutitles">Users</li>
 						<li class="slide">
 							<a class="side-menu__item"  href="<?php echo e(route('admin.create')); ?>">
@@ -317,6 +350,7 @@
 					<!--		</div>-->
 					<!--	</div>-->
 					<!--</div>-->
+                            <?php endif; ?>
 				</aside>
 <!--aside closed-->
 <?php /**PATH /home/ecyberco/domains/lipakodi.ecyber.co.ke/public_html/rms/resources/views/layouts/side-menu.blade.php ENDPATH**/ ?>

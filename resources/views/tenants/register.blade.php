@@ -117,7 +117,7 @@
                                         <label>Full Names <span class="text-danger">*</span></label>
                                         <div>
                                             <input type="text" class="form-control" name="full_name"
-                                                value="">
+                                                value="" required>
                                         </div>
                                     </div>
                                 </div>
@@ -126,7 +126,7 @@
                                         <label>Phone Number<span class="text-danger">*</span></label>
                                         <div>
                                             <input type="text" class="form-control" name="phone" pattern=".{12,}"   title="Phone number must begin with 254 and contain 12 characters"
-                                            maxlength="12">
+                                            maxlength="12" required>
                                                
 
                                         </div>
@@ -143,9 +143,9 @@
                                 
                                 <div class="col-sm-4">
                                     <div class="form-group">
-                                        <label>National ID Number / Passport </label>
+                                        <label>National ID Number / Passport <span class="text-danger">*</span></label>
                                         <div>
-                                            <input type="text" class="form-control" name="id_number" value="" id="passport">
+                                            <input type="text" class="form-control" name="id_number" value="" id="passport" required>
                                         </div>
                                     </div>
                                 </div>

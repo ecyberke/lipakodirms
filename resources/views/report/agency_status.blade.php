@@ -4,6 +4,8 @@
 <link href="{{URL::asset('assets/plugins/select2/select2.min.css')}}" rel="stylesheet" />
 <!-- File Uploads css -->
 <link href="{{URL::asset('assets/plugins/fancyuploder/fancy_fileupload.css')}}" rel="stylesheet" />
+<link href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" rel="stylesheet" />
+
 <!-- Time picker css -->
 <link href="{{URL::asset('assets/plugins/time-picker/jquery.timepicker.css')}}" rel="stylesheet" />
 <!-- Date Picker css -->
@@ -117,7 +119,8 @@
                         </div>
                     </div>
                     <div class="row table-responsive   ">
-                        <table class="table dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 500px; width: 100%;">
+                        <table id="agency-status-table" class="table dt-responsive nowrap" style="width: 100%;">
+                        <!--<table class="table dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 500px; width: 100%;">-->
                             <thead>
                               <tr>
                                    <th>Acc No</th>
@@ -149,8 +152,25 @@
                                 <td class="text-right">{{number_format($entry['balance'])}}</td>
                               </tr>
                               @endforeach
+                           
+                            </tbody>
+                          </table>
+                          <!--<table id="agency-status-table" class="table dt-responsive nowrap" style="width: 100%;">-->
+                        <table class="table dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 500px; width: 100%;">
+                             <thead>
                               <tr>
-                                <th colspan="4">Totals</th>
+                               <th colspan="4">Totals</th>
+                                <th class="text-right">Expected Monthly Rent</th>
+                                <th class="text-right">Total Expected</th>
+                                <th class="text-right">Total Paid</th>
+                                <th class="text-right">Arrears</th>
+                                <th class="text-right">Prepayment</th>
+                                <th class="text-right">Outstanding Balance</th>
+                              </tr>
+                            </thead>
+                             
+                              <tr>
+                                <th colspan="4"> </th>
                                 <th class="text-right">{{number_format($totals['total_rent'])}}</th>
                                 <th class="text-right">{{number_format($totals['total_payable'])}}</th>
                                 <th class="text-right">{{number_format($totals['total_paid_in'])}}</th>
@@ -188,6 +208,8 @@
 @section('js')
 <!--Select2 js -->
 <script src="{{URL::asset('assets/plugins/select2/select2.full.min.js')}}"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
 <script src="{{URL::asset('assets/js/select2.js')}}"></script>
 <!-- Timepicker js -->
 <script src="{{URL::asset('assets/plugins/time-picker/jquery.timepicker.js')}}"></script>
@@ -222,6 +244,10 @@
 <script src="{{URL::asset('assets/js/formelementadvnced.js')}}"></script>
 <script src="{{URL::asset('assets/js/form-elements.js')}}"></script>
 <script src="{{URL::asset('assets/js/file-upload.js')}}"></script>
+
+
+
+
 <script>
     $('#apartment_id').change(function () {
         var id = $(this).val();
@@ -309,5 +335,14 @@
 
     });
 
+</script>
+<script>
+    $(document).ready(function() {
+        $('#agency-status-table').DataTable({
+            pageLength: 10,
+            lengthMenu: [5, 10, 25, 50, 100],
+            responsive: true,
+        });
+    });
 </script>
 @endsection

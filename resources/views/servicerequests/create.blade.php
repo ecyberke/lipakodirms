@@ -2,6 +2,7 @@
 @section('css')
 <!-- Select2 css -->
 <link href="{{URL::asset('assets/plugins/select2/select2.min.css')}}" rel="stylesheet" />
+<meta name="csrf-token" content="{{ csrf_token() }}">
 <!-- File Uploads css -->
 <link href="{{URL::asset('assets/plugins/fancyuploder/fancy_fileupload.css')}}" rel="stylesheet" />
 <!-- Time picker css -->
@@ -42,23 +43,19 @@
 						<!-- Row -->
 						<div class="row">
 							<div class="col-lg-12 col-md-12">
-	<form action="{{ route('servicerequests.store')}}" method="post" class="card">
-        @csrf
-        
-        
+	<form method="POST" action="{{ route('servicerequests.store') }}" class="card">
+    @csrf
         <div class="row">
             {{ csrf_field() }}
 
             <div class="col-12">
                 <div class="">
                     <div class="card-body">
-                        {{-- <h4 class="mt-0 header-title mb-4">Important Details</h4> --}}
+  
+        @include('includes.messages')
 
-                        {{-- <hr class="mt-2 mb-4"> --}}
-                        @include('includes.messages')
-                       
-                        
-                            <div class="row">
+        <!-- Select Property -->
+        <div class="row">
                                 <div class="col-sm-6">
                                 <label>Select Property <span class="text-danger">*</span></label>
                                 <select class="form-control select2-show-search" style="width: 100%"  id="apartment_id" name="apartment_id">
@@ -75,68 +72,98 @@
                                 </div>
                                 <div class="col-sm-6">
                                 <label>Select House</label>
-                                <select class="form-control select2-show-search" style="width: 100%"  name="house_id" >
-
-                                </select>
+                               <select class="form-control select2-show-search"  style="width: 100%" name="house_id" id="houses_select" required>
+                    <option selected disabled>-----Select Property First-----</option>
+                    
+                </select>
                                 </div>
                                 </div> <br>
-                            
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                    <label>Select Tenant  </label>
-                                    <select class="form-control select2-show-search" style="width: 100%"  name="tenant_id">
-        
-                                        <option selected disabled>-----Select-----</option>
-                                        @forelse ($tenants as $tenant=>$key)
-                                            <option value="{{$key}}">{{ $tenant}}</option>
-                                            @empty
-        
-                                            @endforelse
-        
-                                    </select>
-                                    </div></div> <br>
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                    <label>Service Request <span class="text-danger">*</span></label>
-                                    <textarea name="service_request" class="form-control" rows="4" cols="66" ></textarea>
-                                    </div>
-                                    
-                                    </div> <br>
-                                    
-                                        
-                                       
-                                        
-                                        <input class="form-control" type="text" readonly name="status"
-                                        value="0" hidden>
-                                       
-                                        @if(Auth::user()->is_super )
-                                        <input class="form-control" type="text" readonly name="approval"
-                                        value="1" hidden>
-                                     
-                                        @else
-                                        <input class="form-control" type="text" readonly name="approval"
-                                        value="0" hidden>
-                                        
-                                        @endif
-                                        
-                                        
-                                        
-                        
-                        
+     
 
-                        <div class="row mb-4">
-                            <div class="col-sm-8">
-                                
-                               
-                                <button type="submit" class="btn btn-success waves-effect waves-light">Add Request</button></button>
-                            </div>
-                           
-                        </div>
-                    </div>
-                </div>
-            </div>            
+        <!-- Auto-filled Tenant -->
+        <div class="row">
+            <div class="col-sm-12">
+                <label>Tenant</label>
+                <input type="text" class="form-control" id="tenant-name-display" readonly>
+                <input type="hidden" name="tenant_id" id="tenant-id">
+            </div>
+        </div><br>
+
+        <!-- Service Requested -->
+        <div class="row">
+            <div class="col-sm-12">
+                <label>Service Requested <span class="text-danger">*</span></label>
+                <select name="service_type" class="form-control select2-show-search" required>
+                    <option selected disabled>-----Select-----</option>
+                    <option value="Plumbing">Plumbing</option>
+                    <option value="Electrical">Electrical</option>
+                    <option value="Sewerage">Sewerage</option>
+                    <option value="Carpentry">Carpentry</option>
+                </select>
+            </div>
+        </div><br>
+
+        <!-- Affected Area -->
+        <div class="row">
+            <div class="col-sm-12">
+                <label>Affected Area <span class="text-danger">*</span></label>
+                <select name="affected_area" class="form-control select2-show-search" id="affected_area_select" required>
+                    <option selected disabled>-----Select-----</option>
+                    <option value="Living Room">Living Room</option>
+                    <option value="Kitchen">Kitchen</option>
+                    <option value="Bedroom">Bedroom</option>
+                    <option value="Bathroom">Bathroom</option>
+                    <option value="Toilet/Bathroom">Toilet/Bathroom</option>
+                    <option value="Roofing">Roofing</option>
+                    <option value="Walls">Walls</option>
+                    <option value="Whole House">Whole House</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+        </div><br>
+
+        <!-- Affected Area (Other Input) -->
+        <!--<div class="row" id="other_area_row" style="display: none;">-->
+        <!--    <div class="col-sm-12">-->
+        <!--        <label>Specify Affected Area</label>-->
+        <!--        <input type="text" name="affected_area_other" id="affected_area_other_input" class="form-control">-->
+        <!--    </div>-->
+        <!--</div><br>-->
+
+        <!-- Description -->
+        <div class="row">
+            <div class="col-sm-12">
+                <label>Details<span class="text-danger">*</span></label>
+                <input type="text" name="service_request"  class="form-control">
+            </div>
+        </div><br>
+         <div class="row">
+            <div class="col-sm-12">
+                <label>Priority <span class="text-danger">*</span></label>
+                <select name="priority" class="form-control select2-show-search" required>
+                    <option selected disabled>-----Select-----</option>
+                    <option value="1">Urgent</option>
+                    <option value="2">Not Urgent</option>
+                </select>
+            </div>
+        </div><br>
+        
+
+        <!-- Hidden Status and Approval -->
+        <input type="hidden" name="status" value="0">
+        <input type="hidden" name="approval" value="{{ Auth::user()->is_super ? '1' : '0' }}">
+
+        <!-- Submit -->
+        <div class="row mb-4">
+            <div class="col-sm-8">
+                <button type="submit" class="btn btn-success">Add Request</button>
+            </div>
         </div>
-    </form>
+    </div>
+        </div>  </div>
+        </div>
+</form>
+
 							
 
 								
@@ -195,6 +222,7 @@
                 $('#section-bills').html('');
                 $("select[name='house_id']").html('');
                 $("select[name='house_id']").html(data.options);
+                 $("select[name='house_id']").append('<option value="Common Amenity">Common Amenity</option>');
             },
             error: function () {
                 alert("error!!!!");
@@ -217,7 +245,7 @@
                 $("select[name='full_name']").html(data.options);
             },
             error: function () {
-                alert("error!!!!");
+                alert("Note: No Tenant is available in common amenity selection");
             }
         });
 
@@ -274,5 +302,48 @@
     $('.js-example-basic-single').select2();
 });
 
+</script>
+<script>
+    // Fetch tenant when house is selected
+    $('#houses_select').change(function () {
+    var id = $(this).val();
+    
+    // If 'Common Amenity' is selected
+    if (id === "Common Amenity") {
+        $('#tenant-name-display').val('');
+        $('#tenant-id').val('');
+        return; // Stop here, don't make the AJAX call
+    }
+
+    var token = $("input[name='_token']").val();
+
+    $.ajax({
+        url: "{!! route('ajax.house.tenant') !!}",
+        method: 'POST',
+        data: { 'id': id, '_token': token },
+        success: function (data) {
+            $('#house-rent').val('');
+            $('#house-rent').val(data.house_rent);
+            $('#tenant-name-display').val(data.tenant_name); // update this
+            $('#tenant-id').val(data.tenant_id); // update this
+        },
+        error: function () {
+            alert("No Tenant is fetched in common amenity selection");
+        }
+    });
+});
+
+
+    // Toggle Other Area Input
+    $('#affected_area_select').change(function () {
+        if ($(this).val() === 'Other') {
+            $('#other_area_row').show();
+            $('#affected_area_other_input').attr('required', true);
+        } else {
+            $('#other_area_row').hide();
+            $('#affected_area_other_input').val('');
+            $('#affected_area_other_input').removeAttr('required');
+        }
+    });
 </script>
 @endsection

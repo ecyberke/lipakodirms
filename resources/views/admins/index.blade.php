@@ -76,7 +76,7 @@
 									
 								</div>
 							</div>
-
+                             @if (Auth::user()->is_admin==2 )
 							<div class="col-xl-12 col-lg-6">
 								<div class="row">
 									<div class="col-xl-3 col-md-12 col-lg-12">
@@ -114,8 +114,8 @@
 											<div class="card-body">
 												<div class="row">
 													<div class="col">
-														<p class="mb-1">This Month's Total Expenses</p>
-															<h3 class="mb-0 font-weight-bold">Ksh.{{number_format($month_bill)  }}</h3>
+														<p class="mb-1">Outstanding This Month</p>
+															<h3 class="mb-0 font-weight-bold">Ksh.{{number_format($arrears_month)  }}</h3>
 													</div>
 													<div class="col col-auto">
 														<div id="spark3"></div>
@@ -129,7 +129,7 @@
 											<div class="card-body">
 												<div class="row">
 													<div class="col">
-														<p class="mb-1">Outstanding Balance</p>
+														<p class="mb-1">Total Outstanding Balance</p>
 														<h3 class="mb-0 font-weight-bold">Ksh.{{number_format($arrears)  }}</h3>
 													</div>
 													<div class="col col-auto">
@@ -141,6 +141,7 @@
 									</div>
 								</div>
 							</div>
+							@endif
 						</div>
 
 						<!--Row-->

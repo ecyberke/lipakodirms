@@ -64,7 +64,7 @@
                                 <!--<th class="text-right">Bills Paid</th>-->
                                 <th class="text-right">Deposit</th>
                                 <th class="text-right">Prepaid</th>
-                                <th class="text-right">Outstanding Balance</th>
+                                <th class="text-right">Balance</th>
                               </tr>
                             </thead>
                             <tbody>
@@ -90,7 +90,7 @@
                                   <th class="text-right text-bold">{{number_format($totals['total_paid_in'])}}</th>
                                   <th class="text-right text-bold">{{number_format($totals['total_carryforward'])}}</th>
                                   <th class="text-right text-bold">-</th>
-                                  <th class="text-right text-bold">{{number_format($totals['total_balance'])}}</th>
+                                  <th class="text-right text-bold">{{number_format($totals['total_payable'])}}</th>
                                 </tr>
                             </tbody>
                           </table>

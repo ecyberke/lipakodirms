@@ -71,6 +71,7 @@
                                 <select class="form-control select2-show-search" style="width: 100%"  name="apartment">
 
                                     <option selected disabled>-----Select-----</option>
+                                    <option value="0">All Properties</option>
                                     @forelse ($apartments as $apartment=>$key )
                                         <option value="{{$key}}">{{ $apartment}}</option>
                                         @empty

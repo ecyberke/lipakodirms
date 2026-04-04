@@ -76,7 +76,7 @@
                             
                                 
                                 <select class="form-control select2-show-search" style="width: 100%" name="apartment_id" id="apartment_id">
-                                    <option value="">--choose--</option>
+                                    <option >--choose--</option>
                                     <?php $__empty_1 = true; $__currentLoopData = $apartments; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $apartment=>$key): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                                     <option value="<?php echo e($key); ?>"><?php echo e($apartment); ?></option>
                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
@@ -145,64 +145,31 @@
                
                     
                     </div>
-                    </div>
-                    <hr>
-                    <h5>Monthly Bills</h5>
-                    <hr>
-                    <div class="row">
-                            <div class="col-sm-3">
-                            <label >Electricity</label>
-                            
-                           
-                                <input type="text" class="form-control" name="electricity_bill" >
-                                    
-                        </div>
-                        <div class="col-sm-3">
-                        <label >Water</label>
-                       
-                        
-                            <input type="text" class="form-control" name="water_bill">
-               
-                    
-                    </div>
-                    <div class="col-sm-3">
-                        <label >Litter Collection</label>
-                      
-                        
-                            <input type="text" class="form-control" name="litter_bill">
-               
-                    
-                    </div>
-                    <div class="col-sm-3">
-                        <label >Compound Maintenance</label>
-                 
-                        
-                            <input type="text" class="form-control" name="compound_bill">
-               
-                    
-                    </div>
-                    
                     </div><br>
+                
                     <div class="row">
-                            
-                            
-                    <div class="col-sm-6">
-                        <label >Security</label>
-                      
-                        
-                            <input type="text" class="form-control" name="security">
-               
+                         <div class="col-sm-4">
+                         <label >Statutory Fees</label>
+                          
+                           
+                         <input type="text" class="form-control" name="statutory" >
+                                    
+                         </div>
                     
+                         <div class="col-sm-4">
+                         <label >Service Charge</label>
+                          
+                           
+                         <input type="text" class="form-control" name="service_charge" >
+                                    
                     </div>
-                    <div class="col-sm-6">
-                        <label >Others</label>
-                 
-                        
-                            <input type="text" class="form-control" name="others">
-               
-                    
+                         <div class="col-sm-4">
+                         <label >Other Charges</label>
+                         <input type="text" class="form-control" name="other" >
+                                    
                     </div>
-                    </div><hr>
+                </div><br>
+              
                         
 
                         

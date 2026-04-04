@@ -77,7 +77,7 @@
                             {{-- <div   class="form-group form-focus select-focus"> --}}
                                 
                                 <select class="form-control select2-show-search" style="width: 100%" name="apartment_id" id="apartment_id">
-                                    <option value="">--choose--</option>
+                                    <option >--choose--</option>
                                     @forelse ($apartments as $apartment=>$key)
                                     <option value="{{$key}}">{{ $apartment }}</option>
                                     @empty
@@ -146,64 +146,31 @@
                
                     
                     </div>
-                    </div>
-                    <hr>
-                    <h5>Monthly Bills</h5>
-                    <hr>
-                    <div class="row">
-                            <div class="col-sm-3">
-                            <label >Electricity</label>
-                            {{-- <label for="id_label_single"  class="text-muted">House Type </label> --}}
-                           
-                                <input type="text" class="form-control" name="electricity_bill" >
-                                    
-                        </div>
-                        <div class="col-sm-3">
-                        <label >Water</label>
-                       
-                        
-                            <input type="text" class="form-control" name="water_bill">
-               
-                    
-                    </div>
-                    <div class="col-sm-3">
-                        <label >Litter Collection</label>
-                      
-                        
-                            <input type="text" class="form-control" name="litter_bill">
-               
-                    
-                    </div>
-                    <div class="col-sm-3">
-                        <label >Compound Maintenance</label>
-                 
-                        
-                            <input type="text" class="form-control" name="compound_bill">
-               
-                    
-                    </div>
-                    
                     </div><br>
+                
                     <div class="row">
-                            
-                            
-                    <div class="col-sm-6">
-                        <label >Security</label>
-                      
-                        
-                            <input type="text" class="form-control" name="security">
-               
+                         <div class="col-sm-4">
+                         <label >Statutory Fees</label>
+                          
+                           
+                         <input type="text" class="form-control" name="statutory" >
+                                    
+                         </div>
                     
+                         <div class="col-sm-4">
+                         <label >Service Charge</label>
+                          
+                           
+                         <input type="text" class="form-control" name="service_charge" >
+                                    
                     </div>
-                    <div class="col-sm-6">
-                        <label >Others</label>
-                 
-                        
-                            <input type="text" class="form-control" name="others">
-               
-                    
+                         <div class="col-sm-4">
+                         <label >Other Charges</label>
+                         <input type="text" class="form-control" name="other" >
+                                    
                     </div>
-                    </div><hr>
+                </div><br>
+              
                         
 
                         

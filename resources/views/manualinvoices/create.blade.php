@@ -63,8 +63,8 @@
 
                                 
                                 <option value="placement" selected>Placement Fee</option>
-                                <option value="management">Management Fee</option>
-                                <option value="viewing">Viewing Fee</option>
+                                <!--<option value="management">Management Fee</option>-->
+                                <!--<option value="viewing">Agency Fee</option>-->
                                 <option value="others">Others</option>
                                 
                            

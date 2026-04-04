@@ -1,12 +1,13 @@
 <!--app header-->
+
 						<div class="app-header header top-header">
 							<div class="container-fluid">
 								<div class="d-flex">
 									<a class="header-brand" href="#">
-										<img src="{{URL::asset('assets/images/lesa.png')}}" class="header-brand-img desktop-lgo" alt="Lipakodi Logo">
-										<img src="{{URL::asset('assets/images/lipakodi_main_logo.png')}}" class="header-brand-img dark-logo" alt="Lipakodi Logo">
-										<img src="{{URL::asset('assets/images/brand/favicon-1675497104.png')}}" class="header-brand-img mobile-logo" alt="Lipakodi Logo">
-										<img src="{{URL::asset('assets/images/brand/favicon-1675497104.png')}}" class="header-brand-img darkmobile-logo" alt="Lipakodi">
+										<img src="{{URL::asset('assets/images/lesa.png')}}" class="header-brand-img desktop-lgo" alt="Dashtic logo">
+										<img src="{{URL::asset('assets/images/les.png')}}" class="header-brand-img dark-logo" alt="Dashtic logo">
+										<img src="{{URL::asset('assets/images/les.png')}}" class="header-brand-img mobile-logo" alt="Dashtic logo">
+										<img src="{{URL::asset('assets/images/les.png')}}" class="header-brand-img darkmobile-logo" alt="Dashtic logo">
 									</a>
 									<div class="dropdown side-nav">
 										<div class="app-sidebar__toggle" data-toggle="sidebar">
@@ -107,11 +108,13 @@
 												<!--		<div class="small text-muted">1 daya ago</div>-->
 												<!--	</div>-->
 												<!--</a>-->
+												
 												<div class=" text-center p-2 border-top">
-													<a href="{{route('admin.notification')}}" class="">View All Notifications</a>
+													<a href="{{ url('/chat/' . $page='email-inbox') }}" class="">You have new emails</a>
 												</div>
 											</div>
 										</div>
+										
 										<div class="dropdown profile-dropdown">
 											<a href="#" class="nav-link pr-0 leading-none" data-toggle="dropdown">
 												<span>

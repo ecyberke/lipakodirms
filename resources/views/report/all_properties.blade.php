@@ -65,9 +65,23 @@
                        
                         
                         <div class="row">
+                            <div class="col-sm-12">
+                            <label >Select <span class="text-danger">*</span></label>
+                          
+                            
+                                <select class="form-control select2-show-search" style="width: 100%"  name="prop">
+
+                                    <option selected disabled>-----Select-----</option>
+                              
+                                        <option value="active">All Active Properties</option>
+                                         <option value="inactive">All Inctive Properties</option>
+                                       
+
+                                </select>
+                            
+                            </div><br>
                             <div class="col-sm-6">
-                            <label>From <span
-                                    class="text-danger">*</span></label>
+                            <label>From </label>
                             
                                 <div class="form-group">
                                     <div class="cal-icon">
@@ -78,13 +92,12 @@
 
                             </div>
                             <div class="col-sm-6">
-                            <label >To<span
-                                class="text-danger">*</span></label>
+                            <label >To</label>
                         
                             <div class="form-group">
                                 <div class="cal-icon">
                                     <input class="form-control " type="date" name="to"
-                                        value="{{ old('placement_date')}}">
+                                        value="{{ old('placement_date')}}" >
                                 </div>
                             </div>
                               <input hidden value="all_properties" type="text" name="selected_report"/>

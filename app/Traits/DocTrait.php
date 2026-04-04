@@ -37,8 +37,11 @@ trait DocTrait
             $invoices = Invoice::where('tenant_id', $tenant_id)->get();
             $payments = ManualPayment::where('InvoiceNumber', $tnt->account_number)->get();
         }
-
-        $rent_sum = $invoices->sum('rent');
+        //  $rent = Invoice::where('tenant_id', $tenant_id)->get();
+        //  foreach($rent as $rn){
+        //      $actual_rent = $rn->rent * $rn->rent_period;
+        //  }
+        // $rent_sum = $invoices->sum('rent');
         $bills_sum =  $invoices->sum('electricity_bill') + $invoices->sum('water_bill') + $invoices->sum('litter_bill') + $invoices->sum('security') + $invoices->sum('compound_bill') + $invoices->sum('other_bill') ;
         $penalty_sum = $invoices->sum('penalty');
 
@@ -103,7 +106,7 @@ trait DocTrait
                 'description' => 'Rent Invoice',
                 'date' => date('d-m-Y', strtotime($inv->created_at)),
                 'reference' => $this->invoice_number($inv->id),
-                'amount' => $inv->rent,
+                'amount' => $inv->rent *$inv->rent_period  ,
                 'paid_in' => '-',
                 'balance' => $inv->balance,
             ];
@@ -132,7 +135,8 @@ trait DocTrait
         }
 
         $payments = $this->sumArrayOfObjects($entries, 'paid_in');
-
+        $rent_sum2 = $this->sumArrayOfObjects($entries, 'amount');
+        $rent_sum = $rent_sum2 - ($deposit_sum + $arrears_sum + $electricity_deposit_sum);
         $total_bills = $bills_sum + $penalty_sum + $rent_sum + $deposit_sum + $arrears_sum + $electricity_deposit_sum;
         $total = $total_bills;
         $balance = $total_bills - $payments;

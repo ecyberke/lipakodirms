@@ -233,7 +233,7 @@ Route::delete('overpayment/{id}/delete', 'OverpaymentController@delete')->name('
 Route::get('/make-synch', function () {Artisan::call('invoices:synchronize');
     //return redirect()->route('house.list')->with('success', '');
     // return back()->with('success', 'Invoice is successfully generated');
-});
+})->name('invoice.synch');
 //Invoices Manipulation
 Route::get('/make-invoice', function () {Artisan::call('invoice:initialize');
     //return redirect()->route('house.list')->with('success', '');
@@ -462,3 +462,65 @@ Route::get('/rent-overdue', function () {Artisan::call('sms:rentoverdue');
     //return redirect()->route('house.list')->with('success', '');
     return response(['message'=>'Success rent overdue'],200);
 });
+
+// M-Pesa C2B routes (no auth needed - Safaricom callbacks)
+Route::match(['post', 'options'], '/confirmation_url', 'MpesaController@confirmationUrl');
+Route::match(['post', 'options'], '/validation_url', 'MpesaController@validationUrl');
+Route::match(['post', 'options'], '/register', 'MpesaController@registerUrl');
+Route::match(['post', 'options'], '/simulate', 'MpesaController@simulateC2BPayment');
+Route::match(['get', 'options'], '/access_token', 'MpesaController@access_token');
+
+// STK Push
+Route::post('/stk-push/{id}', 'MpesaController@stkPush')->name('mpesa.stk.push');
+Route::post('/stk-callback', 'MpesaController@stkCallback')->name('stk.callback');
+Route::post('/stk-query', 'MpesaController@stkQuery')->name('stk.query');
+
+// Excel payment import (auth required)
+Route::middleware(['auth'])->group(function () {
+    Route::post('import-manual-payments', 'MpesaController@processImport')->name('import.excel');
+    Route::get('download-import-template', 'MpesaController@downloadTemplate')->name('excel.template');
+    Route::get('import-history', 'MpesaController@getImportHistory')->name('import.history');
+    Route::get('/payment-tester', 'MpesaController@paymentTester')->name('payment.tester');
+});
+
+// Missing routes from side menu
+Route::get('/bill/approve', 'BillsController@approve')->name('bill.approve');
+Route::get('/bill/property-bills', 'BillsController@property_bills')->name('bill.property_bills');
+Route::get('/bill/remittence', 'BillsController@remittence')->name('bill.remittence');
+Route::get('/bills-categories/create', 'BillCategoryController@create')->name('bills-categories.create');
+Route::get('/report/agency_income_expense', 'ReportController@agency_income_expense')->name('report.agency_income_expense');
+
+// Service Providers
+Route::get('/service-providers', 'ServiceProviderController@index')->name('service-providers.index');
+Route::get('/service-providers/create', 'ServiceProviderController@create')->name('service-providers.create');
+Route::post('/service-providers', 'ServiceProviderController@store')->name('service-providers.store');
+Route::get('/service-providers/{service_provider}', 'ServiceProviderController@show')->name('service-providers.show');
+Route::get('/service-providers/{service_provider}/edit', 'ServiceProviderController@edit')->name('service-providers.edit');
+Route::put('/service-providers/{service_provider}', 'ServiceProviderController@update')->name('service-providers.update');
+Route::delete('/service-providers/{service_provider}', 'ServiceProviderController@destroy')->name('service-providers.destroy');
+
+// Additional report routes
+Route::get('/report/property_income_expense', 'ReportController@property_income_expense')->name('report.property_income_expense');
+Route::get('/report/occupancy', 'ReportController@property_occupancy_expense')->name('report.occupancy_expense');
+Route::get('/report/rent', 'ReportController@rent')->name('report.rent');
+Route::get('/report/agency_income_expense', 'ReportController@agency_income_expense')->name('report.agency_income_expense');
+Route::get('/report/property_income_expense_report', 'DocController@property_income_expense_report')->name('report.property_income_expense_report');
+Route::get('/report/occupancy_expense_report', 'DocController@occupancy_expense_report')->name('report.occupancy_expense_report');
+Route::get('/report/rent_report', 'DocController@rent_report')->name('report.rent_report');
+Route::get('/report/agency_income_expense_report', 'DocController@agency_income_expense_report')->name('report.agency_income_expense_report');
+
+// Missing payowners routes
+Route::get('/payowners/list1', 'ApiController@getPayowners1')->name('api.payowners.list1');
+Route::get('/payowners/totals1', 'ApiController@getPayownerstotals1')->name('api.payowners.totals1');
+
+// Bill categories
+Route::get('/bills-categories', 'BillCategoryController@index')->name('billscategories.index');
+Route::post('/bills-categories', 'BillCategoryController@store')->name('billscategories.store');
+Route::get('/bills-categories/create', 'BillCategoryController@create')->name('billscategories.create');
+Route::get('/bills-categories/{id}/edit', 'BillCategoryController@edit')->name('billscategories.edit');
+Route::put('/bills-categories/{id}', 'BillCategoryController@update')->name('billscategories.update');
+Route::delete('/bills-categories/{id}', 'BillCategoryController@destroy')->name('billscategories.destroy');
+
+// Service provider and service request API routes
+Route::get('/servicerequests/index', 'ApiController@getAllServiceRequests')->name('api.service.request');
+Route::get('/service_providers/index', 'ApiController@getAllServiceProviders')->name('api.service.provider');

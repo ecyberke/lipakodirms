@@ -56,7 +56,8 @@
                                     <th>Property</th>
                                     <th style="width:10%">House No</th>
                                     <th>Status</th> 
-                                    <th>Request State</th>                            
+                                    <th>Request State</th>     
+                                    <th>Priority</th>  
                                     <th>Date</th>  
                                                                       
                                     <th class="text-right">Action</th>                                    
@@ -90,7 +91,7 @@
                 { data: 'house_no', name: 'house_no' },
                 { data: 'status', name: 'status' }, 
                 { data: 'approval', name: 'approval' }, 
-              // { data: 'service_request', name: 'service_request' },                              
+               { data: 'priority', name: 'priority' },                              
                 { data: 'created_at', name: 'created_at' },  
                          
                 { data: 'action', name: 'action',searchable:false,orderable:false },           

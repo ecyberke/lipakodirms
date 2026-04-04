@@ -54,8 +54,16 @@
     <div class="card">
         <form action="{{route('report.property_status_report')}}" method="get">
             @csrf
-            
-            
+          
+             @if($message != '')
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                             <span aria-hidden="true">×</span>
+                             </button>
+                             {{$message}}
+                             </div>
+                             @endif
+                       
             <div class="row">
                
     
@@ -63,7 +71,7 @@
                     <div class="">
                         <div class="card-body">
                             @include('includes.messages')
-                            
+                          
                             <div class="row">
                                 <div class="col-sm-8">
                                 <label >Select Property <span class="text-danger">*</span></label>
@@ -149,7 +157,7 @@
                                 <!--<th class="text-right">Bills Paid</th>-->
                                 <th class="text-right">Deposit</th>
                                 <th class="text-right">Prepaid</th>
-                                <th class="text-right">Outstanding Balance</th>
+                                <th class="text-right">Balance</th>
                               </tr>
                             </thead>
                             <tbody>
@@ -175,7 +183,7 @@
                                   <th class="text-right text-bold">{{number_format($totals['total_paid_in'])}}</th>
                                   <th class="text-right text-bold">{{number_format($totals['total_carryforward'])}}</th>
                                   <th class="text-right text-bold">-</th>
-                                  <th class="text-right text-bold">{{number_format($totals['total_balance'])}}</th>
+                                  <th class="text-right text-bold">{{number_format($totals['total_payable'])}}</th>
                                 </tr>
                             </tbody>
                           </table>

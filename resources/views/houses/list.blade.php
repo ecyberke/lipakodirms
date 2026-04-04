@@ -79,7 +79,7 @@
                 <!-- Tab content -->
                  
                 <div id="List" class="tabcontent">
-                    
+                    <div class="table-responsive">
                   <table class="table table-striped"  id="houses-table" style="width:100%">
                             <thead>
                                 <tr>
@@ -101,7 +101,7 @@
 
                             </tbody>
                         </table>
-                        
+                       </div> 
                 </div>
                 <div id="Occupied" class="tabcontent">
                     <div class="table-responsive">

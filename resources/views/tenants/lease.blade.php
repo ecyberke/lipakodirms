@@ -1,18 +1,404 @@
-<!DOCTYPE  html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Tenancy Agreement | {{$invoice->tenant->full_name}}</title>
-<body style="line-height:30px;">
-<div>
-<h3 style="text-align:center;"><strong>TENANCY /LEASE AGREEMENT</strong></h3>
-<p>Between, PROPERTY OWNER/AGENT(S)<br>Name: &nbsp;&nbsp;<strong>{{$invoice->apartment->landlord->full_name}}</strong>&nbsp;&nbsp;Mailing Address: <strong>{{$invoice->apartment->landlord->email}}</strong><br>And, the TENANT<br>Name: <strong>{{$invoice->tenant->full_name}}</strong> Phone: <strong>{{$invoice->tenant->phone}}</strong> Identification/Passport No: <strong>{{$invoice->tenant->id_number}}</strong><br>Property type: Commercial (Pick one) Shop ID&hellip;&hellip;&hellip;&hellip;&hellip;&hellip; OR Office ID&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;..</p>
-<p>THIS TENANCY AGREEMENT is made on {{$date2}} Between  <strong>{{$invoice->apartment->landlord->full_name}}</strong> in the Republic of Kenya (here in after called the Property Owner (s), and <strong>{{$invoice->tenant->full_name}}</strong> (Herein after called &lsquo;the Tenant&rsquo; WHERE IT IS MUTUALLY AGREED by and between the parties as follows:<br>a) The Property Owner/Agent(s) shall let and the tenant shall take ALL THAT dwelling house/premise at Monthly rent of <strong>Kshs.{{number_format($invoice->house->rent->amount)}}</strong> (In figures) <strong>{{ucfirst(trans($digit->format($invoice->house->rent->amount)))}} only</strong> (in words) payable in advance by the 5th Day of every calendar month.</p>
-<p>b) On or before commencement of this tenancy, the tenant will pay to the Property Owner/Agent(s) the amounts of money mentioned here in (Where applicable)<br>Deposit equivalent to <strong>{{($invoice->deposit_paid)/($invoice->house->rent->amount)}} Month(s)</strong> rent <strong>Kshs.{{number_format($invoice->deposit_paid)}}</strong> <br>Rent inclusive/exclusive of service charge Kshs_______________________________<br>Electricity/Water Deposit <strong>Kshs.{{number_format($invoice->electricity_deposit_paid)}}</strong> <br>Total <strong>Kshs.{{number_format($invoice->total_payable)}}</strong> <br>Note: The above deposit does not earn interest and is refundable at the end of the lease and vacating of premises but subject to fulfillment of the other terms of lease. It shall not be utilized as the last month&rsquo;s rent. Prior to the commencement of the Lease, Deposit paid to reserve the property shall not be refunded unless the landlord declines to accept the tenant and /or a stipulated notice period is issued.</p>
-<p>TENANT PARTICULARS<br>TENANTNAME&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;MARITAL STATUS&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;..<br>NO. OF CHILDREN&hellip;&hellip;&hellip;NATIONALITY&hellip;&hellip;&hellip;&hellip;&hellip;MAILING ADDRESS&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;...&hellip;&hellip;&hellip;&hellip;.<br>OCCUPATION&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;..&hellip;PLACE OF WORK&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;..&hellip;&hellip;&hellip;&hellip;.<br>PHONE NO&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;.../&hellip;&hellip;&hellip;&hellip;ID/PASSPORT NO&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;..&hellip;&hellip;&hellip;...&hellip;&hellip;...<br>EMAIL ADDRESS&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;.. (Provide Photocopy of ID /Passport)<br>CONTACT PERSON INCASE OF EMERGENCY<br>NAME&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;RELATIONSHIP&hellip;&hellip;...&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;<br>ID NO&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;PLACE OF WORK&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;<br>PHONE NO&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;EMAIL ADDRESS&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;.&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;...<br>ACCOUNT DETAILS: FOR RENT REMITTANCES<br>1. PAY VIA: SAFARICOM &lt;LIPA NA MPESA&gt; BUSINESS NO.743994, ACCOUNT NO. &hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;.&hellip;.. (Lesa RMS Generated)<br>2. OR, DEPOSIT CASH DIRECTLY TO THE ACCOUNT No. 5864350011, AT NCBA Bank Kenyatta Avenue Branch<br>3. OR, DEPOSIT ON THE DESIGNATED ACCOUNT: Where applicable<br>ACC. name: &hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;. ACC. No&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;.&hellip;Bank/Branch Name&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;.<br>Note: Cash payments will not be recognized &amp; all correspondence should be addressed to the Company and not individuals. Any bounced Cheque shall attract re-collection fees and bank charges of kshs. 3500/=.<br>LETTING PROVISIONS<br>Where the context admits,<br>1.1 The &ldquo;Property Owner&rdquo; includes the persons for the time being entitled in reservation expectant on the tenancy.<br>1.2 The &ldquo;Tenant&rdquo; includes the persons deriving title under the Tenant.<br>1.3 References to the Property includes references to any part or parts of the Property.<br>1.4 The &ldquo;Agent&rdquo; includes the appointed Property Managers.</p>
-<p>The Condition of the Premise.<br>Tenant agrees that he/she has examined the Premise, including the ground and all improvements, and that at the time of this Lease/letting, they are in good order, good repair, safe, clean and tenable condition.<br>Tenancy/Lease Terms<br>This Agreement shall be for a term of &hellip;36&hellip;. Months beginning (Month) &hellip;&hellip;&hellip;&hellip;&hellip;. (Year) 20&hellip;... and ending (Month)&hellip;&hellip;&hellip;&hellip;&hellip;&hellip; (Year) 20&hellip;&hellip;. (&ldquo;Term&rdquo;). After the Term expires, this Agreement shall automatically terminate unless a new agreement is signed.<br>A. During the tenancy created hereby, the tenant shall: Where Applicable:<br>1) Rent &amp; Utilities. Pay the rent and service charge, and all utility services required on the premises i.e. electricity, water and garbage collection charges incurred and payable here under at the time and in the manner aforesaid to the Agent or as may be directed clear of any deductions whatsoever. Tenant shall not default on any obligation to a utility provider for utility services at the premise.<br>2) Use of Premises.<br>I. The premises let shall be used for purposes only as disclosed to the Property Owner and the Agent at commencement of the tenancy agreement.<br>II. Keep internal parts of the dwelling house including all doors, windows, water-taps, basins, sanitary apparatus, electric light fittings and other landlord&rsquo;s fixtures and all hedges, ditches, fences and gates on the demised premises in the same state of good and tenable conditions as they are now. Only fair, wear and tear is expected.<br>III. Keep the drains both interior and exterior at all times free from obstructions and in proper working order.<br>IV. Comply with all the health and sanitary laws, ordinances, rules and orders of appropriate governmental authorities and homes associations, if any, with respect to the house.<br>3) Right of Inspection. Permit the Property Owner with all the necessary workmen and appliances at all reasonable times during the day time to enter the said premises to view the state and condition thereof and for the purposes of carrying out repairs of which the Property Owner may be liable under the provisions hereof upon reasonable advanced notice.<br>4) Make periodic inspections of the Property and report to the Property Owner or Agent any apparent defects in the structure of the buildings on the Property and any signs of white ants, bees, termites or any other destructive insects or any signs of wet or dry rot.<br>5) Alterations and Improvement. Not to make any alterations in or addition to any of the said premises or carry out any improvements, permanent or temporary (including boundary walls and fences) without the prior written consent of the Property Owner and Such consent not to be unreasonably withheld, provided the property is returned in its original condition at the end of the tenancy.<br>6) Assignment and Subletting. Tenant shall not assign this lease, or sublet or grant any concession or license to use the premise or otherwise part with possession of the said premises or any part thereof without the Property Owner&rsquo;s prior written consent.<br>7) Insurance. Tenant acknowledges that Property Owner shall not provide insurance coverage for Tenant&rsquo;s property, nor shall Property Owner be responsible for any loss of Tenant&rsquo;s property, whether by theft, fire, acts of God or otherwise.<br>8) Not do or suffer anything on the said premises which may be or become a substantial nuisance or annoyance to the Property Owner or the tenants or occupiers of any adjoining premises or which may render any increased or extra premium for the insurance of the said building against fire or which may be void of any policy for such insurance held by the Property Owner.<br>9) In the event of a tenant creating a nuisance, such as to interfere with the quite enjoyment of the other tenants on the premises, the Property Owner shall be entitled to serve a one months&rsquo; notice for a peaceful termination of the tenancy agreement and vacation of the premises by the tenant, subject to settlement of any dues to the party innocent whichever case shall apply.<br>10) Be responsible for all damages incurred as a result of negligence or willful act of the Tenant, its servants, licenses or trustees and will replace with articles of a similar quality all items which shall be lost, broken or damaged during the tenancy.<br>11) Animals/Pets.Tenant shall keep no domestic or other animal in or around the Premises without the prior written consent of the Property Owner.<br>12) Dangerous Materials. Tenant shall not keep or have on or around the Premise any article or thing of a dangerous, inflammable, or explosive character that might unreasonably increase the danger of fire on or around the Premise or that might be considered hazardous.<br>13) Rent review. The agreed rent shall be subject to review or negotiation upon notice in writing of at least 90 days prior to the date of effectuation, but in any event shall not prejudice the tenancy agreement herein entered into, and shall be reasonable.<br>14) Termination of tenancy. The Tenant and the Property Owner(s) shall be entitled to terminate this Agreement on giving the other party: Two (2) calendar month&rsquo;s Written notice of its intention to do so and at the expiration of such period of notice this agreement shall cease and determine but without prejudice to any right of action accrued to either party during the execution of the agreement.<br>15) Display of signs. Permit the Property Owner or the appointed Agent during the last two (2) months of the tenancy to exhibit, in any other reasonably suitable place, a notice advertising the Property as being let and, during this period, will allow all persons holding an order to view the Property upon reasonable advanced notice.<br>16) Holdover by Tenant. Should the Tenant remain in possession of the premise with the consent of the Property Owner after the expiration of the Term of this Lease, a new Tenancy from month to month shall be created which shall be subject to all the terms and conditions of this Lease, but shall be terminable on thirty (30) days by either. If the Tenant hold over without Property Owner/Agent&rsquo;s consent, the Property Owner is entitled to double rent, pro-rated per each day of the holdover, lasting until the Tenant leaves the premise.<br>17) Surrender of Premises. At the expiry of this Lease, the Tenant shall quit and surrender the Premise in good condition as it was at the commencement of this Lease, reasonable wear and tear and damages by the elements excepted.<br>18) Abandonment. If at any time during the term of this Lease, the Tenant abandons the Premise or any of Tenant&rsquo;s personal property in or about the Premise, the Property Owner shall have the following rights.<br>i. Property Owner may at his option, enter the Premise, by any means without liability to Tenant for damages and may re-let the Premise for the whole or any part of the then unexpired term, and may receive and collect all rent payable by virtue of such re-letting.<br>ii. Also at Property Owner&rsquo;s option, he/she may hold Tenant liable for any difference between the rent that would have been payable under this Lease during the balance of un-expired term, if this Lease had continued in force, and the net rent for such period realized by Property Owner by means of such re-letting.<br>iii. The Property Owner may also dispose of any Tenant&rsquo;s abandoned personal property as he/she deems appropriate, without liability to tenant.<br>iv. Property Owner is entitled to presume that Tenant has abandoned the Premise if Tenant removes substantially all of Tenant&rsquo;s furnishings from the Premise and the Premise is unoccupied for a period of two (2) consecutive weeks, or if it would otherwise be reasonable for Property Owner to presume under the circumstances that Tenant has abandoned the Premise.</p>
-<p>B. The Property Owner agrees with the Tenant as follows:<br>1) The Tenant paying the rent hereby reserved and performing and observing all agreements and conditions herein contained or implied and on its part to be performed and observed shall and may peacefully and quietly hold the Property during the tenancy hereby created without any interruptions from or by the Property Owner of any person on his behalf.<br>2) To keep the roof, main walls and main timbers lock, windows and the outside of the buildings on the Property and the water and sanitary apparatus and electric wiring and immersion heaters, in good and tenantable repair and condition and will carry out any repairs to the inside of the said buildings not caused by the default of the Tenant under this Agreement.<br>C. Damages to the Premise.<br>i. If the premise or any part of the premise shall be partially damaged by fire or any other casualty not due to the Tenant&rsquo;s negligence or willful act, or that of Tenant&rsquo;s family, agent or visitor, there shall be an abatement of rent corresponding with the time during which, and the extent to which the House is untenable.<br>ii. If the Property Owner shall decide not to rebuild or repair the premise, the term of this lease shall end and the rent shall be prorated up to the time of the damage.<br>D. GENERAL TERMS. At the commencement of the tenancy the tenant will be required to pay a deposit equivalent to &hellip;&hellip;&hellip;&hellip;&hellip;..month&rsquo;s rent to the Property Owner/Manager to be retained for the entire period of the tenancy as security for house repairs and bills. The deposit shall not at any time be offset against unpaid rents and will be refunded AFTER the Tenant has vacated the premises leaving it in the required state (Determined on inspection of the said premise prior to or before vacating).<br>E. Forfeiture of Security Deposit &ndash; Default.<br>i. Tenant shall not apply or deduct any portion of any security deposit from the last or any month&rsquo;s rent or use or apply any such security deposit at any time in lieu of payment of rent.<br>ii. If the Tenant fails to comply, such security deposit shall be forfeited and the Property Owner/Agent may recover the rent due as if any such deposit had not been applied or deducted from the rent due. For the purpose of this paragraph, it shall be conclusively presumed that a Tenant leaving the premises while owing rent is making an attempted deduction of the deposit. Furthermore, any deposit shall be held as a guarantee that the Tenant shall perform the obligation of this Lease and shall be forfeited by Tenant should the Tenant breach any of the terms and condition of this Lease.<br>iii. In the event of default by Tenant of any obligation in this Lease, which is not cured by the Tenant within Fourteen (14) days&rsquo; notice from the Property Owner, then in addition to forfeiture of the Security Deposit, the Property Owner may pursue any other remedy available at law, equity or otherwise<br>F. PROVIDED ALWAYS AND IT IS HEREBY AGREED by and between the parties thereto that<br>a. If the rent or any other payment due here under or any part there of shall remain unpaid for the space of 5 days after the due date, the tenant will be liable to pay 10% of the due amount thereafter as late remittance charge, and further be liable for all expenses should further action such as distress for rent be taken. Such action may be taken immediately after the 5th day after the due date, without any reference to the tenant.<br>b. Notwithstanding the above, when the said rent or any part there of shall be in arrears for fourteen (14) days whether formally demanded or not OR if the tenant shall commit any breach of any of the provisions here in contained then the Property Owner or his Agent shall re-enter upon the said premises and there upon the tenancy hereby created shall be terminated, but without prejudice to any remedy for any breach by the tenant in any of the provisions hereof.<br>G. Severability. If any part or parts of this Lease shall be held un-enforceable for any reason, the remainder of this agreement shall continue in full force and effect.<br>H. Binding Effects. The covenants and conditions contained in this Lease shall apply to and bind the heirs, legal representative, and permitted assignees of the parties.<br>I. Governing Law. It is agreed that this Lease shall be governed by, and construed in accordance with the Laws of Kenya.<br>J. Entire Agreement. This Lease shall constitute the entire agreement between the parties. Any prior understanding or representation of any kind proceeding the date of this Lease is hereby superseded. This Lease may be modified only by a writing signed by both Property Owner /Agent and Tenant.<br>IN WITNESS WHEREOF, the parties have caused this Lease to be executed the day and year here in first above written.</p>
-<p>Day/Month/Year of Lease &hellip;&hellip;......................................End of Lease Date/Year&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;</p>
-<p>SIGNED by Property Owner/Managers:<br>.............................................................. &hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip; ...................................<br>Name Designation IDNO./PPNO<br>........................................ &hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;..<br>Signature Date</p>
-<p>Signed by Tenant<br>.............................................................. &hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip; ...................................<br>Name Designation IDNO./PPNO<br>........................................ &hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;..<br>Signature Date<br>Witnessed By<br>.............................................................. &hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip; ...................................<br>Name Designation IDNO./PPNO<br>........................................ &hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;..<br>Signature Date</p>
-<p>In the presence of: &hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;<br>Date&hellip;&hellip;&hellip;&hellip;/&hellip;&hellip;&hellip;../&hellip;&hellip;&hellip;</p></div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Residential Tenancy Agreement | LPA/RTA/2026/01</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
+        body {
+            background-color: #e9ecef;
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            line-height: 1.5;
+            color: #1e2a3e;
+            padding: 2rem 1rem;
+        }
+
+        .document-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.15);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.2s;
+        }
+
+        /* header ribbon */
+        .doc-header {
+            background: linear-gradient(135deg, #0b2b3b 0%, #1a4a5f 100%);
+            color: white;
+            padding: 1.8rem 2rem;
+            border-bottom: 4px solid #e3b23c;
+        }
+
+        .doc-header h1 {
+            font-size: 1.9rem;
+            letter-spacing: -0.3px;
+            font-weight: 600;
+            margin-bottom: 0.35rem;
+        }
+
+        .doc-header .ref {
+            font-size: 0.9rem;
+            opacity: 0.85;
+            font-family: monospace;
+            background: rgba(255,255,240,0.2);
+            display: inline-block;
+            padding: 0.2rem 0.8rem;
+            border-radius: 30px;
+            margin-top: 0.5rem;
+        }
+
+        /* main content */
+        .agreement-body {
+            padding: 2rem 2rem 2.2rem;
+        }
+
+        /* section styling */
+        .part {
+            margin-bottom: 2rem;
+            border-left: 4px solid #d4af6c;
+            padding-left: 1.2rem;
+            background: #fefcf7;
+            border-radius: 0 12px 12px 0;
+        }
+
+        .part-title {
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: #1e4a5f;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .part-title span {
+            background: #1e4a5f;
+            color: white;
+            font-size: 0.8rem;
+            width: 26px;
+            height: 26px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-weight: bold;
+        }
+
+        .sub-clause {
+            margin: 0.9rem 0 0.4rem 1rem;
+        }
+
+        .checklist {
+            list-style-type: none;
+            padding-left: 1rem;
+        }
+
+        .checklist li {
+            margin-bottom: 0.5rem;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .checklist li::before {
+            content: "☐";
+            position: absolute;
+            left: 0;
+            color: #b8860b;
+            font-weight: 600;
+        }
+
+        hr.dashed {
+            margin: 1rem 0;
+            border: none;
+            border-top: 1px dashed #cbd5e1;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            background: white;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+
+        th, td {
+            border: 1px solid #d4dce6;
+            padding: 10px 14px;
+            vertical-align: top;
+            text-align: left;
+        }
+
+        th {
+            background-color: #eef2f5;
+            font-weight: 600;
+            color: #1f3b43;
+        }
+
+        .payment-highlight {
+            background: #f0f9f4;
+            border-left: 4px solid #2b7a4b;
+            padding: 0.8rem 1rem;
+            margin: 1rem 0;
+            border-radius: 12px;
+        }
+
+        .signature-block {
+            margin-top: 2rem;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 2rem;
+            border-top: 1px solid #dce3ec;
+            padding-top: 2rem;
+        }
+
+        .signature-item {
+            flex: 1;
+            min-width: 220px;
+        }
+
+        .signature-line {
+            margin-top: 1.5rem;
+            border-bottom: 1px solid #2c3e4e;
+            width: 100%;
+            margin-bottom: 0.3rem;
+        }
+
+        .legal-note {
+            font-size: 0.75rem;
+            color: #4b6a7c;
+            margin-top: 1.8rem;
+            text-align: center;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 1.2rem;
+        }
+
+        @media (max-width: 700px) {
+            .agreement-body {
+                padding: 1.3rem;
+            }
+            .part {
+                padding-left: 0.8rem;
+            }
+            .doc-header h1 {
+                font-size: 1.4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="document-container">
+    <div class="doc-header">
+        <h1>RESIDENTIAL TENANCY AGREEMENT</h1>
+        <div class="ref">Document Ref: LPA/RTA/2026/01</div>
+        <div style="margin-top: 10px; font-size: 0.85rem;">Fixed-term assured tenancy | Kenya</div>
+    </div>
+
+    <div class="agreement-body">
+        <!-- PART 1 -->
+        <div class="part">
+            <div class="part-title"><span>1</span> AGREEMENT TITLE & PARTIES</div>
+            <p><strong>THE LANDLORD:</strong> The lawful owner of the premises or duly authorized agent. <strong>Lesa Property Agency Ltd</strong> is appointed as Managing Agent and is authorized to manage the premises, collect rent, and enforce the terms of this Agreement on behalf of the Landlord.</p>
+            <p><strong>THE TENANT:</strong> The individual(s) occupying the premises. Where more than one Tenant signs, liability shall be joint and several.</p>
+            <p><em>(Landlord and Tenant details completed in schedule — see execution page)</em></p>
+        </div>
+
+        <!-- PART 2 -->
+        <div class="part">
+            <div class="part-title"><span>2</span> PROPERTY DETAILS & PURPOSE OF LETTING</div>
+            <p><strong>Type of Property:</strong> ☐ Standalone House ☐ Apartment ☐ Bedsitter ☐ Other: ________</p>
+            <p><strong>Property Address:</strong> _________________________________________________</p>
+            <p><strong>Purpose of Letting:</strong> The premises shall be used strictly for residential purposes only. No business, commercial, or other non-residential purpose without prior written consent.</p>
+        </div>
+
+        <!-- PART 3 -->
+        <div class="part">
+            <div class="part-title"><span>3</span> TERM OF TENANCY</div>
+            <p>Fixed term of twenty-four (24) months. Upon expiry, may be renewed by mutual written agreement or continue on a month-to-month basis under the same terms. Termination governed by Part 10.</p>
+        </div>
+
+        <!-- PART 4 -->
+        <div class="part">
+            <div class="part-title"><span>4</span> ADDITIONAL TENANT PARTICULARS</div>
+            <table>
+                <tr><th>Detail</th><th>Information</th></tr>
+                <tr><td>Marital Status</td><td>_______________</td></tr>
+                <tr><td>Number of Children (if any)</td><td>_______________</td></tr>
+                <tr><td>Nationality</td><td>_______________</td></tr>
+                <tr><td>Occupation</td><td>_______________</td></tr>
+                <tr><td>Employer / Place of Work</td><td>_______________</td></tr>
+            </table>
+            <p><strong>Emergency Contact:</strong> Name: _________ | Relationship: _________ | Phone: _________ | Email: _________</p>
+            <p><strong>Guarantor (where applicable):</strong> Jointly and severally liable for all obligations including rent, damages, and losses. Guarantor details: Name/ID/Phone/Signature.</p>
+        </div>
+
+        <!-- PART 5: RENT & PAYMENT TERMS -->
+        <div class="part">
+            <div class="part-title"><span>5</span> RENT & PAYMENT TERMS</div>
+            <p><strong>Monthly Rent Amount:</strong> KES _______________</p>
+            <p><strong>Payment Frequency:</strong> ☐ Monthly (due on/before 5th day) &nbsp;&nbsp; ☐ Quarterly (due on/before 5th of first month)</p>
+            <div class="payment-highlight">
+                <strong>Payment Method (official channels):</strong><br>
+                <strong>M-PESA Paybill:</strong> 743994 | Account Number: ______________<br>
+                <strong>Bank Transfer:</strong> Account Name: Lesa Property Agency Ltd | Account Number: 5864350011 | NCBA Bank Kenya PLC (Busia)<br>
+                <em>Cash payments are not acceptable. Rent must be paid strictly via these channels.</em>
+            </div>
+            <p><strong>Late Payment:</strong> If rent remains unpaid after 10th day of due month, a late penalty of 3% of outstanding rent charged per month. If unpaid for 14 days after written demand, lawful recovery action (including distress for rent) may be taken, with all costs recoverable from Tenant.</p>
+        </div>
+
+        <!-- PART 6: SECURITY DEPOSIT -->
+        <div class="part">
+            <div class="part-title"><span>6</span> SECURITY DEPOSIT & INITIAL CHARGES</div>
+            <table>
+                <tr><th>Description</th><th>Amount (KES)</th></tr>
+                <tr><td>Security Deposit (___ months' rent)</td><td>_________</td></tr>
+                <tr><td>Rent (___ months' rent)</td><td>_________</td></tr>
+                <tr><td>Water Deposit (if applicable)</td><td>_________</td></tr>
+                <tr><td>Electricity Deposit</td><td>_________</td></tr>
+                <tr><td>Service Charge</td><td>_________</td></tr>
+                <tr><td>Agency fee</td><td>_________</td></tr>
+                <tr><td>Other Charges</td><td>_________</td></tr>
+                <tr><td><strong>Total Initial Payment</strong></td><td><strong>_________</strong></td></tr>
+            </table>
+            <p><strong>Security Deposit:</strong> Held as security for Tenant's obligations. Refundable within 30 days after lawful termination and handover, subject to no rent arrears, unpaid bills, or damage beyond normal wear and tear. Lawful deductions may apply.</p>
+            <p><strong>Condition of Premises:</strong> Tenant acknowledges premises inspected and accepted in good tenantable condition.</p>
+        </div>
+
+        <!-- PART 7: COMMITMENT UPON PAYMENT -->
+        <div class="part">
+            <div class="part-title"><span>7</span> COMMITMENT UPON PAYMENT</div>
+            <p>Upon signing this Agreement and payment of initial rent and deposit, tenancy becomes legally effective. Any cancellation before occupation does not entitle Tenant to refund unless agreed in writing; administrative deductions may apply.</p>
+        </div>
+
+        <!-- PART 8: TENANT'S OBLIGATIONS -->
+        <div class="part">
+            <div class="part-title"><span>8</span> TENANT'S OBLIGATIONS</div>
+            <ul style="margin-left: 1.5rem;">
+                <li>Pay rent as agreed and promptly settle all utility bills (electricity, water, garbage, service charges).</li>
+                <li>Use premises strictly for residential purpose; no illegal activities.</li>
+                <li>Keep premises, fittings, and fixtures clean; ensure proper use of drains and sanitary installations.</li>
+                <li>Responsible for minor internal repairs and any damage caused; promptly report major defects.</li>
+                <li>No structural alterations without written consent; approved alterations shall be restored unless agreed.</li>
+                <li>No pets without prior written approval.</li>
+                <li>Do not store hazardous/flammable materials.</li>
+                <li>No subletting, assignment, or transfer without written consent.</li>
+                <li>Not cause disturbance or nuisance to neighbours.</li>
+                <li>Allow access for inspection/maintenance/repairs upon at least 24 hours' notice (except emergencies).</li>
+            </ul>
+        </div>
+
+        <!-- PART 9: LANDLORD'S OBLIGATIONS -->
+        <div class="part">
+            <div class="part-title"><span>9</span> LANDLORD'S OBLIGATIONS</div>
+            <ul style="margin-left: 1.5rem;">
+                <li>Ensure premises habitable at commencement.</li>
+                <li>Maintain and repair structural components: roof, walls, plumbing, drainage, electrical systems.</li>
+                <li>Respect Tenant's right to quiet enjoyment and privacy.</li>
+                <li>Attend to repair requests within reasonable time.</li>
+                <li>Refund security deposit in accordance with Clause 6.2.</li>
+            </ul>
+        </div>
+
+        <!-- PART 10: TERMINATION -->
+        <div class="part">
+            <div class="part-title"><span>10</span> TERMINATION OF TENANCY</div>
+            <p><strong>Notice:</strong> Either party may terminate by giving one (1) calendar month's notice or one month's rent in lieu. For month-to-month tenancies: 1 month's notice applies.</p>
+            <p><strong>Termination for Breach:</strong> Landlord may terminate where rent remains unpaid 14 days after demand, or for material breach (illegal use, unauthorized subletting, nuisance, damage, abandonment).</p>
+            <p><strong>Early Termination by Tenant:</strong> Before expiry, 1 month's notice required; early termination charge equivalent to one month's rent may apply unless agreed otherwise.</p>
+            <p><strong>Tenant's Exit Obligations:</strong> Vacate peacefully, settle all dues, return premises in clean condition subject to reasonable wear and tear.</p>
+            <p><strong>Exit Inspection & Deposit Refund:</strong> Refund per Clause 6.2 with lawful deductions.</p>
+            <p><strong>Landlord's Rights during final 30 days:</strong> Show premises to prospective tenants upon reasonable notice and place "To Let" sign.</p>
+        </div>
+
+        <!-- PART 11: ABANDONMENT -->
+        <div class="part">
+            <div class="part-title"><span>11</span> ABANDONMENT AND HOLDOVER</div>
+            <p><strong>Abandonment:</strong> If Tenant vacates without notice or leaves unoccupied for 14 consecutive days without communication, Landlord may treat premises as abandoned, re-enter, re-let, and deal with goods left behind per applicable law.</p>
+            <p><strong>Holding Over:</strong> If Tenant remains with Landlord's consent after expiry, tenancy continues month-to-month. Without consent, Tenant liable to pay double rent for unauthorized occupation.</p>
+        </div>
+
+        <!-- PART 12: RENT REVIEW -->
+        <div class="part">
+            <div class="part-title"><span>12</span> RENT REVIEW</div>
+            <p>Rent may be reviewed upon renewal or expiry based on prevailing market rates. Landlord shall give at least sixty (60) days' written notice of revised rent. If Tenant does not accept, Tenant may terminate before new rent takes effect. Continued occupation after effective date deems acceptance.</p>
+        </div>
+
+        <!-- PART 13-19: Legal & boilerplate -->
+        <div class="part">
+            <div class="part-title"><span>13</span> DISPUTE RESOLUTION</div>
+            <p>Any dispute shall first be resolved amicably through consultation. Where no resolution, dispute referred to a court of competent jurisdiction in Kenya.</p>
+        </div>
+        <div class="part">
+            <div class="part-title"><span>14</span> FORCE MAJEURE</div>
+            <p>Neither party liable for failure due to events beyond reasonable control (natural disasters, government actions, civil unrest). Rent remains payable unless otherwise agreed in writing.</p>
+        </div>
+        <div class="part">
+            <div class="part-title"><span>15</span> GOVERNING LAW</div>
+            <p>Governing laws of Kenya, including Land Act, 2012 and Rent Restriction Act (Cap 296), where applicable.</p>
+        </div>
+        <div class="part">
+            <div class="part-title"><span>16</span> ENTIRE AGREEMENT</div>
+            <p>This Agreement constitutes entire understanding and may only be varied in writing signed by both parties. No oral representations binding.</p>
+        </div>
+        <div class="part">
+            <div class="part-title"><span>17</span> ELECTRONIC COMMUNICATION</div>
+            <p>Notices via email, SMS, or WhatsApp shall be valid written notice. Tenant agrees to receive such communications.</p>
+        </div>
+        <div class="part">
+            <div class="part-title"><span>18</span> DATA PRIVACY CONSENT</div>
+            <p>In accordance with Data Protection Act, 2019, Tenant consents to collection and use of personal data for tenancy management purposes. Information kept confidential.</p>
+        </div>
+        <div class="part">
+            <div class="part-title"><span>19</span> SEVERABILITY</div>
+            <p>If any provision is invalid or unenforceable, remaining provisions remain in full force.</p>
+        </div>
+
+        <!-- PART 20: EXECUTION -->
+        <div class="part" style="border-left-color: #b68b40;">
+            <div class="part-title"><span>20</span> EXECUTION AND SIGNATURES</div>
+            <p>The parties confirm they have read, understood, and agreed to the terms of this Agreement.</p>
+            <div class="signature-block">
+                <div class="signature-item">
+                    <strong>LESA PROPERTY AGENCY LTD</strong> <em>(Managing Agent)</em><br>
+                    Authorized Signatory: _________________________<br>
+                    Signature: _________________________<br>
+                    Date: _________________________
+                </div>
+                <div class="signature-item">
+                    <strong>THE TENANT</strong><br>
+                    Name: _________________________<br>
+                    Signature: _________________________<br>
+                    Date: _________________________
+                </div>
+                <div class="signature-item">
+                    <strong>Additional Tenant (if applicable)</strong><br>
+                    Name: _________________________<br>
+                    Signature: _________________________<br>
+                    Date: _________________________
+                </div>
+            </div>
+            <hr class="dashed">
+            <p><strong>Signed in the presence of (Advocate):</strong><br>
+            Name of Advocate: ____________________ | Law Firm: ____________________<br>
+            Signature: ____________________ | Date: ____________________<br>
+            Advocate's Stamp: ____________________</p>
+        </div>
+
+        <div class="legal-note">
+            This document is a legally binding Residential Tenancy Agreement governed by the laws of Kenya. <br>
+            All parties should ensure full understanding before signing. Any modifications must be in writing.
+        </div>
+    </div>
+</div>
 </body>
 </html>

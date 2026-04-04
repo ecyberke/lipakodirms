@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class ServiceProviderModel extends Model
 {   
     protected $guarded = [];
+    protected $table = 'service_providers';
     public function tenant()
     {
         return $this->belongsTo('App\Tenant');

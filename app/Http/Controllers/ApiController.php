@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\ServiceProviderModel;
 use App\AgencyExpenses;
 use App\Apartment;
 use App\Deposit;
@@ -174,7 +175,10 @@ class ApiController extends Controller
                     return $html;
                     
                 })
-                ->rawColumns(['actions'])
+                ->editColumn('created_at', function($q) {
+                return $q->created_at ? date('d M Y', strtotime($q->created_at)) : '-';
+            })
+        ->rawColumns(['actions'])
             ->toJson();
     }
     public function invoices_trashed()
@@ -216,7 +220,10 @@ class ApiController extends Controller
                     return $html;
                     
                 })
-                ->rawColumns(['actions'])
+                ->editColumn('created_at', function($q) {
+                return $q->created_at ? date('d M Y', strtotime($q->created_at)) : '-';
+            })
+        ->rawColumns(['actions'])
             ->toJson();
     }
     public function landlord_trashed()
@@ -258,7 +265,10 @@ class ApiController extends Controller
                     return $html;
                     
                 })
-                ->rawColumns(['actions'])
+                ->editColumn('created_at', function($q) {
+                return $q->created_at ? date('d M Y', strtotime($q->created_at)) : '-';
+            })
+        ->rawColumns(['actions'])
             ->toJson();
     }
     public function apartments_trashed()
@@ -300,7 +310,10 @@ class ApiController extends Controller
                     return $html;
                     
                 })
-                ->rawColumns(['actions'])
+                ->editColumn('created_at', function($q) {
+                return $q->created_at ? date('d M Y', strtotime($q->created_at)) : '-';
+            })
+        ->rawColumns(['actions'])
             ->toJson();
     }
     public function tenants_trashed()
@@ -342,7 +355,10 @@ class ApiController extends Controller
                     return $html;
                     
                 })
-                ->rawColumns(['actions'])
+                ->editColumn('created_at', function($q) {
+                return $q->created_at ? date('d M Y', strtotime($q->created_at)) : '-';
+            })
+        ->rawColumns(['actions'])
             ->toJson();
     }
     public function bills_trashed()
@@ -384,7 +400,10 @@ class ApiController extends Controller
                     return $html;
                     
                 })
-                ->rawColumns(['actions'])
+                ->editColumn('created_at', function($q) {
+                return $q->created_at ? date('d M Y', strtotime($q->created_at)) : '-';
+            })
+        ->rawColumns(['actions'])
             ->toJson();
     }
    public function user_trashed()
@@ -426,7 +445,10 @@ class ApiController extends Controller
                     return $html;
                     
                 })
-                ->rawColumns(['actions'])
+                ->editColumn('created_at', function($q) {
+                return $q->created_at ? date('d M Y', strtotime($q->created_at)) : '-';
+            })
+        ->rawColumns(['actions'])
             ->toJson();
     }
     public function getAlllogs()
@@ -919,7 +941,18 @@ class ApiController extends Controller
      public function getAllPayments()
     {
         // $query=Landlord::withCount('apartments')->get();
-        $query = ManualPayment::all();
+        $mpesa = ManualPayment::all();
+        $manager = ManagerPayment::where("status", 1)->get()->map(function($p) {
+            $p->FirstName = $p->full_name;
+            $p->MiddleName = "";
+            $p->LastName = "";
+            $p->TransID = $p->TransID;
+            $p->TransAmount = $p->TransAmount;
+            $p->InvoiceNumber = $p->InvoiceNumber;
+            $p->TransactionType = $p->TransactionType;
+            return $p;
+        });
+        $query = $mpesa->merge($manager);
         foreach($query as $payment){
          $receipt = Receipt::where('transaction_code', $payment->TransID)->first();
          if($receipt){
@@ -1006,6 +1039,10 @@ class ApiController extends Controller
         
              })
         
+        ->editColumn('created_at', function($q) {
+                return $q->created_at ? date('d M Y', strtotime($q->created_at)) : '-';
+            })
+        ->editColumn("created_at", function($q) { return $q->created_at ? date("d M Y H:i", strtotime($q->created_at)) : "-"; })
         ->rawColumns(['actions'])
             
             ->toJson();
@@ -1173,6 +1210,9 @@ class ApiController extends Controller
 
             return $html;
         })
+        ->editColumn('created_at', function($q) {
+                return $q->created_at ? date('d M Y', strtotime($q->created_at)) : '-';
+            })
         ->rawColumns(['actions'])
             
             ->toJson();
@@ -1767,7 +1807,10 @@ class ApiController extends Controller
                 return $html;
             })
            // ->rawColumns(['penalty_fee', 'is_paid', 'download', 'delete', 'total_payable', 'carryforward', 'balance', 'paid_in'])
-            ->rawColumns(['actions'])
+            ->editColumn('created_at', function($q) {
+                return $q->created_at ? date('d M Y', strtotime($q->created_at)) : '-';
+            })
+        ->rawColumns(['actions'])
             ->toJson();
 
     }
@@ -2156,7 +2199,10 @@ class ApiController extends Controller
                 return $html;
             })
             
-            ->rawColumns(['actions'])
+            ->editColumn('created_at', function($q) {
+                return $q->created_at ? date('d M Y', strtotime($q->created_at)) : '-';
+            })
+        ->rawColumns(['actions'])
             ->make(true);
 
     }
@@ -2245,7 +2291,10 @@ class ApiController extends Controller
                     }
 
                 })
-                ->rawColumns(['actions'])
+                ->editColumn('created_at', function($q) {
+                return $q->created_at ? date('d M Y', strtotime($q->created_at)) : '-';
+            })
+        ->rawColumns(['actions'])
                 ->make(true);
 
         }
@@ -3057,5 +3106,402 @@ class ApiController extends Controller
 
             }
         }
+    }
+     public function getPayownerstotals1()
+    {
+    
+                    
+       
+        $rent_collection = PayOwners::selectRaw('SUM(total_owned) as sum_bills,SUM(balance) as bal,SUM(paid_in) as pay,SUM(bills) as bill, apartment_id, rent_month, max(created_at) as created_at')->where('bill_type', 'property')
+           
+            ->where('approval', 1 )->groupBy( 'rent_month', 'apartment_id')->orderBy('created_at', 'desc')
+           
+            ->get();
+         
+        
+                
+        return DataTables::of($rent_collection)
+        //  ->addColumn('house_no',function($query){
+        //     return $query->house->house_no;
+        // })
+        ->addIndexColumn()
+        ->addColumn('full_name',function($rent_collection){
+            return $rent_collection->apartment->landlord->full_name;
+        })
+        
+        ->addColumn('apartment',function($rent_collection){
+            return $rent_collection->apartment->name;
+        })
+        
+        ->addColumn('sum_bills',function($rent_collection){
+         
+                      return $rent_collection->sum_bills;
+           
+       })
+       ->addColumn('rent_month',function($rent_collection){
+                  
+                      return  $rent_collection->rent_month;
+           
+       })
+       
+        
+       
+       ->addColumn('bal',function($rent_collection){
+       
+                  return $rent_collection->bal;
+        })
+       
+   ->addColumn('pay',function($rent_collection){
+   
+              return $rent_collection->pay;
+    })
+           // ->editColumn('rent_month', '{{($rent_month)}}')
+            //->addColumn('rent_month', function ($query) {
+                //return $query->rent_month;
+           // ->editColumn('bills', 'Ksh {{ number_format($bills)}}')
+           // ->editColumn('carryforward', '<div class="text-default">Ksh {{ number_format($carryforward)}}</div>')
+           // ->editColumn('penalty_fee', '<div class="text-danger">Ksh {{ number_format($penalty_fee)}}</div>')
+        //     ->editColumn('total_owned', '<div class="text-info">Ksh {{ number_format($smnt)}}</div>')
+        //     ->editColumn('paid_in', '<div class="text-success">Ksh {{ number_format($paidtotal)}}</div>')
+        //    ->editColumn('balance', '<div class="text-danger">Ksh {{ number_format($bal)}}</div>')
+
+            // ->editColumn('pay_status', function ($query) {
+
+            //     if ($query->pay_status) {
+            //         return '<span class="badge badge-success">PAID</span>';
+            //     } else {
+            //         return '<span class="badge badge-danger">UNPAID</span>';
+            //     }
+
+            // })
+           
+            
+          
+
+            ->rawColumns([ 'full_name','apartment','rent_month'])
+
+            ->toJson();
+
+    }
+    
+    
+    public function getPayowners1()
+    {
+        //$month = $request->month . '-' . $request->year;
+        //$landlord_id = $request->landlord;
+       //$query = PayOwners::with('house', 'landlord')->select('pay_owners.*');
+        // $query = PayOwners::with('house', 'landlord')
+        // ->where('landlord_id', $landlord_id)->select('pay_owners.*');
+    
+        $query = PayOwners::where('approval', '!=', 1 )->get();
+        
+
+        return DataTables::of($query)
+        //  ->addColumn('house_no',function($query){
+        //     return $query->house->house_no;
+        // })
+        ->addIndexColumn()
+         ->addColumn('full_name',function($query){
+             if($query->apartment){
+                       return $query->apartment->landlord->full_name;
+             }else{
+                 return $query->agency_user;
+             }
+      
+            
+        })
+         ->addColumn('type',function($query){
+             if($query->type == '--select--'){
+                       return $query->new_type;
+             }else{
+                 return $query->type;
+             }
+      
+            
+        })
+        ->addColumn('apartment',function($query){
+             if($query->apartment){
+                       return $query->apartment->name;
+             }else{
+                 return $query->agency_user;
+             }
+      
+            
+        })
+       
+           // ->editColumn('rent_month', '{{($rent_month)}}')
+            //->addColumn('rent_month', function ($query) {
+                //return $query->rent_month;
+           // ->editColumn('bills', 'Ksh {{ number_format($bills)}}')
+           // ->editColumn('carryforward', '<div class="text-default">Ksh {{ number_format($carryforward)}}</div>')
+           // ->editColumn('penalty_fee', '<div class="text-danger">Ksh {{ number_format($penalty_fee)}}</div>')
+        //   ->editColumn('total_owned', '<div class="text-info">Ksh {{ number_format($smnt)}}</div>')
+        //     ->editColumn('paid_in', '<div class="text-success">Ksh {{ number_format($paidtotal)}}</div>')
+         ->editColumn('total_owned', function ($query) {
+
+                            if ($query->approval == 0) {
+                                return $query->total_owned;
+                            } elseif ($query->approval == 1) {
+                                return $query->total_owned;
+                            }
+                            else {
+                                return $query->total_owned;
+                            }
+            
+                        })
+          ->editColumn('balance', function ($query) {
+
+                            if ($query->approval == 0) {
+                                return $query->balance;
+                            } elseif ($query->approval == 1) {
+                                return $query->balance;
+                            }
+                            else {
+                                return $query->balance;
+                            }
+            
+                        })
+
+            // ->editColumn('pay_status', function ($query) {
+
+            //     if ($query->pay_status) {
+            //         return '<span class="badge badge-success">PAID</span>';
+            //     } else {
+            //         return '<span class="badge badge-danger">UNPAID</span>';
+            //     }
+
+            // })
+             ->editColumn('approval', function ($query) {
+
+                            if ($query->approval == 0) {
+                                return '<span class="badge badge-info">PENDING</span>';
+                            } elseif ($query->approval == 1) {
+                                return '<span class="badge badge-success">APPROVED</span>';
+                            }
+                            elseif ($query->approval == 3) {
+                                return '<span class="badge badge-secondary">AMEND</span>';
+                            }
+                            else {
+                                return '<span class="badge badge-danger">DECLINED</span>';
+                            }
+            
+                        })
+                        
+            ->addColumn('action', function ($query) {
+
+                // Delete permission auth
+                
+                 $delete_form = '';
+    
+                    if (Auth::user()->is_admin==1 || Auth::user()->is_admin==2) {
+                         if ($query->approval == 0){
+                        $delete_form = '
+                    <form class="dropdown-item delete-house" method="POST" action="' . route('payowner.delete', $query->id) . '">
+                        <input type="hidden" name="_method" value="delete" />
+                        <input type="hidden" name="_token" value="' . csrf_token() . '">
+                        <input class="btn btn-sm btn-danger btn-block" type="submit" value="Delete" />
+                    </form>';
+                    
+    
+                    $html = '<div class="text-right">
+                                <div class="dropdown dropdown-action">
+                                    <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        
+                                        <div class="dropdown-item ">
+                                            <a class="btn btn-sm btn-secondary btn-block" href="' . route('payowner.edit', $query->id) . '"> Edit</a>
+                                        </div>
+                                       
+    
+                                        ' . $delete_form . '
+                                    </div>
+                                </div>
+                            </div>';
+    
+                    return $html;
+                         }
+                         elseif($query->approval == 1){
+                        
+                    
+    
+                    $html = '<div class="text-right">
+                                <div class="dropdown dropdown-action">
+                                    <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <div class="dropdown-item ">
+                                            <a class="btn btn-sm btn-info btn-block" href="' . route('payowner.show', $query->id) . '"> View</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>';
+    
+                    return $html;
+                         }
+                         elseif($query->approval == 2){
+                        $delete_form = '
+                    <form class="dropdown-item delete-house" method="POST" action="' . route('payowner.delete', $query->id) . '">
+                        <input type="hidden" name="_method" value="delete" />
+                        <input type="hidden" name="_token" value="' . csrf_token() . '">
+                        <input class="btn btn-sm btn-danger btn-block" type="submit" value="Delete" />
+                    </form>';
+                    
+    
+                    $html = '<div class="text-right">
+                                <div class="dropdown dropdown-action">
+                                    <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                       
+                                       
+    
+                                        ' . $delete_form . '
+                                    </div>
+                                </div>
+                            </div>';
+    
+                    return $html;
+                         }
+                         elseif($query->approval == 3){
+                        $delete_form = '
+                    <form class="dropdown-item delete-house" method="POST" action="' . route('payowner.delete', $query->id) . '">
+                        <input type="hidden" name="_method" value="delete" />
+                        <input type="hidden" name="_token" value="' . csrf_token() . '">
+                        <input class="btn btn-sm btn-danger btn-block" type="submit" value="Delete" />
+                    </form>';
+                    
+    
+                    $html = '<div class="text-right">
+                                <div class="dropdown dropdown-action">
+                                    <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                       
+                                        <div class="dropdown-item ">
+                                            <a class="btn btn-sm btn-secondary btn-block" href="' . route('payowner.edit', $query->id) . '"> Edit</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>';
+    
+                    return $html;
+                         }
+                    }else{
+                        if ($query->approval == 0){
+                        $delete_form = '
+                    <form class="dropdown-item delete-house" method="POST" action="' . route('payowner.delete', $query->id) . '">
+                        <input type="hidden" name="_method" value="delete" />
+                        <input type="hidden" name="_token" value="' . csrf_token() . '">
+                        <input class="btn btn-sm btn-danger btn-block" type="submit" value="Delete" />
+                    </form>';
+                    
+    
+                    $html = '<div class="text-right">
+                                <div class="dropdown dropdown-action">
+                                    <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <div class="dropdown-item ">
+                                            <a class="btn btn-sm btn-info btn-block" href=""> N/A</a>
+                                        </div>
+                                   
+                                    </div>
+                                </div>
+                            </div>';
+    
+                    return $html;
+                         }
+                         elseif($query->approval == 1){
+                        
+                    
+    
+                    $html = '<div class="text-right">
+                                <div class="dropdown dropdown-action">
+                                    <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <div class="dropdown-item ">
+                                            <a class="btn btn-sm btn-info btn-block" href="' . route('payowner.show', $query->id) . '"> View</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>';
+    
+                    return $html;
+                         }
+                     
+                         elseif($query->approval == 3){
+                   
+                    
+    
+                    $html = '<div class="text-right">
+                                <div class="dropdown dropdown-action">
+                                    <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <div class="dropdown-item ">
+                                            <a class="btn btn-sm btn-info btn-block" href=""> N/A</a>
+                                        </div>
+                                      
+                                    </div>
+                                </div>
+                            </div>';
+    
+                    return $html;
+                         }
+                    }
+
+                
+            })
+            
+          
+
+            ->rawColumns([ 'full_name','approval','total_owned','balance','apartment', 'action'])
+
+            ->toJson();
+
+    }
+     public function getAllServiceProviders()
+    {
+        $providers = ServiceProviderModel::all();
+
+        return dataTables::of($providers)
+            
+           
+                        ->addColumn('action', function ($providers) {
+
+                            // Delete permission auth
+                            $delete_form = '';
+            
+                            if (Auth::user()->is_admin==1 || Auth::user()->is_admin==2) {
+                           
+                             
+                                      $delete_form = '
+                            <form class="dropdown-item delete-house" method="POST" action="' . route('service-providers.destroy', $providers->id) . '">
+                                <input type="hidden" name="_method" value="delete" />
+                                <input type="hidden" name="_token" value="' . csrf_token() . '">
+                                <input class="btn btn-sm btn-danger btn-block" type="submit" value="Delete" />
+                            </form>';
+                           
+            
+                            $html = '<div class="text-right">
+                                        <div class="dropdown dropdown-action">
+                                            <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+                                            <div class="dropdown-menu dropdown-menu-right">
+                                             
+                                                <div class="dropdown-item ">
+                                                    <a class="btn btn-sm btn-info btn-block" href="' .  route('service-providers.edit', $providers->id) . '"> Edit</a>
+                                                </div>
+                                                <div class="dropdown-item ">
+                                                     ' . $delete_form . '
+                                                </div>
+                                           
+                                            </div>
+                                        </div>
+                                    </div>';
+            
+                            return $html;
+                                }
+                        
+                            } )
+                    
+           
+            ->rawColumns(['full_name','approval','name','house_no','status','action'])
+            ->toJson();
+
     }
 }

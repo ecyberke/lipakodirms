@@ -91,7 +91,7 @@
                                                 {{-- <div class="input-group-prepend">
                                                     <span class="input-group-text">Ksh:</span>
                                                 </div> --}}
-                                            <input type="text" class="form-control" name="rent_amount" value="{{ optional($house->rent)->amount ?? 0 }}">
+                                            <input type="text" class="form-control" name="rent_amount" value="{{ $house->rent->amount }}">
                                             </div>
                                        <div class="col-sm-4">
                                     <label >Payment Period <span class="text-danger">*</span></label>
@@ -113,67 +113,29 @@
                                     </div>
                                   
                                 </div><br>
-                              <div class="row">
-                            <div class="col-sm-6">
-                            <label >Electricity</label>
-                            <input type="text" class="form-control" name="electricity" value="{{ optional($house->rent)->electricity_bill ?? 0 }}">
-                        </div>
-                        <div class="col-sm-6">
-                            <label >Water</label>
-                            
-
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">Ksh</span>
-                                    </div>
-                                    <input type = "number" class= "form-control"
-                                           placeholder = "" name = "water"
-                                           value       = "{{ optional($house->rent)->water_bill ?? 0 }}" aria-describedby = "depositHelp">
-                                        
-                                </div>
-                               
+                    <div class="row">
+                         <div class="col-sm-4">
+                         <label >Statutory Fees</label>
                           
-                            
-                        </div>
-                            
-                        </div><br>
-                        <div class="row">
-                            <div class="col-sm-6">
-                            <label >Compound Cleaning and Maintenance</label>
-                            
-
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">Ksh</span>
-                                    </div>
-                                    <input type = "number" class= "form-control"
-                                           placeholder = "" name = "compound"
-                                           value       = "{{ optional($house->rent)->compound_bill ?? 0 }}" aria-describedby = "depositHelp">
-                                        
-                                </div>
-                               
+                           
+                         <input type="text" class="form-control" name="statutory_fee"  value="{{ $house->rent->statutory_fee }}">
+                                    
+                         </div>
+                    
+                         <div class="col-sm-4">
+                         <label >Service Charge</label>
                           
-                            
-                        </div>
-                            <div class="col-sm-6">
-                            <label >Litter Collection</label>
-                            
-
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">Ksh</span>
-                                    </div>
-                                    <input type = "number" class= "form-control"
-                                           placeholder = "" name = "litter"
-                                           value       = "{{ optional($house->rent)->litter_bill ?? 0 }}" aria-describedby = "depositHelp">
-                                        
-                                </div>
-                                
-                          
-                            
-                        </div>
-                            
-                        </div><br>
+                           
+                         <input type="text" class="form-control" name="service_charge"  value="{{ $house->rent->service_charge }}">
+                                    
+                    </div>
+                         <div class="col-sm-4">
+                         <label >Other Charges</label>
+                         <input type="text" class="form-control" name="other_charges"  value="{{ $house->rent->other_charges }}">
+                                    
+                    </div>
+                </div><br>
+                      
                                 <div class="row">
                                     <div class="col-sm-6">
                                     <label >House

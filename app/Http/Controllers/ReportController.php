@@ -44,7 +44,32 @@ class ReportController extends Controller
         $apartments = Apartment::pluck('id', 'name');
         $tenants = Tenant::pluck('id', 'full_name');
         $hasReport = false;
-        return view('report.property_status', compact('tenants', 'apartments','hasReport'));
+        $message = '';
+        return view('report.property_status', compact('tenants', 'apartments','hasReport', 'message'));
+    }
+     public function property_income_expense()
+    {
+        $apartments = Apartment::pluck('id', 'name');
+        $tenants = Tenant::pluck('id', 'full_name');
+        $hasReport = false;
+        $message = '';
+        return view('report.property_income_expense', compact('tenants', 'apartments','hasReport', 'message'));
+    }
+      public function property_occupancy_expense()
+    {
+        $apartments = Apartment::pluck('id', 'name');
+        $tenants = Tenant::pluck('id', 'full_name');
+        $hasReport = false;
+        $message = '';
+        return view('report.occupancy', compact('tenants', 'apartments','hasReport', 'message'));
+    }
+      public function rent()
+    {
+        $apartments = Apartment::pluck('id', 'name');
+        $tenants = Tenant::pluck('id', 'full_name');
+        $hasReport = false;
+        $message = '';
+        return view('report.rent', compact('tenants', 'apartments','hasReport', 'message'));
     }
      public function preprintedform()
     {
@@ -59,6 +84,13 @@ class ReportController extends Controller
         $tenants = Tenant::pluck('id', 'full_name');
         $hasReport = false;
         return view('report.agency_status', compact('tenants', 'apartments','hasReport'));
+    }
+     public function agency_income_expense()
+    {
+        $apartments = Apartment::pluck('id', 'name');
+        $tenants = Tenant::pluck('id', 'full_name');
+        $hasReport = false;
+        return view('report.income_expense', compact('tenants', 'apartments','hasReport'));
     }
     
      public function prop_income()
@@ -130,8 +162,11 @@ class ReportController extends Controller
         // dd($request->all());
         switch ( $request->type) {
           case 'vacant':
-              
+            if( $request->apartment == 0){
+             $info = House::with('apartment')->where('is_occupied',false)->get();   
+            }else{
         $info = House::with('apartment')->where('is_occupied',false)->where('apartment_id',$request->apartment)->get();
+            }
         
         foreach($info as $dt){
             $dt['apartment_name'] = $dt['apartment']['name'];
@@ -165,14 +200,18 @@ class ReportController extends Controller
        
         $data['columns']=$columns;
         $data['data']=$info;
-             $data['typ']='Vacant';
+        $data['typ']='Vacant';
         $data['report_title']='Vacant Houses Report';
         $data['hasReport'] = true;
             $data['filename'] =  $data['report_title'];
             break;
         case 'occupied':
+            
+             if( $request->apartment == 0){
+             $info = House::with('apartment')->where('is_occupied',true)->get();   
+            }else{
             $info = House::with('apartment','tenant')->where('is_occupied',true)->where('apartment_id',$request->apartment)->get();
-        
+            }
         foreach($info as $dt){
             $house = HouseTenant::where('house_id',$dt->id)->first();
             $tenant_data = Tenant::where('id',$house->tenant_id)->first();
@@ -365,7 +404,12 @@ class ReportController extends Controller
          $data['filename'] = 'All Property Owners Report';
         break;
          case 'all_properties':
-            $info = Apartment::with('landlord')->get();
+             dd($request->prop);
+             if($request->prop == 'active'){
+            $info = Apartment::with('landlord')->where('active', 1)->get();
+             }else{
+               $info = Apartment::with('landlord')->where('active', 0)->get();  
+             }
             
         foreach($info as $dt){
             $dt['landlord_name'] = $dt['landlord']['full_name'];
@@ -396,9 +440,18 @@ class ReportController extends Controller
         ];
         $data['columns']=$columns;
         $data['data']=$info;
-        $data['report_title']='All Properties';
+        $data['typ']='Pop';
+        if($request->prop == 'active'){
+        $data['report_title']='All Active Properties';
+        }else{
+        $data['report_title']='All Inactive Properties';    
+        }
         $data['has_report'] = true;
-          $data['filename'] = 'All Properties Report';
+         if($request->prop == 'active'){
+          $data['filename'] = 'All Active Properties Report';
+         }else{
+        $data['filename'] = 'All Inactive Properties Report'; 
+        }
         break;
          case 'all_houses':
             $info = House::with('apartment')->get();
@@ -450,7 +503,10 @@ class ReportController extends Controller
            return view('report.vacant_report',$data); 
             }else if($data['typ'] === 'Occupied'){
         return view('report.occupied_report',$data);   
-            }else if($data['typ'] === 'Notice'){
+            }
+           else if($data['typ'] === 'Pop'){
+        return view('report.all_properties',$data);   
+            } else if($data['typ'] === 'Notice'){
              return view('report.notice_report',$data);    
             }else if($data['typ'] === 'tenantBalances'){
             return view('report.tenant_balance',$data);  
@@ -919,15 +975,25 @@ class ReportController extends Controller
         
         break;
          case 'all_properties':
-        
+        if($request->prop == 'active'){
         if($from){
         $info = Apartment::with('landlord')
-        ->where('created_at', '>=', $from)
+        ->where('active', 1)->where('created_at', '>=', $from)
         ->where('created_at', '<=', $to. " 23:59:00")
         ->get();
         }else{
-        $info = Apartment::with('landlord')->get();  
+        $info = Apartment::with('landlord')->where('active', 1)->get();  
         } 
+        }else{
+         if($from){
+        $info = Apartment::with('landlord')
+        ->where('active', 0)->where('created_at', '>=', $from)
+        ->where('created_at', '<=', $to. " 23:59:00")
+        ->get();
+        }else{
+        $info = Apartment::with('landlord')->where('active', 0)->get();  
+        }    
+        }
         // $request->validate([
         //     'from'=>'required|date',
         //     'to'=>'required|date'
@@ -961,10 +1027,14 @@ class ReportController extends Controller
         ];
         $data['columns']=$columns;
         $data['data']=$info;
-        $data['report_title']='All Properties';
-        $data['has_report'] = true;
-          $data['filename'] = 'All Properties Report';
-          
+        if($request->prop == 'active'){
+        $data['report_title']='All Active Properties';
+        $data['filename'] = 'All Active Properties Report';
+        }else{
+         $data['report_title']='All Inactive Properties';
+        $data['filename'] = 'All Inactive Properties Report';   
+        }
+        $data['has_report'] = true;  
         $dt = date('Y-m-d H:i:s');
         if($request->download === 'yes'){
         $pdf = \PDF::loadView('docs.house_report_pdf', $data);

@@ -191,120 +191,120 @@
 
                             </div>
                         </div><br>
-                        <div class="col-sm-12">
-                                    <hr>
-                                </div>
-                                <div class="col-sm-12">
-                                    <h4 class="text-muted m-b-30 font-14">ADD BILLS
-                                    </h4>
-                                </div><hr>
+                      <!--  <div class="col-sm-12">-->
+                      <!--              <hr>-->
+                      <!--          </div>-->
+                      <!--          <div class="col-sm-12">-->
+                      <!--              <h4 class="text-muted m-b-30 font-14">ADD BILLS-->
+                      <!--              </h4>-->
+                      <!--          </div><hr>-->
 
-                      <div class="row">
-                            <div class="col-sm-4">
-                            <label >Electricity</label>
+                      <!--<div class="row">-->
+                      <!--      <div class="col-sm-4">-->
+                      <!--      <label >Electricity</label>-->
                             
 
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">Ksh</span>
-                                    </div>
-                                    <input type = "number" class= "form-control"
-                                           placeholder = "" name = "electricity_bill"
-                                           value       = "0" aria-describedby = "depositHelp">
+                      <!--          <div class="input-group">-->
+                      <!--              <div class="input-group-prepend">-->
+                      <!--                  <span class="input-group-text">Ksh</span>-->
+                      <!--              </div>-->
+                      <!--              <input type = "number" class= "form-control"-->
+                      <!--                     placeholder = "" name = "electricity_bill"-->
+                      <!--                     value       = "0" aria-describedby = "depositHelp">-->
                                         
-                                </div>
-                                <span class="form-text text-muted text-info">Defaults to " 0 " if no bill input is done.</span>
+                      <!--          </div>-->
+                      <!--          <span class="form-text text-muted text-info">Defaults to " 0 " if no bill input is done.</span>-->
                           
                             
-                        </div>
-                        <div class="col-sm-4">
-                            <label >Water</label>
+                      <!--  </div>-->
+                      <!--  <div class="col-sm-4">-->
+                      <!--      <label >Water</label>-->
                             
 
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">Ksh</span>
-                                    </div>
-                                    <input type = "number" class= "form-control"
-                                           placeholder = "" name = "water_bill"
-                                           value       = "0" aria-describedby = "depositHelp">
+                      <!--          <div class="input-group">-->
+                      <!--              <div class="input-group-prepend">-->
+                      <!--                  <span class="input-group-text">Ksh</span>-->
+                      <!--              </div>-->
+                      <!--              <input type = "number" class= "form-control"-->
+                      <!--                     placeholder = "" name = "water_bill"-->
+                      <!--                     value       = "0" aria-describedby = "depositHelp">-->
                                         
-                                </div>
-                                <span class="form-text text-muted text-info">Defaults to " 0 " if no bill input is done.</span>
+                      <!--          </div>-->
+                      <!--          <span class="form-text text-muted text-info">Defaults to " 0 " if no bill input is done.</span>-->
                           
                             
-                        </div>
-                            <div class="col-sm-4">
-                            <label >Compound Cleaning and Maintenance</label>
+                      <!--  </div>-->
+                      <!--      <div class="col-sm-4">-->
+                      <!--      <label >Compound Cleaning and Maintenance</label>-->
                             
 
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">Ksh</span>
-                                    </div>
-                                    <input type = "number" class= "form-control"
-                                           placeholder = "" name = "compound_bill"
-                                           value       = "0" aria-describedby = "depositHelp">
+                      <!--          <div class="input-group">-->
+                      <!--              <div class="input-group-prepend">-->
+                      <!--                  <span class="input-group-text">Ksh</span>-->
+                      <!--              </div>-->
+                      <!--              <input type = "number" class= "form-control"-->
+                      <!--                     placeholder = "" name = "compound_bill"-->
+                      <!--                     value       = "0" aria-describedby = "depositHelp">-->
                                         
-                                </div>
-                                <span class="form-text text-muted text-info">Defaults to " 0 " if no bill input is done.</span>
+                      <!--          </div>-->
+                      <!--          <span class="form-text text-muted text-info">Defaults to " 0 " if no bill input is done.</span>-->
                           
                             
-                        </div>
-                        </div><br>
-                        <div class="row">
-                            <div class="col-sm-4">
-                            <label >Litter Collection</label>
+                      <!--  </div>-->
+                      <!--  </div><br>-->
+                      <!--  <div class="row">-->
+                      <!--      <div class="col-sm-4">-->
+                      <!--      <label >Litter Collection</label>-->
                             
 
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">Ksh</span>
-                                    </div>
-                                    <input type = "number" class= "form-control"
-                                           placeholder = "" name = "litter_bill"
-                                           value       = "0" aria-describedby = "depositHelp">
+                      <!--          <div class="input-group">-->
+                      <!--              <div class="input-group-prepend">-->
+                      <!--                  <span class="input-group-text">Ksh</span>-->
+                      <!--              </div>-->
+                      <!--              <input type = "number" class= "form-control"-->
+                      <!--                     placeholder = "" name = "litter_bill"-->
+                      <!--                     value       = "0" aria-describedby = "depositHelp">-->
                                         
-                                </div>
-                                <span class="form-text text-muted text-info">Defaults to " 0 " if no bill input is done.</span>
+                      <!--          </div>-->
+                      <!--          <span class="form-text text-muted text-info">Defaults to " 0 " if no bill input is done.</span>-->
                           
                             
-                        </div>
-                        <div class="col-sm-4">
-                            <label >Security</label>
+                      <!--  </div>-->
+                      <!--  <div class="col-sm-4">-->
+                      <!--      <label >Security</label>-->
                             
 
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">Ksh</span>
-                                    </div>
-                                    <input type = "number" class= "form-control"
-                                           placeholder = "" name = "security"
-                                           value       = "0" aria-describedby = "depositHelp">
+                      <!--          <div class="input-group">-->
+                      <!--              <div class="input-group-prepend">-->
+                      <!--                  <span class="input-group-text">Ksh</span>-->
+                      <!--              </div>-->
+                      <!--              <input type = "number" class= "form-control"-->
+                      <!--                     placeholder = "" name = "security"-->
+                      <!--                     value       = "0" aria-describedby = "depositHelp">-->
                                         
-                                </div>
-                                <span class="form-text text-muted text-info">Defaults to " 0 " if no bill input is done.</span>
+                      <!--          </div>-->
+                      <!--          <span class="form-text text-muted text-info">Defaults to " 0 " if no bill input is done.</span>-->
                           
                             
-                        </div>
-                            <div class="col-sm-4">
-                            <label >Others</label>
+                      <!--  </div>-->
+                      <!--      <div class="col-sm-4">-->
+                      <!--      <label >Others</label>-->
                             
 
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">Ksh</span>
-                                    </div>
-                                    <input type = "number" class= "form-control"
-                                           placeholder = "" name = "other_bill"
-                                           value       = "0" aria-describedby = "depositHelp">
+                      <!--          <div class="input-group">-->
+                      <!--              <div class="input-group-prepend">-->
+                      <!--                  <span class="input-group-text">Ksh</span>-->
+                      <!--              </div>-->
+                      <!--              <input type = "number" class= "form-control"-->
+                      <!--                     placeholder = "" name = "other_bill"-->
+                      <!--                     value       = "0" aria-describedby = "depositHelp">-->
                                         
-                                </div>
-                                <span class="form-text text-muted text-info">Defaults to " 0 " if no bill input is done.</span>
+                      <!--          </div>-->
+                      <!--          <span class="form-text text-muted text-info">Defaults to " 0 " if no bill input is done.</span>-->
                           
                             
-                        </div>
-                        </div><br>
+                      <!--  </div>-->
+                      <!--  </div><br>-->
                        
 
                         <div class="row mb-4">

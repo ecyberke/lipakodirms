@@ -118,7 +118,7 @@
                                 
                                 </div>
                                 <div class="col-sm-6">
-                                    <label>Agency Fee
+                                    <label>Management Fee
                                         Percentage <span class="text-muted test-small"></span></label>
                                         <div class="input-group ">
                                             <input type="text" class="form-control" aria-label="Management fee"
@@ -134,8 +134,138 @@
                                 
 
                         </div><br>
+                        <div class="col-sm-12">
+                                    <hr>
+                                </div>
+                                <div class="col-sm-12">
+                                    <h4 class="text-muted m-b-30 font-14">PROPERTY BILLS
+                                    </h4>
+                                </div><hr>
+
+                      <div class="row">
+                            <div class="col-sm-4">
+                            <label >Electricity</label>
                             
 
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Ksh</span>
+                                    </div>
+                                    <input type = "number" class= "form-control"
+                                           placeholder = "" name = "electricity"
+                                           value       = "" aria-describedby = "depositHelp">
+                                        
+                                </div>
+                                <span class="form-text text-muted text-info">Defaults to " 0 " if no bill input is done.</span>
+                          
+                            
+                        </div>
+                        <div class="col-sm-4">
+                            <label >Water</label>
+                            
+
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Ksh</span>
+                                    </div>
+                                    <input type = "number" class= "form-control"
+                                           placeholder = "" name = "water"
+                                           value       = "" aria-describedby = "depositHelp">
+                                        
+                                </div>
+                                <span class="form-text text-muted text-info">Defaults to " 0 " if no bill input is done.</span>
+                          
+                            
+                        </div>
+                            <div class="col-sm-4">
+                            <label >Cleaning</label>
+                            
+
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Ksh</span>
+                                    </div>
+                                    <input type = "number" class= "form-control"
+                                           placeholder = "" name = "cleaning"
+                                           value       = "" aria-describedby = "depositHelp">
+                                        
+                                </div>
+                                <span class="form-text text-muted text-info">Defaults to " 0 " if no bill input is done.</span>
+                          
+                            
+                        </div>
+                        </div><br>
+                        <div class="row">
+                            <div class="col-sm-3">
+                            <label >Garbage Collection</label>
+                            
+
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Ksh</span>
+                                    </div>
+                                    <input type = "number" class= "form-control"
+                                           placeholder = "" name = "garbage"
+                                           value       = "" aria-describedby = "depositHelp">
+                                        
+                                </div>
+                                <span class="form-text text-muted text-info">Defaults to " 0 " if no bill input is done.</span>
+                          
+                            
+                        </div>
+                        <div class="col-sm-3">
+                            <label >Security</label>
+                            
+
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Ksh</span>
+                                    </div>
+                                    <input type = "number" class= "form-control"
+                                           placeholder = "" name = "security"
+                                           value       = "" aria-describedby = "depositHelp">
+                                        
+                                </div>
+                                <span class="form-text text-muted text-info">Defaults to " 0 " if no bill input is done.</span>
+                          
+                            
+                        </div>
+                            <div class="col-sm-3">
+                            <label >Sewer / Sanitation</label>
+                            
+
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Ksh</span>
+                                    </div>
+                                    <input type = "number" class= "form-control"
+                                           placeholder = "" name = "sewer"
+                                           value       = "" aria-describedby = "depositHelp">
+                                        
+                                </div>
+                                <span class="form-text text-muted text-info">Defaults to " 0 " if no bill input is done.</span>
+                          
+                            
+                        </div>
+                         <div class="col-sm-3">
+                            <label >Internet</label>
+                            
+
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Ksh</span>
+                                    </div>
+                                    <input type = "number" class= "form-control"
+                                           placeholder = "" name = "internet"
+                                           value       = "" aria-describedby = "depositHelp">
+                                        
+                                </div>
+                                <span class="form-text text-muted text-info">Defaults to " 0 " if no bill input is done.</span>
+                          
+                            
+                        </div>
+                       
+                        </div><br>
                             <div class="row">
                                 <div class="col-sm-8  ">
                                     <button type="submit" class="btn btn-success mr-3">Add Property

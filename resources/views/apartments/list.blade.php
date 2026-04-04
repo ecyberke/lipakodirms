@@ -30,7 +30,7 @@
                 <div class="card-body">
                     {{-- <h4 class="mt-0 header-title">Properties</h4> --}}
                     </p>
-
+<div class="table-responsive">
                     <table id="apartments-table" class="table table-striped custom-table mb-0 "
                        >
                         <thead>
@@ -49,6 +49,7 @@
 
                         </tbody>
                     </table>
+                    </div>
                 </div>
             </div>
         </div> <!-- end col -->

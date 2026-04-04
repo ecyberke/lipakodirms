@@ -1,7 +1,7 @@
 <!-- Title -->
-<title>Lipakodi Property Management System</title>
+<title>Lesa Property Agency</title>
 <!--Favicon -->
-<link rel="icon" href="{{URL::asset('assets/images/favicon-1675497104.png')}}" type="image/x-icon"/>
+<link rel="icon" href="{{URL::asset('assets/images/les.png')}}" type="image/x-icon"/>
 <!-- Bootstrap css -->
 <link href="{{URL::asset('assets/plugins/bootstrap/css/bootstrap.css')}}" rel="stylesheet" />
 <!-- Style css -->

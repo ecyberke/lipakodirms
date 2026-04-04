@@ -10,7 +10,7 @@
     <!-- App css -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     {{-- <link href=" {{ asset('assets/css/invoice_bootstrap.min.css') }} " rel="stylesheet" type="text/css" /> --}}
-    <link href=" {{ asset('assets/css/invoice_style.css') }} " rel="stylesheet" type="text/css" />
+    <link href=" {{ asset('assets/css/invoice_style_new.css') }} " rel="stylesheet" type="text/css" />
 </head>
 
 <body>
@@ -296,9 +296,17 @@
                                                   <strong>Pay via Lipa na Mpesa (Paybill)</strong><br>
                                                           Business Number: <b>743994</b><br>
                                                           Account Number: @if($invoice->tenant_id != null) {{$invoice->tenant->account_number}} @else {{$invoice->tenant_acc}} @endif<br>
-                                                          Amount: {{number_format($invoice->balance )}}<br>
+                                                          Amount: Ksh. {{number_format($invoice->balance )}}<br>
                                             
                                             </small>
+                                            <br><br>
+                                             <small class="text-muted">
+                                    <strong>Pay via Bank Transfer</strong><br>
+                                    Bank: <strong>NCBA PLC</strong><br>
+                                    Account: 5864350011<br>
+                                    Name: Lesa Property Agency Ltd<br>
+                                    Amount: Ksh. {{number_format($invoice->balance )}}
+                                </small><br>
                                              @endif
                                             All rent payments are due on or before 5th-{{$invoice->rent_month}}
                                         </div>

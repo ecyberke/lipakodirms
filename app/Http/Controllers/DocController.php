@@ -9,18 +9,25 @@ use App\MonthlyBilling;
 use App\Overpayment;
 use App\PayOwners;
 use App\Landlord;
+use App\Onboarding;
 use App\Tenant;
 use App\Apartment;
 use App\Traits\DocTrait;
 use App\Traits\UtilTrait;
 use Illuminate\Http\Request;
 use PDF;
+use DB;
 use Carbon\Carbon;
 
 class DocController extends Controller
 {
-    use DocTrait;
     use UtilTrait;
+    use DocTrait;
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
 
     public function tenant_statement(Request $request)
     {
@@ -181,99 +188,506 @@ class DocController extends Controller
         return $this->agencyStatementViewTester($info,$download);
         return response()->json($info);
     }
-    public function property_status_report(Request $request)
-    {
-        // dd($request);
-        $fields = $request->validate([
-            'rent_month' => 'required',
-            'apartment_id' => 'required'
-        ]);
-        
-        $rent_month = date("M-Y", strtotime($fields['rent_month']));
-     
-        $previous_rent_month = date("M-Y", strtotime ( '-1 month' , strtotime ( $fields['rent_month'] ) )) ;
-      
-        $month_invoices = Invoice::with('tenant','house')->where('rent_month', $rent_month)->where('type','!=','House Viewing')->where('apartment_id', $fields['apartment_id'])->get()->sortBy('house_id');
-        $previous_month_invoices = Invoice::with('tenant','house')->where('rent_month','<=', $previous_rent_month)->where('type','!=','House Viewing')->where('apartment_id', $fields['apartment_id'])->get()->sortBy('house_id');
+  public function property_status_report(Request $request)
+{
+    $fields = $request->validate([
+        'rent_month' => 'required',
+        'apartment_id' => 'required'
+    ]);
 
-        $property_info = Apartment::with('landlord')->where('id',$month_invoices[0]['apartment_id'])->first();
-        // ['rent_month','apartment_name','house_name','rent','total_payable','carryforward','paid_in']
-        
-        foreach ($month_invoices as $invoice) {
-            $prev_arreas = Invoice::where('tenant_id', $invoice->tenant_id)->where('rent_month', '!=', $rent_month)->sum('total_payable');
-            $all_invs = Invoice::where('tenant_id', $invoice->tenant_id)->where('type','!=','House Viewing')->get();
-            $total_current_month = Invoice::where('tenant_id', $invoice->tenant_id)->where('rent_month', $rent_month)->where('type','!=','House Viewing')->sum('total_payable');
-           
-            
-            $all_invs = $all_invs->filter(function ($value, $key) use ($rent_month) {
-                if (strtotime($value['rent_month']) <= strtotime($rent_month)) {
-                    return true;
-                }
-            });
-            $prev_invs = $all_invs->filter(function ($value, $key) use ($rent_month) {
-                if (strtotime($value['rent_month']) < strtotime($rent_month)) {
-                    return true;
-                }
-            });
-            
-            $invoice['total_payable'] = $total_current_month + $prev_invs->sum('balance');
-            $invoice['balance'] = $all_invs->sum('balance');
-        }
-        $total_paid_in =  $month_invoices->sum('paid_in');
-        $total_rent =  $month_invoices->sum('rent');
-        $total_payable =  $month_invoices->sum('total_payable');
-        $total_carryforward =  $month_invoices->sum('deposit_paid');
-        $total_balance =  $total_payable-$total_paid_in;
-        $total_bills =  $month_invoices->sum('electricity_bill') + $month_invoices->sum('litter_bill') + $month_invoices->sum('water_bill') + $month_invoices->sum('security') +$month_invoices->sum('compound_bill') + $month_invoices->sum('other_bill');
-        
-        $property_name =  $property_info->name;
-        $property_owner =  $property_info->landlord->full_name;
-        // dd($month_invoices);
-        // dd($total_paid_in);
+    $rent_month = date("M-Y", strtotime($fields['rent_month']));
+    $previous_rent_month = date("M-Y", strtotime('-1 month', strtotime($fields['rent_month'])));
 
-        
-        $filled ='yes';
-        if ($request->download) {
-            $download ='yes';
-            if($request->filled === 'no'){
-            $filled ='no';
-            }
-        }else{
-            $download='no';
-        }
-        $info = [
-            'entries'=>$month_invoices,
-            'rent_month'=> $rent_month,
-            'total_paid_in'=>$total_paid_in,
-            'total_rent'=>$total_rent,
-            'total_bills'=>$total_bills,
-            'total_payable'=>$total_payable,
-            'total_carryforward'=>$total_carryforward,
-            'total_balance'=>$total_balance,
-            'property_owner'=>$property_owner,
-            'property_name'=>$property_name,
-            ];
+    // Fetch invoices for the current and previous month
+    $month_invoices = Invoice::with('tenant', 'house')
+        ->where('rent_month', $rent_month)
+        ->where('type', '!=', 'House Viewing')
+        ->where('apartment_id', $fields['apartment_id'])
+        ->get()
+        ->sortBy('house_id');
 
-        // $date_of_statement = date('jS M Y');
-        // $this->createLog([
-        //     'username' => auth()->user()->username,
-        //     'operation' => 'Agency Statement Generated',
-        //     'more_info' => 'General Agency Statement',
-        //     'tenant_id' => '0',
-        //             'house_id' => '0',
-        //             'apartment_id' => '0',
-        //             'landlord_id' => '0',
-        //             'bill_id' => '0',
-        //             'invoice_id' => '0',
-        //             'sms_id' => '0',
-        //             'user_id' => '0',
-        //             'servicerequest_id' => '0',
-        // ]);
-
+    $previous_month_invoices = Invoice::with('tenant', 'house')
+        ->where('rent_month', '<=', $previous_rent_month)
+        ->where('type', '!=', 'House Viewing')
+        ->where('apartment_id', $fields['apartment_id'])
+        ->get()
+        ->sortBy('house_id');
+     $aprt = Apartment::where('id', $fields['apartment_id'])->first();
+    // Check if there are any invoices for the month
+    if ($month_invoices->isEmpty()) {
         
-        return $this->propertyStatusViewTester($info,$download,$filled);
-        return response()->json($info);
+         $apartments = Apartment::pluck('id', 'name');
+        $tenants = Tenant::pluck('id', 'full_name');
+        $hasReport = false;
+        $message = 'INACTIVE PROPERTY! No invoice found for ' . $aprt->name . ' in the month of ' . $rent_month;
+      return view('report.property_status', compact('message','tenants', 'apartments','hasReport'));
+       
     }
+
+    // Fetch property info if there's at least one invoice
+    $property_info = Apartment::with('landlord')->where('id', $fields['apartment_id'])->first();
+    // if (!$property_info) {
+    //      return back()->with('error', 'No Apartment in the month chosen.');
+       
+    // }
+
+    // Process each invoice
+    foreach ($month_invoices as $invoice) {
+        $prev_arrears = Invoice::where('tenant_id', $invoice->tenant_id)
+            ->where('rent_month', '!=', $rent_month)->where('house_id', $invoice->house_id)
+            ->sum('total_payable');
+
+        $all_invs = Invoice::where('tenant_id', $invoice->tenant_id)
+            ->where('type', '!=', 'House Viewing')->where('house_id', $invoice->house_id)
+            ->get();
+
+        $total_current_month = Invoice::where('tenant_id', $invoice->tenant_id)
+            ->where('rent_month', $rent_month)->where('house_id', $invoice->house_id)
+            ->where('type', '!=', 'House Viewing')
+            ->sum('balance');
+
+        // Filter invoices for previous months
+        $all_invs = $all_invs->filter(function ($value) use ($rent_month) {
+            return strtotime($value['rent_month']) <= strtotime($rent_month);
+        });
+
+        $prev_invs = $all_invs->filter(function ($value) use ($rent_month) {
+            return strtotime($value['rent_month']) < strtotime($rent_month);
+        });
+
+        $invoice['total_payable'] = $total_current_month + $prev_invs->sum('balance');
+        $invoice['balance'] = $all_invs->sum('balance');
+    }
+
+    // Calculate totals
+    $total_paid_in = $month_invoices->sum('paid_in');
+    $total_rent = $month_invoices->sum('rent');
+    $total_payable = $month_invoices->sum('total_payable');
+    $total_carryforward = $month_invoices->sum('deposit_paid');
+    $total_balance = $total_payable - $total_paid_in;
+    $total_bills = $month_invoices->sum('electricity_bill') +
+                   $month_invoices->sum('litter_bill') +
+                   $month_invoices->sum('water_bill') +
+                   $month_invoices->sum('security') +
+                   $month_invoices->sum('compound_bill') +
+                   $month_invoices->sum('other_bill');
+
+    $property_name = $property_info->name;
+    $property_owner = $property_info->landlord->full_name;
+    $message = '';
+
+    $filled = 'yes';
+    $download = 'no';
+    if ($request->download) {
+        $download = 'yes';
+        if ($request->filled === 'no') {
+            $filled = 'no';
+        }
+    }
+
+    $info = [
+        'entries' => $month_invoices,
+        'rent_month' => $rent_month,
+        'total_paid_in' => $total_paid_in,
+        'total_rent' => $total_rent,
+        'total_bills' => $total_bills,
+        'total_payable' => $total_payable,
+        'total_carryforward' => $total_carryforward,
+        'total_balance' => $total_balance,
+        'property_owner' => $property_owner,
+        'property_name' => $property_name,
+        'message' => $message,
+    ];
+
+    return $this->propertyStatusViewTester($info, $download, $filled);
+}
+
+  public function property_income_expense_report(Request $request)
+{
+    $fields = $request->validate([
+        'rent_month' => 'required',
+        'apartment_id' => 'required'
+    ]);
+
+    $rent_month = date("M-Y", strtotime($fields['rent_month']));
+    $previous_rent_month = date("M-Y", strtotime('-1 month', strtotime($fields['rent_month'])));
+
+    // Fetch invoices for the current and previous month
+    $month_invoices = Invoice::with('tenant', 'house')
+        ->where('rent_month', $rent_month)
+        ->where('type', '!=', 'House Viewing')
+        ->where('apartment_id', $fields['apartment_id'])
+        ->get()
+        ->sortBy('house_id');
+
+    $previous_month_invoices = Invoice::with('tenant', 'house')
+        ->where('rent_month', '<=', $previous_rent_month)
+        ->where('type', '!=', 'House Viewing')
+        ->where('apartment_id', $fields['apartment_id'])
+        ->get()
+        ->sortBy('house_id');
+     $aprt = Apartment::where('id', $fields['apartment_id'])->first();
+    // Check if there are any invoices for the month
+    if ($month_invoices->isEmpty()) {
+        
+         $apartments = Apartment::pluck('id', 'name');
+        $tenants = Tenant::pluck('id', 'full_name');
+        $hasReport = false;
+        $message = 'INACTIVE PROPERTY! No invoice found for ' . $aprt->name . ' in the month of ' . $rent_month;
+      return view('report.property_status', compact('message','tenants', 'apartments','hasReport'));
+       
+    }
+
+    // Fetch property info if there's at least one invoice
+    $property_info = Apartment::with('landlord')->where('id', $fields['apartment_id'])->first();
+    // if (!$property_info) {
+    //      return back()->with('error', 'No Apartment in the month chosen.');
+       
+    // }
+
+    // Process each invoice
+    foreach ($month_invoices as $invoice) {
+        $prev_arrears = Invoice::where('tenant_id', $invoice->tenant_id)
+            ->where('rent_month', '!=', $rent_month)->where('house_id', $invoice->house_id)
+            ->sum('total_payable');
+
+        $all_invs = Invoice::where('tenant_id', $invoice->tenant_id)
+            ->where('type', '!=', 'House Viewing')->where('house_id', $invoice->house_id)
+            ->get();
+
+        $total_current_month = Invoice::where('tenant_id', $invoice->tenant_id)
+            ->where('rent_month', $rent_month)->where('house_id', $invoice->house_id)
+            ->where('type', '!=', 'House Viewing')
+            ->sum('balance');
+
+        // Filter invoices for previous months
+        $all_invs = $all_invs->filter(function ($value) use ($rent_month) {
+            return strtotime($value['rent_month']) <= strtotime($rent_month);
+        });
+
+        $prev_invs = $all_invs->filter(function ($value) use ($rent_month) {
+            return strtotime($value['rent_month']) < strtotime($rent_month);
+        });
+
+        $invoice['total_payable'] = $total_current_month + $prev_invs->sum('balance');
+        $invoice['balance'] = $all_invs->sum('balance');
+    }
+    // dd($month_invoices->sum('total_payable'));
+    //service bills
+    $service_bill_water = $property_info->water;
+    $service_bill_sewer = $property_info->sewer;
+    $service_bill_electricity = $property_info->electricity;
+    $service_bill_internet = $property_info->internet;
+    $service_bill_garbage = $property_info->garbage;
+    $service_bill_cleaning = $property_info->cleaning;
+    $service_bill_security = $property_info->security;
+    $sum_service_bill = $service_bill_water + $service_bill_sewer + $service_bill_electricity +   $service_bill_internet +  $service_bill_garbage +  $service_bill_cleaning +  $service_bill_security;
+    
+    //service requests
+    $expenses = PayOwners::where('bill_category', 'service_request')->where('apartment_id', $property_info->id )->get();
+    
+     //remittance_bills
+     $paidforbills = PayOwners::where('bill_type', 'rent')->where('apartment_id', $property_info->id )->where('bill_category','!=', 'Remits')->get();
+     $remittance = PayOwners::where('bill_type', 'rent')->where('apartment_id', $property_info->id )->where('bill_category', 'Remits')->get();
+     
+
+    // Calculate totals
+    $total_paid_in = $month_invoices->sum('paid_in');
+    $expense_total = $expenses->sum('paid_in') ?? 0;
+    $expense_balance = $expenses->sum('balance') ?? 0;
+    $expense_total_owned = $expenses->sum('total_owned') ?? 0;
+    $paidforbills_total = $paidforbills->sum('paid_in') ?? 0;
+    $paidforbills_balance = $paidforbills->sum('balance') ?? 0;
+    $paidforbills_total_owned = $paidforbills->sum('total_owned') ?? 0;
+    $service_bill_total = $sum_service_bill ?? 0;
+    $remittance_total =  $remittance->sum('paid_in') ?? 0;
+    $total_rent = $month_invoices->sum('rent') ?? 0;
+    $total_payable = $month_invoices->sum('total_payable');
+    $total_carryforward = $month_invoices->sum('deposit_paid');
+    $total_balance =$month_invoices->sum('balance');
+    $total_bills = $month_invoices->sum('electricity_bill') +
+                   $month_invoices->sum('litter_bill') +
+                   $month_invoices->sum('water_bill') +
+                   $month_invoices->sum('security') +
+                   $month_invoices->sum('compound_bill') +
+                   $month_invoices->sum('other_bill');
+
+    $property_name = $property_info->name;
+    $property_owner = $property_info->landlord->full_name;
+    $property_mgt = $property_info->management_fee_percentage;
+    $message = '';
+
+    $filled = 'yes';
+    $download = 'no';
+    if ($request->download) {
+        $download = 'yes';
+        if ($request->filled === 'no') {
+            $filled = 'no';
+        }
+    }
+
+    $info = [
+        'income_entries' => $month_invoices,
+        'service_request_entries' => $expenses,
+        'bill_entries' => $paidforbills,
+        'rent_month' => $rent_month,
+        'total_paid_in' => $total_paid_in,
+        'expense_total' => $expense_total,
+        'expense_balance' => $expense_balance,
+        'expense_total_owned' => $expense_total_owned,
+        'paidforbills_total' => $paidforbills_total,
+        'paidforbills_balance' => $paidforbills_balance,
+        'paidforbills_total_owned' => $paidforbills_total_owned,
+        'service_bill_total' => $sum_service_bill ,
+        'remittance_total' => $remittance_total,
+        'total_rent' => $total_rent,
+        'total_bills' => $total_bills,
+        'total_payable' => $total_payable,
+        'total_carryforward' => $total_carryforward,
+        'total_balance' => $total_balance,
+        'property_owner' => $property_owner,
+        'property_name' => $property_name,
+        'property_mgt' => $property_mgt,
+        'service_bill_water' => $service_bill_water ?? 0,
+        'service_bill_electricity' => $service_bill_electricity ?? 0,
+        'service_bill_sewer' => $service_bill_sewer ?? 0,
+        'service_bill_internet' => $service_bill_internet ?? 0,
+        'service_bill_garbage' => $service_bill_garbage ?? 0,
+        'service_bill_cleaning' => $service_bill_cleaning ?? 0,
+        'service_bill_security' => $service_bill_security ?? 0,
+        'message' => $message,
+    ];
+
+    return $this->propertyIncomeExpenseViewTester($info, $download, $filled);
+}
+
+  public function occupancy_expense_report(Request $request)
+{
+    $fields = $request->validate([
+        'rent_month' => 'required',
+        'apartment_id' => 'required'
+    ]);
+
+    $rent_month = date("M-Y", strtotime($fields['rent_month']));
+    $previous_rent_month = date("M-Y", strtotime('-1 month', strtotime($fields['rent_month'])));
+
+    // Fetch invoices for the current and previous month
+    $month_invoices = Invoice::with('tenant', 'house')
+        ->where('rent_month', $rent_month)
+        ->where('type', '!=', 'House Viewing')
+        ->where('apartment_id', $fields['apartment_id'])
+        ->get()
+        ->sortBy('house_id');
+
+    $previous_month_invoices = Invoice::with('tenant', 'house')
+        ->where('rent_month', '<=', $previous_rent_month)
+        ->where('type', '!=', 'House Viewing')
+        ->where('apartment_id', $fields['apartment_id'])
+        ->get()
+        ->sortBy('house_id');
+     $aprt = Apartment::where('id', $fields['apartment_id'])->first();
+    // Check if there are any invoices for the month
+    if ($month_invoices->isEmpty()) {
+        
+         $apartments = Apartment::pluck('id', 'name');
+        $tenants = Tenant::pluck('id', 'full_name');
+        $hasReport = false;
+        $message = 'INACTIVE PROPERTY! No invoice found for ' . $aprt->name . ' in the month of ' . $rent_month;
+      return view('report.property_status', compact('message','tenants', 'apartments','hasReport'));
+       
+    }
+
+    // Fetch property info if there's at least one invoice
+    $property_info = Apartment::with('landlord')->where('id', $fields['apartment_id'])->first();
+    // if (!$property_info) {
+    //      return back()->with('error', 'No Apartment in the month chosen.');
+       
+    // }
+
+    // Process each invoice
+    foreach ($month_invoices as $invoice) {
+        $prev_arrears = Invoice::where('tenant_id', $invoice->tenant_id)
+            ->where('rent_month', '!=', $rent_month)->where('house_id', $invoice->house_id)
+            ->sum('total_payable');
+
+        $all_invs = Invoice::where('tenant_id', $invoice->tenant_id)
+            ->where('type', '!=', 'House Viewing')->where('house_id', $invoice->house_id)
+            ->get();
+
+        $total_current_month = Invoice::where('tenant_id', $invoice->tenant_id)
+            ->where('rent_month', $rent_month)->where('house_id', $invoice->house_id)
+            ->where('type', '!=', 'House Viewing')
+            ->sum('balance');
+
+        // Filter invoices for previous months
+        $all_invs = $all_invs->filter(function ($value) use ($rent_month) {
+            return strtotime($value['rent_month']) <= strtotime($rent_month);
+        });
+
+        $prev_invs = $all_invs->filter(function ($value) use ($rent_month) {
+            return strtotime($value['rent_month']) < strtotime($rent_month);
+        });
+
+        $invoice['total_payable'] = $total_current_month + $prev_invs->sum('balance');
+        $invoice['balance'] = $all_invs->sum('balance');
+    }
+    // dd($month_invoices->sum('total_payable'));
+    //service bills
+    $service_bill_water = $property_info->water;
+    $service_bill_sewer = $property_info->sewer;
+    $service_bill_electricity = $property_info->electricity;
+    $service_bill_internet = $property_info->internet;
+    $service_bill_garbage = $property_info->garbage;
+    $service_bill_cleaning = $property_info->cleaning;
+    $service_bill_security = $property_info->security;
+    $sum_service_bill = $service_bill_water + $service_bill_sewer + $service_bill_electricity +   $service_bill_internet +  $service_bill_garbage +  $service_bill_cleaning +  $service_bill_security;
+    
+    //service requests
+    $expenses = PayOwners::where('bill_category', 'service_request')->where('apartment_id', $property_info->id )->get();
+    
+     //remittance_bills
+     $paidforbills = PayOwners::where('bill_type', 'rent')->where('apartment_id', $property_info->id )->where('bill_category','!=', 'Remits')->get();
+     $remittance = PayOwners::where('bill_type', 'rent')->where('apartment_id', $property_info->id )->where('bill_category', 'Remits')->get();
+     
+
+    // Calculate totals
+    $total_paid_in = $month_invoices->sum('paid_in');
+    $expense_total = $expenses->sum('paid_in') ?? 0;
+    $expense_balance = $expenses->sum('balance') ?? 0;
+    $expense_total_owned = $expenses->sum('total_owned') ?? 0;
+    $paidforbills_total = $paidforbills->sum('paid_in') ?? 0;
+    $paidforbills_balance = $paidforbills->sum('balance') ?? 0;
+    $paidforbills_total_owned = $paidforbills->sum('total_owned') ?? 0;
+    $service_bill_total = $sum_service_bill ?? 0;
+    $remittance_total =  $remittance->sum('paid_in') ?? 0;
+    $total_rent = $month_invoices->sum('rent') ?? 0;
+    $total_payable = $month_invoices->sum('total_payable');
+    $total_carryforward = $month_invoices->sum('deposit_paid');
+    $total_balance =$month_invoices->sum('balance');
+    $total_bills = $month_invoices->sum('electricity_bill') +
+                   $month_invoices->sum('litter_bill') +
+                   $month_invoices->sum('water_bill') +
+                   $month_invoices->sum('security') +
+                   $month_invoices->sum('compound_bill') +
+                   $month_invoices->sum('other_bill');
+
+    $property_name = $property_info->name;
+    $property_owner = $property_info->landlord->full_name;
+    $property_mgt = $property_info->management_fee_percentage;
+    $message = '';
+
+    $filled = 'yes';
+    $download = 'no';
+    if ($request->download) {
+        $download = 'yes';
+        if ($request->filled === 'no') {
+            $filled = 'no';
+        }
+    }
+
+    $info = [
+        'income_entries' => $month_invoices,
+        'service_request_entries' => $expenses,
+        'bill_entries' => $paidforbills,
+        'rent_month' => $rent_month,
+        'total_paid_in' => $total_paid_in,
+        'expense_total' => $expense_total,
+        'expense_balance' => $expense_balance,
+        'expense_total_owned' => $expense_total_owned,
+        'paidforbills_total' => $paidforbills_total,
+        'paidforbills_balance' => $paidforbills_balance,
+        'paidforbills_total_owned' => $paidforbills_total_owned,
+        'service_bill_total' => $sum_service_bill ,
+        'remittance_total' => $remittance_total,
+        'total_rent' => $total_rent,
+        'total_bills' => $total_bills,
+        'total_payable' => $total_payable,
+        'total_carryforward' => $total_carryforward,
+        'total_balance' => $total_balance,
+        'property_owner' => $property_owner,
+        'property_name' => $property_name,
+        'property_mgt' => $property_mgt,
+        'service_bill_water' => $service_bill_water ?? 0,
+        'service_bill_electricity' => $service_bill_electricity ?? 0,
+        'service_bill_sewer' => $service_bill_sewer ?? 0,
+        'service_bill_internet' => $service_bill_internet ?? 0,
+        'service_bill_garbage' => $service_bill_garbage ?? 0,
+        'service_bill_cleaning' => $service_bill_cleaning ?? 0,
+        'service_bill_security' => $service_bill_security ?? 0,
+        'message' => $message,
+    ];
+
+    return $this->propertyOccupancyExpenseViewTester($info, $download, $filled);
+}
+
+
+  public function rent_report(Request $request)
+{
+    $fields = $request->validate([
+        'rent_month' => 'required',
+        'apartment_id' => 'required'
+    ]);
+
+    // Get inputs from the form
+   $rent_month = date("M-Y", strtotime($fields['rent_month'])); // e.g., 'Oct-2020'
+    $property_id = $request->input('apartment_id'); // 0 = All properties
+
+    // Convert rent_month to proper date range (e.g., 2020-10-01 to 2020-10-31)
+    $startDate = date('Y-m-01', strtotime($rent_month));
+    $endDate = date('Y-m-t', strtotime($rent_month));
+
+    // Build query
+    $query = DB::table('pay_owners as po')
+        ->join('apartments as p', 'po.apartment_id', '=', 'p.id')
+        ->select(
+            DB::raw("DATE_FORMAT(po.created_at, '%b-%Y') as month"),
+            'p.name as property_name',
+            'po.apartment_id',
+            DB::raw("SUM(CASE WHEN po.bill_type = 'rent' THEN po.total_owned ELSE 0 END) as total_rent_collected"),
+            DB::raw("AVG(CASE WHEN po.bill_type = 'rent' THEN po.mgt ELSE NULL END) as management_fee_percentage"),
+            DB::raw("GROUP_CONCAT(DISTINCT CASE WHEN po.bill_type = 'property' THEN po.bill_category ELSE NULL END SEPARATOR ', ') as bill_names"),
+            DB::raw("SUM(CASE WHEN po.bill_type = 'property' THEN po.total_owned ELSE 0 END) as total_bill_amount_paid"),
+            DB::raw("(SUM(CASE WHEN po.bill_type = 'rent' THEN po.total_owned ELSE 0 END) 
+                        - SUM(CASE WHEN po.bill_type = 'property' THEN po.total_owned ELSE 0 END)
+                        - (SUM(CASE WHEN po.bill_type = 'rent' THEN po.total_owned ELSE 0 END) 
+                           * (AVG(CASE WHEN po.bill_type = 'rent' THEN po.mgt ELSE NULL END) / 100))
+                    ) as net_rent_remitted")
+
+        )
+        ->whereBetween('po.created_at', [$startDate, $endDate]);
+
+    // Apply property filter only if a specific property is selected
+    if ($property_id != 0) {
+        $query->where('po.apartment_id', $property_id);
+    }
+
+    // Final grouping and sorting
+    $report = $query
+        ->groupBy(DB::raw("DATE_FORMAT(po.created_at, '%b-%Y')"), 'po.apartment_id', 'p.name')
+        ->orderByRaw("STR_TO_DATE(DATE_FORMAT(po.created_at, '%b-%Y'), '%b-%Y') DESC")
+        ->get();
+
+
+
+
+    $filled = 'yes';
+    $download = 'no';
+    if ($request->download) {
+        $download = 'yes';
+        if ($request->filled === 'no') {
+            $filled = 'no';
+        }
+    }
+
+    $info = [
+        'entries' => $report,
+        'rent_month' => $rent_month,
+       
+    ];
+
+    return $this->rentViewTester($info, $download, $filled);
+}
+
     public function agency_status_report(Request $request)
     {
         $fields = $request->validate([
@@ -378,6 +792,80 @@ class DocController extends Controller
         return $this->agencyStatusViewTester($info,$download);
         return response()->json($info);
     }
+    
+    public function agency_income_expense_report(Request $request)
+    {
+     $fields = $request->validate([
+        'rent_month' => 'required'
+    ]);
+
+    $rent_month = date("M-Y", strtotime($fields['rent_month']));
+
+    // Fetch invoices for the selected rent month
+    $month_invoices = Invoice::with(['apartment', 'tenant'])
+        ->where('rent_month', $rent_month)
+        ->orderBy('apartment_id', 'ASC')
+        ->get();
+        
+    
+
+    // 1. List of Properties and Their Total Paid Rent
+    $properties_paid_rent = $month_invoices->filter(fn($inv) => $inv->apartment_id !== null)->groupBy('apartment_id')->map(function ($group) {
+            $apartment_name = optional($group->first()->apartment)->name ?? 'Unknown Apartment';
+            $apartment_commission = optional($group->first()->apartment)->management_fee_percentage ?? 0;
+            $total_paid_in = $group->sum('paid_in');
+            $agency_commission = ($apartment_commission / 100) * $total_paid_in;
+            return [
+                'apartment_name' => $apartment_name,
+                'total_paid_in' => $total_paid_in,
+                'commission' => $apartment_commission,
+                'agency_commission' => $agency_commission,
+                
+            ];
+        })->values();
+
+    // 2. List of Agency Bills from payowners table
+    $agency_bills = Payowners::where('bill_type', 'agency')
+        ->where('rent_month', $rent_month)
+        ->orderBy('created_at', 'DESC')
+        ->get(['id', 'total_owned', 'description', 'created_at', 'rent_month']);
+        
+        
+      //agency crm income
+  $now = Carbon::now();
+$agency_income = Onboarding::whereMonth('created_at', $now->month)
+    ->whereYear('created_at', $now->year)
+    ->orderBy('created_at', 'DESC')
+    ->get();
+       
+   $total_CRM = $agency_income->sum('fee');
+        
+ $total_paid_rent = $properties_paid_rent->sum('total_paid_in');
+$total_agency_bills = $agency_bills->sum('total_owned');
+  $total_agency_commission = $properties_paid_rent->sum('agency_commission');
+   if ($request->download) {
+            $download ='yes';
+        }else{
+            $download='no';
+        }
+    $info = [
+        'rent_month' => $rent_month,
+        'properties_paid_rent' => $properties_paid_rent,
+        'agency_bills' => $agency_bills,
+        'agency_income' => $agency_income,
+        'total_paid_rent' => $total_paid_rent,
+        'total_agency_bills' => $total_agency_bills,
+        'total_agency_commission' => $total_agency_commission,
+        'total_CRM' => $total_CRM,
+    ];
+
+        
+        return $this->agencyIncomeExpenseViewTester($info,$download);
+        return response()->json($info);
+    }
+    
+    
+    
     public function all_property_report(Request $request)
     {
        
@@ -689,6 +1177,8 @@ class DocController extends Controller
         $data['totals'] = $info;
         $data['property_owner'] = $info['property_owner'];
         $data['property_name'] = $info['property_name'];
+         $data['message'] = $info['message'];
+        
         
         if($download == 'yes'){
         $fl_nm = 'Property Status Report - '.$info['rent_month'];
@@ -707,6 +1197,132 @@ class DocController extends Controller
         
         
         return view('report.property_status', $data);
+    }
+    
+    
+     public function propertyIncomeExpenseViewTester($info, $download = '',$filled="yes")
+    {
+        
+        $data['apartments'] = Apartment::pluck('id', 'name');
+        $data['income_entries'] = $info['income_entries'];
+        $data['service_request_entries'] = $info['service_request_entries'];
+        $data['bill_entries'] = $info['bill_entries'];
+        $data['rent_month'] = $info['rent_month'];
+        $data['totals'] = $info;
+        $data['expense_total'] = $expense_total ?? 0;
+        $data['paidforbills_total'] = $paidforbills_total ?? 0;
+        $data['service_bill_total'] = $service_bill_total ?? 0;
+        $data['remittance_total'] = $remittance_total ?? 0;
+        $data['total_paid_in'] = $total_paid_in ?? 0;
+        $data['property_owner'] = $info['property_owner'];
+        $data['property_name'] = $info['property_name'];
+        $data['property_mgt'] = $info['property_mgt'] ?? 0;
+         $data['message'] = $info['message'];
+        
+        
+        if($download == 'yes'){
+        $fl_nm = 'Property Income Expense Report - '.$info['rent_month'];
+       
+        $pdf = \PDF::loadView('docs.prop_income_expense', $data);
+            
+        
+        $pdf->setPaper('A4', 'landscape');
+        return $pdf->stream($fl_nm);
+        }
+
+        $data['hasReport'] = true;
+        
+        
+        return view('report.property_income_expense', $data);
+    }
+    
+         public function propertyOccupancyExpenseViewTester($info, $download = '',$filled="yes")
+    {
+        
+        $data['apartments'] = Apartment::pluck('id', 'name');
+        $data['income_entries'] = $info['income_entries'];
+        $data['service_request_entries'] = $info['service_request_entries'];
+        $data['bill_entries'] = $info['bill_entries'];
+        $data['rent_month'] = $info['rent_month'];
+        $data['totals'] = $info;
+        $data['expense_total'] = $expense_total ?? 0;
+        $data['paidforbills_total'] = $paidforbills_total ?? 0;
+        $data['service_bill_total'] = $service_bill_total ?? 0;
+        $data['remittance_total'] = $remittance_total ?? 0;
+        $data['total_paid_in'] = $total_paid_in ?? 0;
+        $data['property_owner'] = $info['property_owner'];
+        $data['property_name'] = $info['property_name'];
+        $data['property_mgt'] = $info['property_mgt'] ?? 0;
+         $data['message'] = $info['message'];
+        
+        
+        if($download == 'yes'){
+        $fl_nm = 'Property Occupancy Expense Report - '.$info['rent_month'];
+       
+        $pdf = \PDF::loadView('docs.occupancy_expense', $data);
+            
+        
+        $pdf->setPaper('A4', 'landscape');
+        return $pdf->stream($fl_nm);
+        }
+
+        $data['hasReport'] = true;
+        
+        
+        return view('report.occupancy', $data);
+    }
+      public function rentViewTester($info, $download = '',$filled="yes")
+    {
+        
+        $data['apartments'] = Apartment::pluck('id', 'name');
+        $data['entries'] = $info['entries'];
+        $data['rent_month'] = $info['rent_month'];
+  
+        
+        
+        if($download == 'yes'){
+        $fl_nm = 'Rent Report - '.$info['rent_month'];
+       
+        $pdf = \PDF::loadView('docs.rent', $data);
+            
+        
+        $pdf->setPaper('A4', 'landscape');
+        return response()->streamDownload(function () use ($pdf) {
+    echo $pdf->output();
+}, $fl_nm);
+
+        // return $pdf->download($fl_nm);
+        }
+
+        $data['hasReport'] = true;
+        
+        
+        return view('report.rent', $data);
+    }
+        public function agencyIncomeExpenseViewTester($info, $download = '')
+    { 
+
+        $data['rent_month'] = $info['rent_month'];
+        $data['properties_paid_rent'] = $info['properties_paid_rent'];
+        $data['agency_bills'] = $info['agency_bills'];
+        $data['agency_income'] = $info['agency_income'];
+        $data['total_paid_rent'] = $info['total_paid_rent'];
+        $data['total_agency_bills'] = $info['total_agency_bills'];
+        $data['total_agency_commission'] = $info['total_agency_commission'];
+        $data['total_CRM'] = $info['total_CRM'];
+        
+        if($download == 'yes'){
+        $fl_nm = 'Agency Income Expense Report - '.$info['rent_month']. '.pdf';
+        $pdf = \PDF::loadView('docs.agency_income_expense', $data);
+        $pdf->setPaper('A4', 'landscape');
+        return $pdf->stream($fl_nm);
+        // return view('docs.tenantStatement', $data); 
+        }
+
+        $data['hasReport'] = true;
+        
+        
+        return view('report.income_expense', $data);
     }
     public function agencyStatusViewTester($info, $download = '')
     {

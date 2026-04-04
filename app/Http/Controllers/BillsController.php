@@ -10,7 +10,9 @@ use App\Http\Requests\BillsRequest;
 use App\PayOwners;
 use App\Invoice;
 use App\Landlord;
+use App\BillCategory;
 use App\ServiceRequests;
+use App\ServiceProviderModel as ServiceProvider;
 use App\Tenant;
 use App\Traits\UtilTrait;
 use App\Traits\DocTrait;
@@ -27,9 +29,45 @@ class BillsController extends Controller
         $apartments = Apartment::pluck('id', 'name');
         $tenants = Tenant::pluck('id', 'full_name');
         $service_requests = ServiceRequests::where('status', 0)->get();
+        $providers = ServiceProvider::all();
         $users = User::all();
-        return view('bills.create', compact('tenants', 'apartments', 'service_requests', 'users'));
+        return view('bills.create', compact('tenants', 'apartments', 'service_requests', 'users', 'providers'));
 
+    }
+    public function remittence()
+    {
+        $apartments = Apartment::pluck('id', 'name');
+        $tenants = Tenant::pluck('id', 'full_name');
+        $service_requests = ServiceRequests::where('status', 0)->get();
+        $providers = ServiceProvider::all();
+        $bill_category = BillCategory::all();
+        $users = User::all();
+        return view('bills.remittence', compact('tenants', 'bill_category', 'apartments', 'service_requests', 'users', 'providers'));
+
+    }
+    
+    
+    
+    public function property_bills()
+    {
+        $apartments = Apartment::pluck('id', 'name');
+        $tenants = Tenant::pluck('id', 'full_name');
+        $service_requests = ServiceRequests::where('status', 0)->get();
+        $providers = ServiceProvider::all();
+        $users = User::all();
+        return view('bills.property_bills', compact('tenants', 'apartments', 'service_requests', 'users', 'providers'));
+
+    }
+    
+    
+    public function getServiceRequestsByProperty($property_id)
+    {
+        // Assuming you have a ServiceRequest model
+        $serviceRequests = ServiceRequests::where('apartment_id', $property_id)
+            ->where('pay_status', 0)->where('house_id', '!=', null)->with('house') // or whatever status you need
+            ->get(['id', 'service_request', 'service_type', 'affected_area']);
+        
+        return response()->json($serviceRequests);
     }
 
     public function pay()
@@ -66,9 +104,13 @@ class BillsController extends Controller
         $payowner = PayOwners::where('type','!=', '--select--')->where('type','!=', 'Rent Collection')->where('approval', '1')->get();
         return view('bills.pay', compact('apartment', 'payowners', 'payowner', 'apt_grouped'));
     }
+    
 
     function list() {
         return view('bills.list');
+    }
+    function approve() {
+        return view('payowners.approve');
     }
      function payments() {
         return view('bills.payments');
@@ -83,36 +125,23 @@ class BillsController extends Controller
         try{
         $var = CarbonCarbon::now()->format('M-Y');
         
-        if($request->bill_type === 'property'){
-                   $bills = new PayOwners;
+        if($request->bill_type === 'property' || $request->bill_type === 'rent'){
+        $bills = new PayOwners;
         $bills->id = $request->id;
-        $bills->type = $request->type;
-        $bills->new_type = $request->new_type;
         $bills->bill_type = $request->bill_type;
-        
         $bills->apartment_id = $request->apartment_id;
-        
-        $landlord = $bills->apartment->landlord_id;
-        $bills->landlord_id = $landlord;
-        if($request->approval == 0){
-        $bills->total_owned_edit = $request->bill_amount;
-        }else{
-          $bills->total_owned = $request->bill_amount;  
-        }
-         $bills->approval = $request->approval;
+        $bills->bill_category = $request->bill_category;
+        $bills->selected_bill = $request->selected_bill;
+        $bills->service_provider_id = $request->service_provider_id;
+        $bills->description = $request->bill_description;
+        $bills->total_owned = $request->bill_amount;
+        $bills->paid_in = $request->bill_amount;
+        $bills->approval = $request->approval;
         $bills->rent_month = $var;
-         $amount = $bills->total_owned - $bills->paid_in;
-         $amount2 = $bills->total_owned_edit - $bills->paid_in;
-       if($request->approval == 0){
-          $bills->balance_edit = $amount2;
-          $bills->description_edit = $request->bill_description;
-       }else{
-           $bills->balance = $amount;
-           $bills->description = $request->bill_description;
-       }
-       
-        // $bills->description = $request->bill_description;
-        $bills->agency_user = $request->agency_user;
+        $amount = $bills->total_owned - $bills->paid_in;
+        $bills->balance = $amount;
+        $bills->bill_date = $request->bill_date;
+        $bills->paid_by = $request->paid_by;
         $bills->save();
             
         }else{
@@ -124,33 +153,25 @@ class BillsController extends Controller
             $file = $request->proof;
              $fl_name = time() . '_' . 'agency_file' . '.' . $file->getClientOriginalExtension();
             \Storage::disk('local')->putFileAs('agency_files/', $file, $fl_name);
-            $bills->proof =  $fl_name;
+        $bills->proof =  $fl_name;
         }
         $bills->id = $request->id;
-        $bills->type = $request->type;
         $bills->bill_type = $request->bill_type;
-
         $bills->apartment_id = null;
-        if($request->approval == 0){
-        $bills->total_owned_edit = $request->bill_amount;
-        }else{
-          $bills->total_owned = $request->bill_amount;  
-        }
-        
+        $bills->bill_category = $request->bill_category;
+        $bills->selected_bill = $request->selected_bill;
+        $bills->service_provider_id = $request->service_provider_id;
+        $bills->description = $request->bill_description;
+        $bills->total_owned = $request->bill_amount;
+        $bills->paid_in = $request->bill_amount;
         $bills->rent_month = $var;
         $amount = $bills->total_owned - $bills->paid_in;
-        $amount2 = $bills->total_owned_edit - $bills->paid_in;
-        
-         if($request->approval == 0){
-          $bills->balance_edit = $amount2;
-          $bills->description_edit = $request->bill_description;
-       }else{
-           $bills->balance = $amount;
-           $bills->description = $request->bill_description;
-       }
+        $bills->balance = $amount;
+       
         $bills->approval = $request->approval;
         
-        $bills->agency_user = $request->agency_user;
+        $bills->bill_date = $request->bill_date;
+        $bills->paid_by = $request->paid_by;
         $bills->save();
         }
     

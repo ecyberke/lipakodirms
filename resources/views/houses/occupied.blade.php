@@ -45,7 +45,7 @@
                    <!-- <button style="border-top-right-radius:10px; border-bottom-right-radius: 10px;"><a href="{{ route('house.vacant')}}">Vacant</a></button>-->
                    <!-- </div>-->
                    <!-- <br><br><br>-->
-
+                 <div class="table-responsive">
                     <table id="occupied-houses" class="table table-striped custom-table mb-0"
                         >
                         <thead>
@@ -67,6 +67,7 @@
 
                         </tbody>
                     </table>
+                    </div>
                 </div>
             </div>
         </div> <!-- end col -->

@@ -73,35 +73,337 @@ class InvoicesController extends Controller
     }
     
     
-        public function leasepdfInvoice($id)
-    {
-        // try{
+public function leasepdfInvoice($id)
+{
+    try {
         $invoice = Invoice::where('house_id', $id)->where('type', 'rent and deposit')->latest()->first();
         
-        if($invoice){
-        
-        
-       $date1 = Carbon::createFromFormat('Y-m-d h:i:s', $invoice->created_at)->format('d-M-Y');
-       $date2 = Carbon::createFromFormat('Y-m-d h:i:s', $invoice->house->created_at)->format('d-M-Y');
-       $digit = new NumberFormatter("en", NumberFormatter::SPELLOUT);
-       $pdf = PDF::loadView('tenants.lease', compact('invoice', 'date1', 'date2', 'digit')); 
-          
-        
+        if (!$invoice) {
+            $invoice = Invoice::where('house_id', $id)->latest()->first();
         }
-        else{
-       $invoice = Invoice::where('house_id', $id)->latest()->first();
-       $date1 = Carbon::createFromFormat('Y-m-d h:i:s', '2022-03-01 00:00:00')->format('d-M-Y');
-       $date2 = Carbon::createFromFormat('Y-m-d h:i:s', '2022-03-01 00:00:00')->format('d-M-Y');
-       $digit = new NumberFormatter("en", NumberFormatter::SPELLOUT);
-       $pdf = PDF::loadView('tenants.lease', compact('invoice', 'date1', 'date2', 'digit')); 
-       
-        }
-         
-        return $pdf->stream('Lease Agreement #' . $id. '.pdf');
         
+        if (!$invoice) {
+            throw new \Exception('Invoice not found for house ID: ' . $id);
+        }
+        
+        $house = $invoice->house;
+        $tenant = $invoice->tenant;
+        $apartment = $house->apartment ?? null;
+        $landlord = $apartment->landlord ?? null;
+        $rent = $house->rent ?? null;
+        
+        // DEBUG: Log all raw values to identify the problematic one
+        \Log::info('=== LEASE PDF DEBUG START ===');
+        \Log::info('Invoice ID: ' . $invoice->id);
+        \Log::info('Raw monthly rent: ' . json_encode($rent->amount ?? ($house->rent->amount ?? 0)));
+        \Log::info('Raw deposit paid: ' . json_encode($invoice->deposit_paid ?? 0));
+        \Log::info('Raw rent paid: ' . json_encode($invoice->rent_paid ?? 0));
+        \Log::info('Raw water deposit: ' . json_encode($invoice->water_deposit_paid ?? 0));
+        \Log::info('Raw electricity deposit: ' . json_encode($invoice->electricity_deposit_paid ?? 0));
+        \Log::info('Raw service charge: ' . json_encode($house->service_charge ?? 0));
+        \Log::info('Raw other charges: ' . json_encode($invoice->other_charges_amount ?? 0));
+        \Log::info('Raw total payable: ' . json_encode($invoice->total_payable ?? 0));
+        
+        // Get raw values
+        $rawMonthlyRent = $rent->amount ?? ($house->rent->amount ?? 0);
+        $rawDepositPaid = $invoice->deposit_paid ?? 0;
+        $rawRentPaid = $invoice->rent_paid ?? $rawMonthlyRent;
+        $rawWaterDeposit = $invoice->water_deposit_paid ?? 0;
+        $rawElectricityDeposit = $invoice->electricity_deposit_paid ?? 0;
+        $rawServiceCharge = $house->service_charge ?? 0;
+        $rawOtherCharges = $invoice->other_charges_amount ?? 0;
+        $rawTotalPayable = $invoice->total_payable ?? 0;
+        
+        // Convert to string to see exact characters
+        \Log::info('Raw monthly rent as string: ' . $this->getRawString($rawMonthlyRent));
+        \Log::info('Raw deposit paid as string: ' . $this->getRawString($rawDepositPaid));
+        
+        // Try to clean values with different methods to see what works
+        $monthlyRentAmount = $this->debugCleanValue($rawMonthlyRent, 'monthly_rent');
+        $depositPaid = $this->debugCleanValue($rawDepositPaid, 'deposit_paid');
+        $rentPaid = $this->debugCleanValue($rawRentPaid, 'rent_paid');
+        $waterDeposit = $this->debugCleanValue($rawWaterDeposit, 'water_deposit');
+        $electricityDeposit = $this->debugCleanValue($rawElectricityDeposit, 'electricity_deposit');
+        $serviceChargeValue = $this->debugCleanValue($rawServiceCharge, 'service_charge');
+        $otherCharges = $this->debugCleanValue($rawOtherCharges, 'other_charges');
+        $totalPayable = $this->debugCleanValue($rawTotalPayable, 'total_payable');
+        
+        $startDate = Carbon::parse($invoice->created_at ?? now());
+        $endDate = $startDate->copy()->addMonths(24);
+        
+        // Use simple number to words without NumberFormatter to test
+        $rentWords = $this->simpleNumberToWords($monthlyRentAmount) . ' only';
+        
+        $depositMonths = ($depositPaid > 0 && $monthlyRentAmount > 0) 
+            ? round($depositPaid / $monthlyRentAmount, 1) 
+            : 1;
+        
+        $data = [
+            // Agreement date
+            'agreementDay' => $startDate->format('d'),
+            'agreementMonth' => $startDate->format('F'),
+            'agreementYear' => $startDate->format('Y'),
+            
+            // Landlord
+            'landlordName' => $this->cleanString($landlord->full_name ?? ''),
+            'landlordId' => $this->cleanString($landlord->id_number ?? ''),
+            'landlordPhone' => $this->cleanString($landlord->phone ?? ''),
+            'landlordAddress' => $this->cleanString($landlord->email ?? ''),
+            
+            // Tenant
+            'tenantName' => $this->cleanString($tenant->full_name ?? ''),
+            'tenantId' => $this->cleanString($tenant->id_number ?? ''),
+            'tenantPhone' => $this->cleanString($tenant->phone ?? ''),
+            'tenantEmail' => $this->cleanString($tenant->email ?? ''),
+            'additionalTenantName' => $this->cleanString($tenant->additional_tenant_name ?? ''),
+            'additionalTenantId' => $this->cleanString($tenant->additional_tenant_id ?? ''),
+            'additionalTenantPhone' => $this->cleanString($tenant->additional_tenant_phone ?? ''),
+            
+            // Property
+            'unitNumber' => $this->cleanString($house->unit_number ?? ($house->name ?? '')),
+            'propertyAddressFull' => $this->cleanString($apartment->address ?? ($apartment->name ?? '')),
+            'propertyTypeOther' => $this->cleanString($house->property_type ?? 'Apartment'),
+            
+            // Tenancy dates
+            'tenancyStartDay' => $startDate->format('d'),
+            'tenancyStartMonth' => $startDate->format('F'),
+            'tenancyStartYear' => $startDate->format('Y'),
+            'tenancyEndDay' => $endDate->format('d'),
+            'tenancyEndMonth' => $endDate->format('F'),
+            'tenancyEndYear' => $endDate->format('Y'),
+            
+            // Tenant particulars
+            'maritalStatus' => $this->cleanString($tenant->marital_status ?? ''),
+            'childrenCount' => $this->cleanString($tenant->children_count ?? ''),
+            'nationality' => $this->cleanString($tenant->nationality ?? ''),
+            'occupation' => $this->cleanString($tenant->occupation ?? ''),
+            'employer' => $this->cleanString($tenant->employer ?? ''),
+            
+            // Emergency
+            'emergencyName' => $this->cleanString($tenant->emergency_name ?? ''),
+            'emergencyRelation' => $this->cleanString($tenant->emergency_relation ?? ''),
+            'emergencyId' => $this->cleanString($tenant->emergency_id ?? ''),
+            'emergencyPhone' => $this->cleanString($tenant->emergency_phone ?? ''),
+            'emergencyEmail' => $this->cleanString($tenant->emergency_email ?? ''),
+            'emergencyWork' => $this->cleanString($tenant->emergency_work ?? ''),
+            
+            // Guarantor
+            'guarantorName' => $this->cleanString($tenant->guarantor_name ?? ''),
+            'guarantorId' => $this->cleanString($tenant->guarantor_id ?? ''),
+            'guarantorPhone' => $this->cleanString($tenant->guarantor_phone ?? ''),
+            'guarantorEmail' => $this->cleanString($tenant->guarantor_email ?? ''),
+            
+            // Rent and payment (simple formatting without number_format)
+            'monthlyRent' => $this->simpleFormatNumber($monthlyRentAmount),
+            'rentWords' => $rentWords,
+            'mpesaAccount' => $this->cleanString($tenant->account_number ?? ($invoice->account_number ?? '')),
+            'serviceCharge' => $this->simpleFormatNumber($serviceChargeValue),
+            
+            // Initial payments
+            'securityDeposit' => $this->simpleFormatNumber($depositPaid),
+            'advanceRent' => $this->simpleFormatNumber($rentPaid),
+            'waterDeposit' => $this->simpleFormatNumber($waterDeposit),
+            'electricityDeposit' => $this->simpleFormatNumber($electricityDeposit),
+            'agencyFee' => $this->simpleFormatNumber($monthlyRentAmount * 0.1),
+            'otherChargesDesc' => $this->cleanString($invoice->other_charges_description ?? ''),
+            'otherChargesAmount' => $this->simpleFormatNumber($otherCharges),
+            'totalInitialPayment' => $this->simpleFormatNumber($totalPayable),
+            'depositMonths' => $depositMonths,
+            
+            // Signatures
+            'agentSignatory' => 'Managing Director',
+            'agentSignDate' => $startDate->format('d-M-Y'),
+            'tenantSignName' => $this->cleanString($tenant->full_name ?? ''),
+            'tenantSignDate' => $startDate->format('d-M-Y'),
+            'additionalTenantSign' => $this->cleanString($tenant->additional_tenant_name ?? ''),
+        ];
+        
+        \Log::info('=== LEASE PDF DATA PREPARED SUCCESSFULLY ===');
+        \Log::info('Monthly rent cleaned: ' . $monthlyRentAmount);
+        \Log::info('Monthly rent formatted: ' . $data['monthlyRent']);
+        
+  $html = view('tenants.lease', $data)->render();
+        
+        // Remove all non-ASCII characters (keep only characters 32-126)
+        $html = preg_replace('/[^\x20-\x7E]/', '', $html);
+        
+        // Also remove HTML entities
+        $html = preg_replace('/&[#a-zA-Z0-9]+;/', '', $html);
+        
+        // Load the cleaned HTML
+        $pdf = PDF::loadHTML($html);
+        $pdf->setPaper('A4', 'portrait');
 
-        // return view('tenants.lease', compact('invoice'));
+return $pdf->stream('Lease_Agreement_' . $id . '.pdf');
+        
+        return $pdf->stream('Lease_Agreement_' . $id . '.pdf');
+        
+    } catch (\Exception $e) {
+        \Log::error('Lease PDF Generation Error: ' . $e->getMessage());
+        \Log::error($e->getTraceAsString());
+        return redirect()->back()->with('error', 'Unable to generate lease agreement: ' . $e->getMessage());
+    }
+}
+
+/**
+ * Get raw string representation of a value for debugging
+ */
+private function getRawString($value)
+{
+    if ($value === null) {
+        return 'NULL';
+    }
+    if (is_numeric($value)) {
+        return (string) $value;
+    }
+    return bin2hex((string) $value) . ' (' . (string) $value . ')';
+}
+
+/**
+ * Debug and clean a value, logging what was cleaned
+ */
+private function debugCleanValue($value, $fieldName)
+{
+    $original = $value;
+    $originalType = gettype($value);
+    
+    // Remove everything except digits and decimal point
+    $string = (string) $value;
+    $cleaned = preg_replace('/[^0-9.]/', '', $string);
+    
+    $result = floatval($cleaned);
+    
+    \Log::info("Cleaning {$fieldName}: type={$originalType}, original={$this->getRawString($original)}, cleaned={$cleaned}, result={$result}");
+    
+    return $result;
+}
+
+/**
+ * Clean string by removing any invalid UTF-8 characters
+ */
+private function cleanString($string)
+{
+    if (empty($string)) {
+        return '';
+    }
+    
+    // Remove any non-UTF-8 characters
+    $string = mb_convert_encoding($string, 'UTF-8', 'UTF-8');
+    
+    // Remove control characters except newlines and tabs
+    $string = preg_replace('/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/', '', $string);
+    
+    return $string;
+}
+
+/**
+ * Simple number formatting without using number_format
+ */
+private function simpleFormatNumber($value)
+{
+    $numeric = floatval($value);
+    
+    if ($numeric == 0) {
+        return '';
+    }
+    
+    // Convert to string and remove decimals if .00
+    $number = (string) $numeric;
+    if (strpos($number, '.') !== false) {
+        $number = rtrim(rtrim($number, '0'), '.');
+    }
+    
+    // Add commas manually
+    $length = strlen($number);
+    if ($length <= 3) {
+        return $number;
+    }
+    
+    $result = '';
+    for ($i = $length - 1, $count = 0; $i >= 0; $i--, $count++) {
+        if ($count > 0 && $count % 3 == 0) {
+            $result = ',' . $result;
         }
+        $result = $number[$i] . $result;
+    }
+    
+    return $result;
+}
+
+/**
+ * Simple number to words (fallback)
+ */
+private function simpleNumberToWords($number)
+{
+    $number = (int) $this->cleanNumericValue($number);
+    
+    if ($number == 0) {
+        return 'zero';
+    }
+    
+    $words = [
+        1 => 'one', 2 => 'two', 3 => 'three', 4 => 'four', 5 => 'five',
+        6 => 'six', 7 => 'seven', 8 => 'eight', 9 => 'nine', 10 => 'ten',
+        11 => 'eleven', 12 => 'twelve', 13 => 'thirteen', 14 => 'fourteen',
+        15 => 'fifteen', 16 => 'sixteen', 17 => 'seventeen', 18 => 'eighteen',
+        19 => 'nineteen', 20 => 'twenty', 30 => 'thirty', 40 => 'forty',
+        50 => 'fifty', 60 => 'sixty', 70 => 'seventy', 80 => 'eighty', 90 => 'ninety'
+    ];
+    
+    if ($number < 21) {
+        return $words[$number];
+    }
+    
+    if ($number < 100) {
+        $tens = floor($number / 10) * 10;
+        $units = $number % 10;
+        if ($units == 0) {
+            return $words[$tens];
+        }
+        return $words[$tens] . '-' . $words[$units];
+    }
+    
+    if ($number < 1000) {
+        $hundreds = floor($number / 100);
+        $remainder = $number % 100;
+        if ($remainder == 0) {
+            return $words[$hundreds] . ' hundred';
+        }
+        return $words[$hundreds] . ' hundred and ' . $this->simpleNumberToWords($remainder);
+    }
+    
+    if ($number < 1000000) {
+        $thousands = floor($number / 1000);
+        $remainder = $number % 1000;
+        if ($remainder == 0) {
+            return $this->simpleNumberToWords($thousands) . ' thousand';
+        }
+        return $this->simpleNumberToWords($thousands) . ' thousand ' . $this->simpleNumberToWords($remainder);
+    }
+    
+    return number_format($number);
+}
+
+private function cleanNumericValue($value)
+{
+    if ($value === null || $value === '') {
+        return 0;
+    }
+    
+    if (is_numeric($value)) {
+        return (float) $value;
+    }
+    
+    $string = (string) $value;
+    $cleaned = preg_replace('/[^0-9.-]/', '', $string);
+    
+    if ($cleaned === '' || $cleaned === null) {
+        return 0;
+    }
+    
+    return (float) $cleaned;
+}
+
 
     public function initializeInvoice($var)
     {
@@ -894,20 +1196,20 @@ class InvoicesController extends Controller
         $format = "Dear %s,\nYour rent payment of Ksh %d has been received.";
         $message_text = sprintf($format, $tenant_first_name, $amt_paid);
 
-        $rent_section = "\nRent: Ksh %d";
-        $message_text .= sprintf($rent_section, $userData->rent);
-        $prepayment = $userData->prepayment > 0 ? true : false;
+        // $rent_section = "\nRent: Ksh %d";
+        // $message_text .= sprintf($rent_section, $userData->rent);
+        // $prepayment = $userData->prepayment > 0 ? true : false;
 
         // if ($arrears) {
         //     $arrears_section = "\nArrears: Ksh %d";
         //     $message_text .= sprintf($arrears_section, $userData->arrears);
         // }
-        if ($prepayment) {
-            $prepayment_section = "\nPrepayment: Ksh %d";
-            $message_text .= sprintf($prepayment_section, $userData->prepayment);
-        }
-        $to_pay_section = "\nBalance: Ksh %d";
-        $message_text .= sprintf($to_pay_section, $userData->balance);
+        // if ($prepayment) {
+        //     $prepayment_section = "\nPrepayment: Ksh %d";
+        //     $message_text .= sprintf($prepayment_section, $userData->prepayment);
+        // }
+        // $to_pay_section = "\nBalance: Ksh %d";
+        // $message_text .= sprintf($to_pay_section, $userData->balance);
         
         // $receipt = "\nReceipt: https://rms.lesaagencies.co.ke/receipt/%d/index";
         // $message_text .= sprintf($receipt, $userData->receipt_id);

@@ -65,6 +65,27 @@
 </div>
 @endsection
 @section('js')
+<script>
+    $(function () {
+        $('#tenants-table').DataTable({
+            processing: true,
+            serverSide: true,
+             "pageLength": 25,
+            ajax: '{!! route('tenants.list') !!}',
+            columns: [
+                { data: 'account_number', name: 'account_number' },      
+                { data: 'full_name', name: 'full_name' },
+                { data: 'phone', name: 'phone', },
+                { data: 'email', name: 'email' },
+                { data: 'actions', name: 'actions', orderable: false, searchable: false },
+
+            ]
+        });
+
+        $(document).on('submit','.delete-tenant',function(event){
+            return confirm('Are you sure you want to PERMANENTLY DELETE this tenant? The action will also delete all information linked with the tenant. ');            
+        });
+    });
 </script>
 <!-- Data tables -->
 <script src="{{URL::asset('assets/plugins/datatable/js/jquery.dataTables.js')}}"></script>
@@ -80,26 +101,6 @@
 <script src="{{URL::asset('assets/plugins/datatable/dataTables.responsive.min.js')}}"></script>
 <script src="{{URL::asset('assets/plugins/datatable/responsive.bootstrap4.min.js')}}"></script>
 <script src="{{URL::asset('assets/js/datatables.js')}}"></script>
-<script>
-    $(function () {
-        $('#tenants-table').DataTable({
-            processing: true,
-            serverSide: true,
-            "pageLength": 25,
-            ajax: '{!! route("tenants.list") !!}',
-            columns: [
-                { data: 'account_number', name: 'account_number' },      
-                { data: 'full_name', name: 'full_name' },
-                { data: 'phone', name: 'phone' },
-                { data: 'email', name: 'email' },
-                { data: 'actions', name: 'actions', orderable: false, searchable: false },
-            ]
-        });
-        $(document).on('submit', '.delete-tenant', function(event){
-            return confirm('Are you sure you want to PERMANENTLY DELETE this tenant?');            
-        });
-    });
-</script>
 <!-- Select2 js -->
 <script src="{{URL::asset('assets/plugins/select2/select2.full.min.js')}}"></script>
 @endsection

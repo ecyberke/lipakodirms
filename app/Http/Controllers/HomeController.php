@@ -88,7 +88,8 @@ class HomeController extends Controller
         $balance = number_format($result->balance);
         curl_close($curl);
         
-return view('admins.index', compact('currency', 'balance','arrears','no_arrears','tenants', 'landlords', 'apartments', 'houses', 'tenats', 'incomes','servicerequest', 'expenses', 'today_expenses', 'occupied_house','vacant_house', 'income_today', 'month_income', 'bill_today', 'month_bill'));
+        $sms_low = false;
+return view('admins.index', compact('currency', 'balance', 'sms_low', 'arrears','no_arrears','tenants', 'landlords', 'apartments', 'houses', 'tenats', 'incomes','servicerequest', 'expenses', 'today_expenses', 'occupied_house','vacant_house', 'income_today', 'month_income', 'bill_today', 'month_bill'));
 // return view('coming', compact('tenants', 'landlords', 'apartments', 'houses', 'tenats', 'incomes','servicerequest', 'expenses', 'today_expenses', 'occupied_house','vacant_house', 'income_today', 'month_income', 'bill_today', 'month_bill'));
   
         

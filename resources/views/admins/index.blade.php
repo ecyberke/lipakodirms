@@ -8,10 +8,46 @@
 <link href="{{URL::asset('assets/plugins/bootstrap-daterangepicker/daterangepicker.css')}}" rel="stylesheet" />
 @endsection
 
-@section('content')<br><br>
-                          @if (Auth::user()->is_admin==2 )
-                          <h5><strong>SMS Credits:</strong> {{$balance}}</h5>
-                          @endif
+@section('content')
+
+@if(isset($show_renewal_notice) && $show_renewal_notice)
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <i class="fe fe-alert-triangle"></i>
+    <strong>Subscription Renewal Notice:</strong> Your subscription expires in {{ $subscription_days_left }} day(s).
+    Please renew to avoid service interruption.
+    <button type="button" class="close" data-dismiss="alert"><span>&times;</span></button>
+</div>
+@endif
+
+@if(isset($sms_low) && $sms_low)
+<div class="alert alert-danger alert-dismissible fade show">
+    <i class="fe fe-alert-triangle"></i> <strong>Low SMS Balance!</strong> Please top up to continue sending SMS notifications.
+    <button type="button" class="close" data-dismiss="alert"><span>&times;</span></button>
+</div>
+@endif
+
+<div class="row mb-3" style="margin-top:10px;">
+    <div class="col-9">
+        @if(Auth::user()->is_admin == 1 || Auth::user()->is_admin == 2)
+        <div class="card mb-0" style="border-left: 4px solid #1A4FA8;">
+            <div class="card-body py-2 px-3">
+                <small class="text-muted d-block">SMS Credits</small>
+                <span class="font-weight-bold {{ isset($sms_low) && $sms_low ? 'text-danger' : 'text-success' }}">
+                    {{ $currency }} {{ $balance }}
+                    @if(isset($sms_low) && $sms_low)
+                        <i class="fe fe-alert-triangle text-danger ml-1"></i>
+                    @endif
+                </span>
+            </div>
+        </div>
+        @endif
+    </div>
+    <div class="col-3 d-flex align-items-center justify-content-end">
+        <a href="{{ route('onboarding.wizard') }}" class="btn btn-sm btn-outline-primary w-100">
+            <i class="fe fe-settings"></i> Setup Wizard
+        </a>
+    </div>
+</div>
 						<!--Row-->
 						<div class="row">
 							<div class="col-xl-12 col-md-12 col-lg-12">

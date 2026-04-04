@@ -13,7 +13,7 @@
 </style>
 				<div class="app-sidebar app-sidebar2">
 					<div class="app-sidebar__logo">
-						<a class="header-brand" href="{{ url('/' . $page='index') }}">
+						<a class="header-brand" href="{{ route('home') }}">
 							<img src="{{URL::asset('assets/images/lipakodi_main_logo.png')}}" style= "width:100px; height:60px;" class="header-brand-img desktop-lgo"  alt="LIA">
 							<img src="{{URL::asset('assets/images/lipakodi_main_logo.png')}}" style= "width:100px; height:60px;"  class="header-brand-img dark-logo" alt="LIA">
 							<img src="{{URL::asset('assets/images/lipakodi_main_logo.png')}}" class="header-brand-img mobile-logo" alt="LIA">
@@ -157,6 +157,7 @@
 								
 							
 						</li><br>
+                                            <li><a href="{{ route('onboarding.wizard') }}" class="slide-item"><i class="fas fa-magic me-1"></i> Setup Wizard</a></li>
 						
 						<li class="menutitles">Tenants</li>
 						<li class="slide">

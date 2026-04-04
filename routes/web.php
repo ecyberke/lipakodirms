@@ -425,13 +425,13 @@ Auth::routes();
 
 //Tenant Logins Routes
 Route::get('tenant-login', 'Auth\TenantLoginController@showLoginForm');
-Route::post('tenant-login', 'Auth\TenantLoginController@login')->name('tenant.login');
+Route::post('tenant-login', 'Auth\TenantLoginController@login')->name('old.tenant.login');
 Route::get('tenant-logout', 'Auth\TenantLoginController@logout')->name('tenant.logout');
 
 //Landlord Logins routes
 Route::get('landlord-login', 'Auth\LandlordLoginController@showLoginForm');
-Route::post('landlord-login', 'Auth\LandlordLoginController@login')->name('landlord.login');
-Route::get('landlord-logout', 'Auth\LandlordLoginController@logout')->name('landlord.logout');
+Route::post('landlord-login', 'Auth\LandlordLoginController@login')->name('old.landlord.login');
+Route::get('landlord-logout', 'Auth\LandlordLoginController@logout')->name('old.landlord.logout');
 
 //User Tenant
 Route::get('tenant', 'UserTenantController@index')->name('tenant-home');
@@ -524,3 +524,87 @@ Route::delete('/bills-categories/{id}', 'BillCategoryController@destroy')->name(
 // Service provider and service request API routes
 Route::get('/servicerequests/index', 'ApiController@getAllServiceRequests')->name('api.service.request');
 Route::get('/service_providers/index', 'ApiController@getAllServiceProviders')->name('api.service.provider');
+
+// ============================================================
+// SUPER ADMIN ROUTES (app.lipakodi.co.ke)
+// ============================================================
+Route::prefix('super-admin')->name('super.')->middleware(['auth'])->group(function () {
+    Route::get('/dashboard', 'SuperAdmin\DashboardController@index')->name('dashboard');
+
+    // Organizations
+    Route::get('/organizations', 'SuperAdmin\OrganizationController@index')->name('organizations.index');
+    Route::get('/organizations/create', 'SuperAdmin\OrganizationController@create')->name('organizations.create');
+    Route::post('/organizations', 'SuperAdmin\OrganizationController@store')->name('organizations.store');
+    Route::get('/organizations/{id}', 'SuperAdmin\OrganizationController@show')->name('organizations.show');
+    Route::get('/organizations/{id}/edit', 'SuperAdmin\OrganizationController@edit')->name('organizations.edit');
+    Route::put('/organizations/{id}', 'SuperAdmin\OrganizationController@update')->name('organizations.update');
+    Route::post('/organizations/{id}/suspend', 'SuperAdmin\OrganizationController@suspend')->name('organizations.suspend');
+    Route::post('/organizations/{id}/activate', 'SuperAdmin\OrganizationController@activate')->name('organizations.activate');
+    Route::post('/organizations/{id}/impersonate', 'SuperAdmin\OrganizationController@impersonate')->name('impersonate');
+    Route::get('/stop-impersonating', 'SuperAdmin\OrganizationController@stopImpersonating')->name('impersonate.stop');
+
+    // Subscription Plans
+    Route::get('/plans', 'SuperAdmin\SubscriptionPlanController@index')->name('plans.index');
+    Route::put('/plans/{id}', 'SuperAdmin\SubscriptionPlanController@update')->name('plans.update');
+
+    // Subscriptions list
+    Route::get('/subscriptions', function() {
+        $subscriptions = App\Subscription::with('organization', 'plan')->latest()->paginate(20);
+        return view('super_admin.subscriptions.index', compact('subscriptions'));
+    })->name('subscriptions.index');
+});
+
+// ============================================================
+// TENANT PORTAL ROUTES
+// ============================================================
+Route::prefix('tenant-portal')->name('tenant.')->group(function () {
+    // Auth
+    Route::get('/login', 'Tenant\TenantAuthController@showLogin')->name('login');
+    Route::post('/login', 'Tenant\TenantAuthController@login')->name('login.post');
+    Route::post('/logout', 'Tenant\TenantAuthController@logout')->name('logout');
+
+    // Protected routes
+    Route::middleware('auth:tenant')->group(function () {
+        Route::get('/dashboard', 'Tenant\TenantDashboardController@index')->name('dashboard');
+        Route::get('/invoices', 'Tenant\TenantDashboardController@invoices')->name('invoices');
+        Route::get('/service-requests', 'Tenant\TenantDashboardController@serviceRequests')->name('service-requests');
+        Route::post('/service-requests', 'Tenant\TenantDashboardController@submitServiceRequest')->name('service-requests.store');
+        Route::get('/notice', function() {
+            $org = config('app.organization');
+            return view('tenant.notice', compact('org'));
+        })->name('notice');
+        Route::post('/notice', 'Tenant\TenantDashboardController@submitNotice')->name('notice.submit');
+        Route::get('/password', function() {
+            $org = config('app.organization');
+            return view('tenant.password', compact('org'));
+        })->name('password');
+        Route::post('/password', 'Tenant\TenantDashboardController@changePassword')->name('password.update');
+    });
+});
+
+// ============================================================
+// LANDLORD PORTAL ROUTES
+// ============================================================
+Route::prefix('landlord-portal')->name('landlord.')->group(function () {
+    // Auth
+    Route::get('/login', 'Landlord\LandlordAuthController@showLogin')->name('login');
+    Route::post('/login', 'Landlord\LandlordAuthController@login')->name('login.post');
+    Route::post('/logout', 'Landlord\LandlordAuthController@logout')->name('logout');
+
+    // Protected routes
+    Route::middleware('auth:landlord')->group(function () {
+        Route::get('/dashboard', 'Landlord\LandlordDashboardController@index')->name('dashboard');
+        Route::get('/properties', 'Landlord\LandlordDashboardController@properties')->name('properties');
+        Route::get('/statements', 'Landlord\LandlordDashboardController@statements')->name('statements');
+        Route::get('/service-requests', 'Landlord\LandlordDashboardController@serviceRequests')->name('service-requests');
+    });
+});
+
+// Onboarding Wizard
+Route::get('/onboarding', 'OnboardingWizardController@index')->name('onboarding.wizard');
+
+// Suspended page
+Route::get('/suspended', function() {
+    $org = config('app.organization');
+    return view('suspended', compact('org'));
+})->name('suspended');

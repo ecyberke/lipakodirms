@@ -13,6 +13,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
+        \App\Console\Commands\CheckSubscriptions::class,
         Commands\InitializeInvoices::class,
         Commands\PenalizeInvoices::class,
         Commands\PayingOwners::class,

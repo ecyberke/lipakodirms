@@ -1,21 +1,30 @@
 <?php
-
 namespace App\Http\Middleware;
 
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
+use Illuminate\Http\Request;
 
 class Authenticate extends Middleware
 {
-    /**
-     * Get the path the user should be redirected to when they are not authenticated.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return string
-     */
-    protected function redirectTo($request)
+    protected function redirectTo(Request $request): ?string
     {
-        if (! $request->expectsJson()) {
+        if ($request->expectsJson()) {
+            return null;
+        }
+
+        // Redirect to appropriate login based on route prefix
+        if ($request->is('tenant-portal/*')) {
+            return route('tenant.login');
+        }
+
+        if ($request->is('landlord-portal/*')) {
+            return route('landlord.login');
+        }
+
+        if ($request->is('super-admin/*')) {
             return route('login');
         }
+
+        return route('login');
     }
 }

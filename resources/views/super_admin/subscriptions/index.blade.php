@@ -40,8 +40,8 @@
                             <td>{{ ucfirst(str_replace('_', ' ', $sub->billing_cycle)) }}</td>
                             <td>{{ $sub->units }}</td>
                             <td>KES {{ number_format($sub->amount) }}</td>
-                            <td>{{ $sub->starts_at->format('d M Y') }}</td>
-                            <td>{{ $sub->ends_at->format('d M Y') }}</td>
+                            <td>{{ $sub->starts_at ? \Carbon\Carbon::parse($sub->starts_at)->format('d M Y') : 'N/A' }}</td>
+                            <td>{{ $sub->ends_at ? \Carbon\Carbon::parse($sub->ends_at)->format('d M Y') : 'N/A' }}</td>
                             <td><span class="org-status status-{{ $sub->status }}">{{ ucfirst($sub->status) }}</span></td>
                         </tr>
                         @empty

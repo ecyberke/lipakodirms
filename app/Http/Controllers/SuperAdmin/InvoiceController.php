@@ -132,4 +132,51 @@ class InvoiceController extends SuperAdminController
         return redirect()->route('super.invoices.payments')
             ->with('success', 'SMS credits recorded successfully.');
     }
+
+    public function show($id)
+    {
+        $invoice = DB::table('subscription_invoices')
+            ->join('organizations', 'subscription_invoices.organization_id', '=', 'organizations.id')
+            ->select('subscription_invoices.*', 'organizations.name as org_name',
+                     'organizations.slug as org_slug', 'organizations.phone as org_phone',
+                     'organizations.email as org_email')
+            ->where('subscription_invoices.id', $id)
+            ->first();
+        if (!$invoice) abort(404);
+        return view('super_admin.invoices.show', compact('invoice'));
+    }
+
+    public function edit($id)
+    {
+        $invoice = DB::table('subscription_invoices')->where('id', $id)->first();
+        if (!$invoice) abort(404);
+        $organizations = Organization::where('status', 'active')->get();
+        return view('super_admin.invoices.edit', compact('invoice', 'organizations'));
+    }
+
+    public function update(\Illuminate\Http\Request $request, $id)
+    {
+        $request->validate([
+            'amount'   => 'required|numeric|min:1',
+            'due_date' => 'required|date',
+            'status'   => 'required|in:unpaid,paid,partial,cancelled',
+        ]);
+        DB::table('subscription_invoices')->where('id', $id)->update([
+            'amount'      => $request->amount,
+            'due_date'    => $request->due_date,
+            'status'      => $request->status,
+            'description' => $request->description,
+            'updated_at'  => now(),
+        ]);
+        return redirect()->route('super.invoices.list')
+            ->with('success', 'Invoice updated successfully.');
+    }
+
+    public function destroy($id)
+    {
+        DB::table('subscription_invoices')->where('id', $id)->delete();
+        return redirect()->route('super.invoices.list')
+            ->with('success', 'Invoice deleted successfully.');
+    }
+
 }

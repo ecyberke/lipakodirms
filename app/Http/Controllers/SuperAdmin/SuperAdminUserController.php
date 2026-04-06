@@ -9,6 +9,7 @@ class SuperAdminUserController extends SuperAdminController
 {
     public function index()
     {
+        // Show all super admin users
         $users = User::where('is_super', 1)->latest()->get();
         return view('super_admin.users.index', compact('users'));
     }

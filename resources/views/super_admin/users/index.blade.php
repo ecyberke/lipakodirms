@@ -21,6 +21,7 @@
                                 <th>Username</th>
                                 <th>Email</th>
                                 <th>Created</th>
+                                <th style="width:10%;">Password</th>
                                 <th style="width:10%;">Action</th>
                             </tr>
                         </thead>
@@ -32,23 +33,27 @@
                             <td>{{ $user->email }}</td>
                             <td>{{ $user->created_at->format('d M Y') }}</td>
                             <td>
+                                <a class="btn btn-sm btn-success btn-block"
+                                    href="{{ route('admin.editpassword', $user->id) }}">Edit Password</a>
+                            </td>
+                            <td>
                                 <div class="text-center">
                                     <div class="dropdown dropdown-action">
                                         <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                                             <i class="fa fa-ellipsis-v"></i>
                                         </a>
                                         <div class="dropdown-menu dropdown-menu-right">
+                                            <div class="dropdown-item">
+                                                <a class="btn btn-sm btn-info btn-block"
+                                                    href="{{ route('admin.edit', $user->id) }}">Edit</a>
+                                            </div>
                                             @if($user->id !== auth()->id())
                                             <div class="dropdown-item">
-                                                <form method="POST" action="{{ route('super.users.destroy', $user->id) }}"
+                                                <form method="POST" action="{{ route('admin.delete', $user->id) }}"
                                                     class="delete-form">
                                                     @csrf @method('DELETE')
                                                     <input type="submit" class="btn btn-sm btn-danger btn-block" value="Delete">
                                                 </form>
-                                            </div>
-                                            @else
-                                            <div class="dropdown-item">
-                                                <span class="badge badge-info btn-block text-center">Current User</span>
                                             </div>
                                             @endif
                                         </div>
@@ -57,7 +62,7 @@
                             </td>
                         </tr>
                         @empty
-                        <tr><td colspan="5" class="text-center text-muted">No users found</td></tr>
+                        <tr><td colspan="6" class="text-center text-muted">No users found</td></tr>
                         @endforelse
                         </tbody>
                     </table>

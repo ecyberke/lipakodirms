@@ -142,11 +142,7 @@
                     <input type="text" name="mpesa_passkey" class="form-control form-control-sm" 
                         placeholder="Passkey" value="{{ $org->mpesa_passkey }}">
                 </div>
-                <div class="mb-3">
-                    <label class="small text-muted">Paybill Number</label>
-                    <input type="text" name="mpesa_paybill" class="form-control form-control-sm" 
-                        placeholder="Paybill Number" value="{{ $org->mpesa_paybill }}">
-                </div>
+
                 <h6 class="text-muted small">Bank</h6>
                 <div class="mb-2"><input type="text" name="bank_name" class="form-control form-control-sm" placeholder="Bank Name" value="{{ $org->bank_name }}"></div>
                 <div class="mb-2"><input type="text" name="bank_account" class="form-control form-control-sm" placeholder="Account Number" value="{{ $org->bank_account }}"></div>

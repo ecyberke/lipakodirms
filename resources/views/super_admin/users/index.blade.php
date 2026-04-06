@@ -9,62 +9,55 @@
 
 @section('content')
 <div class="content container-fluid">
-    <div class="row">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">Super Admin Users</h3>
-                    <div class="card-options">
-                        <a href="{{ route('super.users.create') }}" class="btn btn-sm btn-primary">
-                            <i class="fe fe-plus"></i> Add User
-                        </a>
-                    </div>
-                </div>
-                <div class="card-body">
+    <div class="card" style="padding-top:25px;padding-bottom:25px;padding-left:25px;padding-right:25px;">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="table-responsive">
                     @include('includes.messages')
-                    <table id="users-table" class="table table-striped custom-table mb-0 dt-responsive nowrap" style="width:100%;">
+                    <table class="table table-striped custom-table mb-0" id="users-table">
                         <thead>
                             <tr>
-                                <th style="width:3%">#</th>
                                 <th>Name</th>
                                 <th>Username</th>
                                 <th>Email</th>
                                 <th>Created</th>
-                                <th class="text-right">Action</th>
+                                <th style="width:10%;">Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                        @php $i = 1; @endphp
                         @forelse($users as $user)
                         <tr>
-                            <td>{{ $i++ }}</td>
                             <td><strong>{{ $user->name }}</strong></td>
                             <td>{{ $user->username }}</td>
                             <td>{{ $user->email }}</td>
                             <td>{{ $user->created_at->format('d M Y') }}</td>
-                            <td class="text-right">
-                                @if($user->id !== auth()->id())
-                                <div class="dropdown dropdown-action">
-                                    <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown">
-                                        <i class="fa fa-ellipsis-v"></i>
-                                    </a>
-                                    <div class="dropdown-menu dropdown-menu-right">
-                                        <div class="dropdown-item">
-                                            <form method="POST" action="{{ route('super.users.destroy', $user->id) }}"
-                                                onsubmit="return confirm('Delete this user?')">
-                                                @csrf @method('DELETE')
-                                                <button class="btn btn-sm btn-danger btn-block">Delete</button>
-                                            </form>
+                            <td>
+                                <div class="text-center">
+                                    <div class="dropdown dropdown-action">
+                                        <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                            <i class="fa fa-ellipsis-v"></i>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right">
+                                            @if($user->id !== auth()->id())
+                                            <div class="dropdown-item">
+                                                <form method="POST" action="{{ route('super.users.destroy', $user->id) }}"
+                                                    class="delete-form">
+                                                    @csrf @method('DELETE')
+                                                    <input type="submit" class="btn btn-sm btn-danger btn-block" value="Delete">
+                                                </form>
+                                            </div>
+                                            @else
+                                            <div class="dropdown-item">
+                                                <span class="badge badge-info btn-block text-center">Current User</span>
+                                            </div>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
-                                @else
-                                <span class="badge badge-info">You</span>
-                                @endif
                             </td>
                         </tr>
                         @empty
-                        <tr><td colspan="6" class="text-center text-muted">No users found</td></tr>
+                        <tr><td colspan="5" class="text-center text-muted">No users found</td></tr>
                         @endforelse
                         </tbody>
                     </table>
@@ -81,6 +74,11 @@
 <script src="{{URL::asset('assets/plugins/datatable/dataTables.responsive.min.js')}}"></script>
 <script src="{{URL::asset('assets/plugins/datatable/responsive.bootstrap4.min.js')}}"></script>
 <script>
-$(function() { $('#users-table').DataTable({ responsive: true, pageLength: 25, order: [[0, 'desc']] }); });
+$(function() {
+    $('#users-table').DataTable({ responsive: true, pageLength: 25 });
+    $(document).on('submit', '.delete-form', function() {
+        return confirm('Are you sure you want to delete this user?');
+    });
+});
 </script>
 @endsection

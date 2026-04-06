@@ -68,11 +68,6 @@
                                 placeholder="Paybill/Till Number" value="{{ $settings?->mpesa_shortcode }}">
                         </div>
                         <div class="form-group">
-                            <label>Paybill Number</label>
-                            <input type="text" name="mpesa_paybill" class="form-control"
-                                placeholder="Paybill Number" value="{{ $settings?->mpesa_paybill }}">
-                        </div>
-                        <div class="form-group">
                             <label>Consumer Key <span class="text-danger">*</span></label>
                             <input type="text" name="mpesa_consumer_key" class="form-control"
                                 placeholder="Consumer Key" value="{{ $settings?->mpesa_consumer_key }}">

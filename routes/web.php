@@ -553,6 +553,17 @@ Route::prefix('super-admin')->name('super.')->middleware(['auth'])->group(functi
     Route::get('/plans', 'SuperAdmin\SubscriptionPlanController@index')->name('plans.index');
     Route::put('/plans/{id}', 'SuperAdmin\SubscriptionPlanController@update')->name('plans.update');
 
+    // Super Admin Invoicing (proxy to company invoice routes)
+    Route::get('/invoices', function() {
+        return redirect()->route('manualinvoice.list');
+    })->name('invoices.list');
+    Route::get('/invoices/pay', function() {
+        return redirect()->route('manualinvoice.pay');
+    })->name('invoices.pay');
+    Route::get('/invoices/payments', function() {
+        return redirect()->route('manualinvoice.payments');
+    })->name('invoices.payments');
+
     // Connections/Settings
     Route::get('/connections', 'SuperAdmin\ConnectionController@index')->name('connections');
     Route::post('/connections', 'SuperAdmin\ConnectionController@update')->name('connections.update');

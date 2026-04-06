@@ -67,37 +67,6 @@
         </div>
     </div>
 
-    {{-- Revenue Cards --}}
-    <div class="col-xl-12 col-lg-6">
-        <div class="row">
-            <div class="col-xl-3 col-md-12 col-lg-12">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col">
-                                <p class="mb-1">Est. Monthly Revenue</p>
-                                <h3 class="mb-0 font-weight-bold">KES {{ number_format($stats['monthly_revenue']) }}</h3>
-                            </div>
-                            <div class="col col-auto"><div id="spark1"></div></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-3 col-md-12 col-lg-12">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col">
-                                <p class="mb-1">Est. Annual Revenue</p>
-                                <h3 class="mb-0 font-weight-bold">KES {{ number_format($stats['annual_revenue']) }}</h3>
-                            </div>
-                            <div class="col col-auto"><div id="spark2"></div></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
 
 <!--Row-->

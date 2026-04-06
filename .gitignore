@@ -9,3 +9,17 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
+
+# Compiled views
+/storage/framework/views/
+/storage/framework/cache/
+/storage/framework/sessions/
+
+# Logs
+/storage/logs/
+
+# SMS response logs
+/storage/app/sms*.json
+
+# Bootstrap cache
+/bootstrap/cache/

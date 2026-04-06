@@ -605,6 +605,9 @@ Route::prefix('landlord-portal')->name('landlord.')->group(function () {
         Route::get('/dashboard', 'Landlord\LandlordDashboardController@index')->name('dashboard');
         Route::get('/properties', 'Landlord\LandlordDashboardController@properties')->name('properties');
         Route::get('/statements', 'Landlord\LandlordDashboardController@statements')->name('statements');
+        Route::get('/maintenance-report', 'Landlord\LandlordDashboardController@maintenanceReport')->name('maintenance-report');
+        Route::get('/property-status', 'Landlord\LandlordDashboardController@propertyStatus')->name('property-status');
+        Route::get('/remittance', 'Landlord\LandlordDashboardController@remittance')->name('remittance');
         Route::get('/service-requests', 'Landlord\LandlordDashboardController@serviceRequests')->name('service-requests');
     });
 });

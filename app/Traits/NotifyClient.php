@@ -4,130 +4,144 @@ namespace App\Traits;
 use App\Mail\OnClientPayment;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Storage;
+
 trait NotifyClient
 {
     use UtilTrait;
+
+    /**
+     * Core SMS sender using Talksasa/Ecyber gateway
+     */
+    private function sendSMS(string $recipient, string $message, string $senderId = null): array
+    {
+        $org = config('app.organization');
+
+        // Use org-specific credentials if available, else fall back to app config
+        $apiToken = $org?->sms_api_token ?? config('app.sms_api_token');
+        $senderId = $senderId ?? $org?->sms_sender_id ?? config('app.sms_sender_id', 'LIPAKODI');
+
+        try {
+            $client = new Client(['timeout' => 30, 'verify' => false]);
+            $response = $client->post('https://sasa.ecyber.co.ke/api/v3/sms/send', [
+                'headers' => [
+                    'Authorization' => 'Bearer ' . $apiToken,
+                    'Content-Type'  => 'application/json',
+                    'Accept'        => 'application/json',
+                ],
+                'json' => [
+                    'recipient' => $recipient,
+                    'sender_id' => $senderId,
+                    'type'      => 'plain',
+                    'message'   => $message,
+                ],
+            ]);
+
+            $result = json_decode($response->getBody(), true);
+            Storage::put('sms_log_' . time() . '.json', json_encode($result));
+            return $result;
+        } catch (\Exception $e) {
+            Storage::put('sms_error_' . time() . '.json', json_encode([
+                'error' => $e->getMessage(),
+                'recipient' => $recipient,
+                'message' => $message,
+            ]));
+            return ['status' => 'error', 'message' => $e->getMessage()];
+        }
+    }
+
+    /**
+     * Send email notification
+     */
     public function sendEmail($userData)
     {
-        //sending email
         $format = '%s/api/viewpdf/%d';
         $userData->invoice_id = sprintf($format, config('app.url'), $userData->invoice_id);
-
-        \Mail::to($userData->tenant_info->email)->send(
-            new OnClientPayment($userData)
-        );
-
+        \Mail::to($userData->tenant_info->email)->send(new OnClientPayment($userData));
         return true;
     }
 
+    /**
+     * Send message to multiple recipients
+     * Compatible with existing call signature: array of ['to' => phone, 'text' => message]
+     */
     public function sendMessage($array_of_messages)
     {
-        $sms_job_object = ['messages' => $array_of_messages];
-
         $this->smsData([
-            // 'type' => auth()->user()->username,
-            'message_body' => $array_of_messages[0]['text'],
+            'message_body'  => $array_of_messages[0]['text'] ?? '',
             'message_count' => count($array_of_messages),
         ]);
 
-        $json_sms_job_object = json_encode($sms_job_object);
-
-        //return  $array_of_messages;
-        $client = new Client();
-        $credentials = base64_encode(config('app.sms_username') . ':' . config('app.sms_password'));
-        $response = $client->request('POST', 'https://sms.enet.co.ke/sms/1/text/multi', [
-            'headers' => [
-                'Authorization' => 'Basic ' . $credentials,
-            ],
-            'body' => $json_sms_job_object,
-        ]);
-        Storage::put('smsresponse' . time() . '.json', $response->getBody());
-        return json_decode($response->getBody());
+        $results = [];
+        foreach ($array_of_messages as $msg) {
+            $recipient = $msg['to'] ?? '';
+            $message   = $msg['text'] ?? '';
+            if ($recipient && $message) {
+                $results[] = $this->sendSMS($recipient, $message, $msg['from'] ?? null);
+            }
+        }
+        return $results;
     }
+
+    /**
+     * Send test message
+     */
     public function sendTestMessage($array_of_messages)
     {
-        $sms_job_object = ['messages' => $array_of_messages];
-
-        $this->smsData([
-            // 'type' => auth()->user()->username,
-            'message_body' => $array_of_messages[0]['text'],
-            'message_count' => count($array_of_messages),
-        ]);
-
-        $json_sms_job_object = json_encode($sms_job_object);
-
-        //return  $array_of_messages;
-        $client = new Client();
-        $credentials = base64_encode(config('app.sms_test_username') . ':' . config('app.sms_test_password'));
-        $response = $client->request('POST', 'https://sms.enet.co.ke/sms/1/text/multi', [
-            'headers' => [
-                'Authorization' => 'Basic ' . $credentials,
-            ],
-            'body' => $json_sms_job_object,
-        ]);
-        Storage::put('smsresponse_test' . time() . '.json', $response->getBody());
-        return json_decode($response->getBody());
+        return $this->sendMessage($array_of_messages);
     }
+
+    /**
+     * Send payment confirmation to tenant
+     */
     public function sendConfirmationMessage($userData)
     {
+        $org = config('app.organization');
+        $currency = $org?->currency ?? 'KES';
 
-        $format = "Dear %s,\nYour rent payment of Ksh %d has been received.\nFor enquiries call 0796106612.";
-
-        $message_text = sprintf($format,
+        $message = sprintf(
+            "Dear %s,\nYour rent payment of %s %s has been received.\nThank you.",
             $userData->inv,
-            $userData->amt_paid);
+            $currency,
+            number_format($userData->amt_paid)
+        );
 
-        $array_of_messages = [];
-        $data = [
-            'from' => config('app.sms_client'),
-            'to' => $userData->phone,
-            'text' => $message_text,
-        ];
-        array_push($array_of_messages, $data);
-        $sms_job_object = ['messages' => $array_of_messages];
-        $json_sms_job_object = json_encode($sms_job_object);
-
-        $client = new Client();
-        $credentials = base64_encode(config('app.sms_username') . ':' . config('app.sms_password'));
-        $response = $client->request('POST', 'https://sms.enet.co.ke/sms/1/text/multi', [
-            'headers' => [
-                'Authorization' => 'Basic ' . $credentials,
-            ],
-            'body' => $json_sms_job_object,
-        ]);
-        Storage::put('smsresponseconfirmation' . time() . '.json', $response->getBody());
-        return json_decode($response->getBody());
+        return $this->sendSMS($userData->phone, $message);
     }
+
+    /**
+     * Send payment notification to admin
+     */
     public function sendConfirmationMessageAdmin($userData)
     {
+        $org = config('app.organization');
+        $adminPhone = $org?->phone ?? config('app.sms_admin_phone');
+        $currency   = $org?->currency ?? 'KES';
 
-        $format = "%s of %d, %d has paid Ksh %d.";
-
-        $message_text = sprintf($format,
+        $message = sprintf(
+            "%s has paid %s %s for House %s.",
             $userData->inv,
-            $userData->house_name,
-            $userData->house_number,
-            $userData->amount);
+            $currency,
+            number_format($userData->amount),
+            $userData->house_number ?? ''
+        );
 
-        $array_of_messages = [];
-        $data = [
-            'from' => config('app.sms_client'),
-            'to' => config('app.sms_admin_phone'),
-            'text' => $message_text,
-        ];
-        array_push($array_of_messages, $data);
-        $sms_job_object = ['messages' => $array_of_messages];
-        $json_sms_job_object = json_encode($sms_job_object);
+        return $this->sendSMS($adminPhone, $message);
+    }
 
-        $client = new Client();
-        $credentials = base64_encode(config('app.sms_username') . ':' . config('app.sms_password'));
-        $response = $client->request('POST', 'https://sms.enet.co.ke/sms/1/text/multi', [
-            'headers' => [
-                'Authorization' => 'Basic ' . $credentials,
-            ],
-            'body' => $json_sms_job_object,
-        ]);
-        Storage::put('smsresponseconfirmation' . time() . '.json', $response->getBody());
-        return json_decode($response->getBody());
+    /**
+     * Send a simple SMS to a single number - new helper for direct use
+     */
+    public function sendSimpleSMS(string $phone, string $message): array
+    {
+        return $this->sendSMS($phone, $message);
+    }
+
+    /**
+     * Send SMS to multiple phones at once (comma-separated via Talksasa)
+     */
+    public function sendBulkSMS(array $phones, string $message): array
+    {
+        $recipient = implode(',', $phones);
+        return $this->sendSMS($recipient, $message);
     }
 }

@@ -40,6 +40,7 @@
 <script>
 $(function() {
     $('#servicerequest-table').DataTable({
+        responsive: true,
         processing: true,
         serverSide: true,
         pageLength: 25,

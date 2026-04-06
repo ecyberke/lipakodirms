@@ -1,25 +1,71 @@
 @extends('landlord.layouts.master')
 @section('title', 'Service Requests')
 
+@section('css')
+<link href="{{URL::asset('assets/plugins/datatable/css/dataTables.bootstrap4.min.css')}}" rel="stylesheet" />
+<link href="{{URL::asset('assets/plugins/datatable/css/buttons.bootstrap4.min.css')}}" rel="stylesheet">
+<link href="{{URL::asset('assets/plugins/datatable/responsive.bootstrap4.min.css')}}" rel="stylesheet" />
+@endsection
+
 @section('content')
-<div class="content-card">
-    <h6 class="mb-3"><i class="fas fa-tools text-warning"></i> Service Requests on My Properties</h6>
-    @forelse($requests as $req)
-    <div class="border rounded p-3 mb-3">
-        <div class="d-flex justify-content-between">
-            <div>
-                <strong>{{ $req->request_type }}</strong>
-                <small class="text-muted ms-2">{{ $req->created_at->format('d M Y') }}</small>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                @include('includes.messages')
+                <table id="sr-table" class="table table-striped custom-table mb-0">
+                    <thead>
+                        <tr>
+                            <th style="width:5%">#</th>
+                            <th>Property</th>
+                            <th>House No</th>
+                            <th>Service Requested</th>
+                            <th>Area Affected</th>
+                            <th>Status</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @php $i = 1; @endphp
+                    @forelse($requests as $req)
+                    <tr>
+                        <td>{{ $i++ }}</td>
+                        <td>{{ $req->apartment->name ?? 'N/A' }}</td>
+                        <td>{{ $req->house->house_no ?? 'N/A' }}</td>
+                        <td><strong>{{ $req->request_type }}</strong></td>
+                        <td>{{ $req->area_affected ?? 'N/A' }}</td>
+                        <td>
+                            @if($req->approval == 1)
+                                <span class="badge badge-success">Approved</span>
+                            @elseif($req->status == 'notice')
+                                <span class="badge badge-warning">Notice</span>
+                            @else
+                                <span class="badge badge-secondary">Pending</span>
+                            @endif
+                        </td>
+                        <td>{{ $req->created_at->format('d M Y') }}</td>
+                    </tr>
+                    @empty
+                    <tr><td colspan="7" class="text-center text-muted">No service requests found</td></tr>
+                    @endforelse
+                    </tbody>
+                </table>
+                {{ $requests->links() }}
             </div>
-            <span class="badge {{ $req->approval ? 'bg-success' : 'bg-warning text-dark' }}">
-                {{ $req->approval ? 'Resolved' : 'Pending' }}
-            </span>
         </div>
-        <p class="text-muted small mt-2 mb-0">{{ $req->description }}</p>
     </div>
-    @empty
-    <p class="text-muted">No service requests on your properties.</p>
-    @endforelse
-    {{ $requests->links() }}
 </div>
+@endsection
+
+@section('scripts')
+<script src="{{URL::asset('assets/plugins/datatable/js/jquery.dataTables.js')}}"></script>
+<script src="{{URL::asset('assets/plugins/datatable/js/dataTables.bootstrap4.js')}}"></script>
+<script src="{{URL::asset('assets/plugins/datatable/dataTables.responsive.min.js')}}"></script>
+<script src="{{URL::asset('assets/plugins/datatable/responsive.bootstrap4.min.js')}}"></script>
+<script>
+$(function() {
+    $('#sr-table').DataTable({
+        responsive: true,"pageLength": 25, "order": [[6, "desc"]]});
+});
+</script>
 @endsection

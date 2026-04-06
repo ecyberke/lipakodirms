@@ -77,6 +77,7 @@
 <script>
 $(function() {
     $('#payments-table').DataTable({
+        responsive: true,
         "pageLength": 25,
         "order": [[6, "desc"]],
         "columnDefs": [{"orderable": false, "targets": [7]}]

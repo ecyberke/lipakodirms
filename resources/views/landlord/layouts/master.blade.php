@@ -50,19 +50,25 @@
                         <span class="side-menu__label">My Properties</span>
                     </a>
                 </li>
-                <li class="menutitles">REPORTS</li>
-                <li class="slide">
-                    <a class="side-menu__item {{ request()->routeIs('landlord.statements') ? 'active' : '' }}" href="{{ route('landlord.statements') }}">
-                        <svg class="side-menu__icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
-                        <span class="side-menu__label">Statements</span>
-                    </a>
-                </li>
                 <li class="menutitles">MAINTENANCE</li>
                 <li class="slide">
                     <a class="side-menu__item {{ request()->routeIs('landlord.service-requests') ? 'active' : '' }}" href="{{ route('landlord.service-requests') }}">
                         <svg class="side-menu__icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.07 4.93l-1.41 1.41M4.93 19.07l1.41-1.41M19.07 19.07l-1.41-1.41M4.93 4.93l1.41 1.41"></path><line x1="12" y1="2" x2="12" y2="4"></line><line x1="12" y1="20" x2="12" y2="22"></line><line x1="2" y1="12" x2="4" y2="12"></line><line x1="20" y1="12" x2="22" y2="12"></line></svg>
                         <span class="side-menu__label">Service Requests</span>
                     </a>
+                </li>
+                <li class="menutitles">REPORTS</li>
+                <li class="slide">
+                    <a class="side-menu__item" data-toggle="slide" href="{{ url('/') }}">
+                        <svg class="side-menu__icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                        <span class="side-menu__label">Reports</span><i class="angle fa fa-angle-right"></i>
+                    </a>
+                    <ul class="slide-menu">
+                        <li><a href="{{ route('landlord.statements') }}" class="slide-item"> Statement</a></li>
+                        <li><a href="{{ route('landlord.remittance') }}" class="slide-item"> Remittance</a></li>
+                        <li><a href="{{ route('landlord.maintenance-report') }}" class="slide-item"> Maintenance Report</a></li>
+                        <li><a href="{{ route('landlord.property-status') }}" class="slide-item"> Property Status</a></li>
+                    </ul>
                 </li>
             </ul>
         </aside>

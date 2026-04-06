@@ -163,6 +163,7 @@
 <script>
 $(function() {
     $('#tenant-invoices-table').DataTable({
+        responsive: true,
         "pageLength": 25,
         "order": [[2, "desc"]],
         "columnDefs": [{"orderable": false, "targets": [9]}]

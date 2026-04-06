@@ -48,9 +48,8 @@
                                 <div class="form-group row">
                                     <div class="col-sm-4">
                                         <label>User Level <span class="text-danger">*</span></label>
-                                        <select class="form-control select2-show-search" name="role">
-                                            <option value="">--- Choose ---</option>
-                                            <option value="super">Super Admin</option>
+                                        <select class="form-control" name="role">
+                                            <option value="super" selected>Super Admin</option>
                                         </select>
                                     </div>
                                     <div class="col-sm-4">

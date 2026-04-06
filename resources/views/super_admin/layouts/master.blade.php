@@ -92,6 +92,7 @@
                         <span class="side-menu__label">Invoicing</span><i class="angle fa fa-angle-right"></i>
                     </a>
                     <ul class="slide-menu">
+                        <li><a href="{{ route('super.invoices.create') }}" class="slide-item"> Add Invoice</a></li>
                         <li><a href="{{ route('super.invoices.list') }}" class="slide-item"> List Invoices</a></li>
                         <li><a href="{{ route('super.invoices.pay') }}" class="slide-item"> Pay Invoice</a></li>
                         <li><a href="{{ route('super.invoices.payments') }}" class="slide-item"> List Payments</a></li>

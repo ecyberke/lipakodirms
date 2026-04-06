@@ -553,16 +553,14 @@ Route::prefix('super-admin')->name('super.')->middleware(['auth'])->group(functi
     Route::get('/plans', 'SuperAdmin\SubscriptionPlanController@index')->name('plans.index');
     Route::put('/plans/{id}', 'SuperAdmin\SubscriptionPlanController@update')->name('plans.update');
 
-    // Super Admin Invoicing (proxy to company invoice routes)
-    Route::get('/invoices', function() {
-        return redirect()->route('manualinvoice.list');
-    })->name('invoices.list');
-    Route::get('/invoices/pay', function() {
-        return redirect()->route('manualinvoice.pay');
-    })->name('invoices.pay');
-    Route::get('/invoices/payments', function() {
-        return redirect()->route('manualinvoice.payments');
-    })->name('invoices.payments');
+    // Super Admin Invoicing
+    Route::get('/invoices', 'SuperAdmin\InvoiceController@list')->name('invoices.list');
+    Route::get('/invoices/create', 'SuperAdmin\InvoiceController@create')->name('invoices.create');
+    Route::post('/invoices', 'SuperAdmin\InvoiceController@store')->name('invoices.store');
+    Route::get('/invoices/pay', 'SuperAdmin\InvoiceController@pay')->name('invoices.pay');
+    Route::post('/invoices/pay', 'SuperAdmin\InvoiceController@recordPayment')->name('invoices.record-payment');
+    Route::get('/invoices/payments', 'SuperAdmin\InvoiceController@payments')->name('invoices.payments');
+    Route::post('/invoices/sms-credits', 'SuperAdmin\InvoiceController@addSmsCredits')->name('invoices.sms-credits');
 
     // Connections/Settings
     Route::get('/connections', 'SuperAdmin\ConnectionController@index')->name('connections');

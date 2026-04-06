@@ -64,6 +64,11 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="card text-white bg-primary py-5 d-md-down-none page-content mt-0">
+                                    <div class="card-body text-center justify-content-center page-single-content">
+                                        <img src="{{URL::asset('assets/images/pattern/login.png')}}" alt="img">
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

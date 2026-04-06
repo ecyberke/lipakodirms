@@ -56,6 +56,20 @@ class SubdomainMiddleware
             Config::set('app.is_super_admin', false);
             Config::set('app.organization', $org);
             Config::set('app.currency', $org->currency);
+            // Override SMS config with org-specific credentials if set
+            if ($org->sms_api_token) {
+                Config::set('app.sms_api_token', $org->sms_api_token);
+                Config::set('app.sms_sender_id', $org->sms_sender_id ?? config('app.sms_sender_id'));
+                Config::set('app.sms_admin_phone', $org->sms_admin_phone ?? config('app.sms_admin_phone'));
+            }
+            // Override M-Pesa config with org-specific credentials if set
+            if ($org->mpesa_consumer_key) {
+                Config::set('services.mpesa.consumer_key', $org->mpesa_consumer_key);
+                Config::set('services.mpesa.consumer_secret', $org->mpesa_consumer_secret);
+                Config::set('services.mpesa.shortcode', $org->mpesa_shortcode);
+                Config::set('services.mpesa.passkey', $org->mpesa_passkey);
+                Config::set('services.mpesa.paybill', $org->mpesa_paybill);
+            }
             View::share('current_org', $org);
             View::share('is_super_admin', false);
 

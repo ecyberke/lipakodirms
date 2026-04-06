@@ -85,18 +85,68 @@
     <!-- API Integrations sidebar -->
     <div class="col-md-4">
         <div class="table-card mb-4">
-            <h6 class="mb-3"><i class="fas fa-plug"></i> API Integrations</h6>
+            <h6 class="mb-3"><i class="fas fa-cog"></i> Configuration</h6>
             <form method="POST" action="{{ route('super.organizations.update', $org->id) }}">
                 @csrf @method('PUT')
-                <h6 class="text-muted small">SMS</h6>
-                <div class="mb-2"><input type="text" name="sms_username" class="form-control form-control-sm" placeholder="SMS Username" value="{{ $org->sms_username }}"></div>
-                <div class="mb-3"><input type="password" name="sms_password" class="form-control form-control-sm" placeholder="SMS Password" value="{{ $org->sms_password }}"></div>
-                <h6 class="text-muted small">M-Pesa</h6>
-                <div class="mb-2"><input type="text" name="mpesa_consumer_key" class="form-control form-control-sm" placeholder="Consumer Key" value="{{ $org->mpesa_consumer_key }}"></div>
-                <div class="mb-2"><input type="text" name="mpesa_consumer_secret" class="form-control form-control-sm" placeholder="Consumer Secret" value="{{ $org->mpesa_consumer_secret }}"></div>
-                <div class="mb-2"><input type="text" name="mpesa_shortcode" class="form-control form-control-sm" placeholder="Shortcode/Till" value="{{ $org->mpesa_shortcode }}"></div>
-                <div class="mb-2"><input type="text" name="mpesa_paybill" class="form-control form-control-sm" placeholder="Paybill Number" value="{{ $org->mpesa_paybill }}"></div>
-                <div class="mb-3"><input type="text" name="mpesa_passkey" class="form-control form-control-sm" placeholder="Passkey" value="{{ $org->mpesa_passkey }}"></div>
+                {{-- BULK SMS --}}
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <h6 class="text-muted small mb-0">BULK SMS</h6>
+                    @if($org->sms_api_token)
+                        <span class="badge badge-success"><i class="fe fe-check"></i> Active</span>
+                    @else
+                        <span class="badge badge-secondary">Not Configured</span>
+                    @endif
+                </div>
+                <div class="mb-2">
+                    <label class="small text-muted">Sender ID</label>
+                    <input type="text" name="sms_sender_id" class="form-control form-control-sm" 
+                        placeholder="e.g. SaliSystems" value="{{ $org->sms_sender_id }}">
+                </div>
+                <div class="mb-2">
+                    <label class="small text-muted">Admin Phone</label>
+                    <input type="text" name="sms_admin_phone" class="form-control form-control-sm" 
+                        placeholder="e.g. 254700000000" value="{{ $org->sms_admin_phone }}">
+                </div>
+                <div class="mb-3">
+                    <label class="small text-muted">API Key</label>
+                    <input type="text" name="sms_api_token" class="form-control form-control-sm" 
+                        placeholder="Bearer Token" value="{{ $org->sms_api_token }}">
+                </div>
+
+                {{-- M-PESA --}}
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <h6 class="text-muted small mb-0">M-PESA</h6>
+                    @if($org->mpesa_consumer_key && $org->mpesa_consumer_secret && $org->mpesa_shortcode && $org->mpesa_passkey)
+                        <span class="badge badge-success"><i class="fe fe-check"></i> Active</span>
+                    @else
+                        <span class="badge badge-secondary">Not Configured</span>
+                    @endif
+                </div>
+                <div class="mb-2">
+                    <label class="small text-muted">Shortcode</label>
+                    <input type="text" name="mpesa_shortcode" class="form-control form-control-sm" 
+                        placeholder="Shortcode/Till" value="{{ $org->mpesa_shortcode }}">
+                </div>
+                <div class="mb-2">
+                    <label class="small text-muted">Consumer Key</label>
+                    <input type="text" name="mpesa_consumer_key" class="form-control form-control-sm" 
+                        placeholder="Consumer Key" value="{{ $org->mpesa_consumer_key }}">
+                </div>
+                <div class="mb-2">
+                    <label class="small text-muted">Consumer Secret</label>
+                    <input type="text" name="mpesa_consumer_secret" class="form-control form-control-sm" 
+                        placeholder="Consumer Secret" value="{{ $org->mpesa_consumer_secret }}">
+                </div>
+                <div class="mb-2">
+                    <label class="small text-muted">Pass Key</label>
+                    <input type="text" name="mpesa_passkey" class="form-control form-control-sm" 
+                        placeholder="Passkey" value="{{ $org->mpesa_passkey }}">
+                </div>
+                <div class="mb-3">
+                    <label class="small text-muted">Paybill Number</label>
+                    <input type="text" name="mpesa_paybill" class="form-control form-control-sm" 
+                        placeholder="Paybill Number" value="{{ $org->mpesa_paybill }}">
+                </div>
                 <h6 class="text-muted small">Bank</h6>
                 <div class="mb-2"><input type="text" name="bank_name" class="form-control form-control-sm" placeholder="Bank Name" value="{{ $org->bank_name }}"></div>
                 <div class="mb-2"><input type="text" name="bank_account" class="form-control form-control-sm" placeholder="Account Number" value="{{ $org->bank_account }}"></div>

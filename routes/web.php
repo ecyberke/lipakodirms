@@ -553,6 +553,16 @@ Route::prefix('super-admin')->name('super.')->middleware(['auth'])->group(functi
     Route::get('/plans', 'SuperAdmin\SubscriptionPlanController@index')->name('plans.index');
     Route::put('/plans/{id}', 'SuperAdmin\SubscriptionPlanController@update')->name('plans.update');
 
+    // Connections/Settings
+    Route::get('/connections', 'SuperAdmin\ConnectionController@index')->name('connections');
+    Route::post('/connections', 'SuperAdmin\ConnectionController@update')->name('connections.update');
+
+    // Super Admin Users
+    Route::get('/users', 'SuperAdmin\SuperAdminUserController@index')->name('users.index');
+    Route::get('/users/create', 'SuperAdmin\SuperAdminUserController@create')->name('users.create');
+    Route::post('/users', 'SuperAdmin\SuperAdminUserController@store')->name('users.store');
+    Route::delete('/users/{id}', 'SuperAdmin\SuperAdminUserController@destroy')->name('users.destroy');
+
     // Subscriptions list
     Route::get('/subscriptions', function() {
         $subscriptions = App\Subscription::with('organization', 'plan')->latest()->paginate(20);

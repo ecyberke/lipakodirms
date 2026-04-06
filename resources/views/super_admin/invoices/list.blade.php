@@ -25,7 +25,6 @@
                                 <th>Invoice No.</th>
                                 <th>Organization</th>
                                 <th>Type</th>
-                                <th>Description</th>
                                 <th>Amount</th>
                                 <th>Due Date</th>
                                 <th>Status</th>
@@ -46,7 +45,6 @@
                                     <span class="badge badge-primary">Subscription</span>
                                 @endif
                             </td>
-                            <td>{{ $inv->description ?? 'N/A' }}</td>
                             <td>KES {{ number_format($inv->amount) }}</td>
                             <td>{{ \Carbon\Carbon::parse($inv->due_date)->format('d M Y') }}</td>
                             <td>

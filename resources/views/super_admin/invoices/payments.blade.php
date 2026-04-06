@@ -22,11 +22,7 @@
                                 <i class="fe fe-upload"></i>
                                 <span class="d-none d-md-inline ml-1">Import Payments</span>
                             </button>
-                            <a href="{{ route('super.invoices.pay') }}" class="btn btn-success"
-                                title="Record Payment">
-                                <i class="fe fe-plus"></i>
-                                <span class="d-none d-md-inline ml-1">Record Payment</span>
-                            </a>
+
                         </div>
                     </div>
                 </div>

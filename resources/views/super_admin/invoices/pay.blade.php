@@ -5,7 +5,7 @@
 @section('content')
 <div class="content container-fluid">
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
                     <h4 class="card-title">Record Payment</h4>
@@ -76,52 +76,6 @@
             </div>
         </div>
     </div>
-
-    {{-- Unpaid Invoices Table --}}
-    <div class="row">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">Unpaid Invoices</h3>
-                </div>
-                <div class="card-body">
-                    <table id="unpaid-table" class="table table-striped custom-table mb-0" style="width:100%;">
-                        <thead>
-                            <tr>
-                                <th style="width:2%">#</th>
-                                <th>Invoice No.</th>
-                                <th>Organization</th>
-                                <th>Type</th>
-                                <th>Amount</th>
-                                <th>Due Date</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        @php $i = 1; @endphp
-                        @forelse($unpaidInvoices as $inv)
-                        <tr>
-                            <td>{{ $i++ }}</td>
-                            <td><strong>{{ $inv->invoice_number }}</strong></td>
-                            <td>{{ $inv->org_name }}</td>
-                            <td>
-                                @if($inv->type === 'sms_credits')
-                                    <span class="badge badge-info">SMS Credits</span>
-                                @else
-                                    <span class="badge badge-primary">Subscription</span>
-                                @endif
-                            </td>
-                            <td>KES {{ number_format($inv->amount) }}</td>
-                            <td>{{ \Carbon\Carbon::parse($inv->due_date)->format('d M Y') }}</td>
-                        </tr>
-                        @empty
-                        <tr><td colspan="6" class="text-center text-muted">No unpaid invoices</td></tr>
-                        @endforelse
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
 @endsection
 
@@ -130,13 +84,11 @@
 <script src="{{URL::asset('assets/plugins/datatable/js/dataTables.bootstrap4.js')}}"></script>
 <script>
 $(function() {
-    $('#unpaid-table').DataTable({ pageLength: 25 });
-
     // Filter invoices by selected organization
     $('#org_filter').on('change', function() {
         var orgId = $(this).val();
         $('#invoice_select').find('option').each(function() {
-            if ($(this).val() === '') return; // keep placeholder
+            if ($(this).val() === '') return;
             if (!orgId || $(this).data('org') == orgId) {
                 $(this).show();
             } else {

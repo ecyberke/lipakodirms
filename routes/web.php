@@ -562,6 +562,7 @@ Route::prefix('super-admin')->name('super.')->middleware(['auth'])->group(functi
     Route::get('/invoices/payments', 'SuperAdmin\InvoiceController@payments')->name('invoices.payments');
     Route::post('/invoices/sms-credits', 'SuperAdmin\InvoiceController@addSmsCredits')->name('invoices.sms-credits');
     Route::get('/invoices/{id}', 'SuperAdmin\InvoiceController@show')->name('invoices.show');
+    Route::post('/invoices/{id}/stk-push', 'SuperAdmin\InvoiceController@stkPush')->name('invoices.stk-push');
     Route::get('/invoices/{id}/edit', 'SuperAdmin\InvoiceController@edit')->name('invoices.edit');
     Route::put('/invoices/{id}', 'SuperAdmin\InvoiceController@update')->name('invoices.update');
     Route::delete('/invoices/{id}', 'SuperAdmin\InvoiceController@destroy')->name('invoices.destroy');

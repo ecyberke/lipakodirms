@@ -133,6 +133,73 @@ class InvoiceController extends SuperAdminController
             ->with('success', 'SMS credits recorded successfully.');
     }
 
+    public function stkPush(\Illuminate\Http\Request $request, $id)
+    {
+        $request->validate([
+            'phone'  => 'required|string|min:10|max:13',
+            'amount' => 'required|numeric|min:1',
+        ]);
+
+        $invoice = DB::table('subscription_invoices')->where('id', $id)->first();
+        if (!$invoice) abort(404);
+
+        // Use MpesaController logic
+        $mpesa = new \App\Http\Controllers\MpesaController();
+
+        // Format phone
+        $phone  = $request->phone;
+        $phone  = preg_replace('/^0/', '254', $phone);
+        $phone  = preg_replace('/^\+/', '', $phone);
+        $amount = round($request->amount);
+
+        // Generate access token
+        $accessToken = $mpesa->access_token();
+        if (!$accessToken) {
+            return redirect()->route('super.invoices.show', $id)
+                ->with('error', 'Failed to generate M-Pesa access token. Check M-Pesa configuration.');
+        }
+
+        $timestamp = \Carbon\Carbon::now()->format('YmdHms');
+        $shortcode = config('services.mpesa.shortcode', '174379');
+        $passkey   = config('services.mpesa.passkey', '');
+        $password  = base64_encode($shortcode . $passkey . $timestamp);
+
+        $stkData = [
+            'BusinessShortCode' => $shortcode,
+            'Password'          => $password,
+            'Timestamp'         => $timestamp,
+            'TransactionType'   => 'CustomerPayBillOnline',
+            'Amount'            => $amount,
+            'PartyA'            => $phone,
+            'PartyB'            => $shortcode,
+            'PhoneNumber'       => $phone,
+            'CallBackURL'       => route('stk.callback'),
+            'AccountReference'  => $invoice->invoice_number,
+            'TransactionDesc'   => 'Payment for ' . $invoice->invoice_number,
+        ];
+
+        $curl = curl_init('https://api.safaricom.co.ke/mpesa/stkpush/v1/processrequest');
+        curl_setopt($curl, CURLOPT_HTTPHEADER, [
+            'Content-Type: application/json',
+            'Authorization: Bearer ' . $accessToken,
+        ]);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_POST, true);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($stkData));
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+        $response     = json_decode(curl_exec($curl));
+        $http_code    = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+        curl_close($curl);
+
+        if (isset($response->ResponseCode) && $response->ResponseCode == '0') {
+            return redirect()->route('super.invoices.show', $id)
+                ->with('success', 'STK Push sent successfully. Ask the client to enter their M-Pesa PIN.');
+        }
+
+        $error = $response->errorMessage ?? $response->ResultDesc ?? 'STK Push failed. Try again.';
+        return redirect()->route('super.invoices.show', $id)->with('error', $error);
+    }
+
     public function show($id)
     {
         $invoice = DB::table('subscription_invoices')

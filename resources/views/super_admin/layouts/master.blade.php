@@ -128,13 +128,11 @@
                 <div class="page-header">
                     <div class="page-leftheader">
                         <h4 class="page-title">@yield('page-title', 'Dashboard')</h4>
+                        @if(session('impersonating_org'))
                         <small class="text-muted">
-                            <span class="badge badge-warning">Super Admin</span>
-                            {{ Auth::user()->name ?? '' }}
-                            @if(session('impersonating_org'))
-                                &mdash; <span class="badge badge-danger">Impersonating</span>
-                            @endif
+                            <span class="badge badge-danger">Impersonating</span>
                         </small>
+                        @endif
                     </div>
                     <div class="page-rightheader ml-auto d-lg-flex d-none">
                         <ol class="breadcrumb">

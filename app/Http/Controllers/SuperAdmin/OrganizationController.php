@@ -8,9 +8,69 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Yajra\DataTables\DataTables;
 
 class OrganizationController extends SuperAdminController
 {
+    public function apiList(Request $request)
+    {
+        $orgs = Organization::with('subscription')->latest();
+        return DataTables::of($orgs)
+            ->addColumn('name_email', function($org) {
+                return '<strong>'.$org->name.'</strong><br><small class="text-muted">'.$org->email.'</small>';
+            })
+            ->addColumn('subdomain', function($org) {
+                return '<code>'.$org->slug.'.lipakodi.co.ke</code>';
+            })
+            ->addColumn('status_badge', function($org) {
+                return '<span class="org-status status-'.$org->status.'">'.ucfirst($org->status).'</span>';
+            })
+            ->addColumn('subscription_info', function($org) {
+                if ($org->subscription) {
+                    return '<small>Ends: '.$org->subscription->ends_at->format('d M Y').'</small>';
+                }
+                return '<small class="text-muted">No subscription</small>';
+            })
+            ->addColumn('action', function($org) {
+                $html = '<div class="dropdown dropdown-action">
+                    <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        <i class="fa fa-ellipsis-v"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <div class="dropdown-item">
+                            <a class="btn btn-sm btn-info btn-block" href="'.route('super.organizations.show', $org->id).'"> View</a>
+                        </div>
+                        <div class="dropdown-item">
+                            <a class="btn btn-sm btn-success btn-block" href="'.route('super.organizations.edit', $org->id).'"> Edit</a>
+                        </div>
+                        <div class="dropdown-item">
+                            <form method="POST" action="'.route('super.impersonate', $org->id).'">
+                                '.csrf_field().'
+                                <button class="btn btn-sm btn-dark btn-block"> Login As</button>
+                            </form>
+                        </div>';
+                if ($org->status === 'active') {
+                    $html .= '<div class="dropdown-item">
+                            <form method="POST" action="'.route('super.organizations.suspend', $org->id).'" onsubmit="return confirm(&quot;Suspend this organization?&quot;)">
+                                '.csrf_field().'
+                                <button class="btn btn-sm btn-warning btn-block"> Suspend</button>
+                            </form>
+                        </div>';
+                } else {
+                    $html .= '<div class="dropdown-item">
+                            <form method="POST" action="'.route('super.organizations.activate', $org->id).'">
+                                '.csrf_field().'
+                                <button class="btn btn-sm btn-success btn-block"> Activate</button>
+                            </form>
+                        </div>';
+                }
+                $html .= '</div></div>';
+                return $html;
+            })
+            ->rawColumns(['name_email', 'subdomain', 'status_badge', 'subscription_info', 'action'])
+            ->make(true);
+    }
+
     public function index()
     {
         $organizations = Organization::withTrashed()->latest()->paginate(20);

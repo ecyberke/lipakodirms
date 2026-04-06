@@ -21,7 +21,7 @@
                         </a>
                         <div class="dropdown-divider"></div>
                         @endif
-                        <form method="POST" action="{{ route('logout') }}">
+                        <form method="POST" action="{{ route('super.logout') }}">
                             @csrf
                             <button type="submit" class="dropdown-item text-danger">
                                 <i class="dropdown-icon fe fe-log-out"></i> Sign out

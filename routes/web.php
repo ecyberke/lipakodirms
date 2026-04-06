@@ -528,7 +528,13 @@ Route::get('/service_providers/index', 'ApiController@getAllServiceProviders')->
 // ============================================================
 // SUPER ADMIN ROUTES (app.lipakodi.co.ke)
 // ============================================================
+// Super Admin Auth
+Route::get('/super-admin/login', 'SuperAdmin\SuperAdminAuthController@showLogin')->name('super.login');
+Route::post('/super-admin/login', 'SuperAdmin\SuperAdminAuthController@login')->name('super.login.post');
+Route::post('/super-admin/logout', 'SuperAdmin\SuperAdminAuthController@logout')->name('super.logout');
+
 Route::prefix('super-admin')->name('super.')->middleware(['auth'])->group(function () {
+        Route::get('/api/organizations', 'SuperAdmin\OrganizationController@apiList')->name('api.organizations');
     Route::get('/dashboard', 'SuperAdmin\DashboardController@index')->name('dashboard');
 
     // Organizations

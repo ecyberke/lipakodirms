@@ -22,7 +22,7 @@ class Authenticate extends Middleware
         }
 
         if ($request->is('super-admin/*')) {
-            return route('login');
+            return route('super.login');
         }
 
         return route('login');

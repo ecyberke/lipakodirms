@@ -24,18 +24,28 @@
                 </div>
                 @endif
 
-                @if($invoice->status === 'unpaid' || $invoice->status === 'partial')
-                <div class="d-flex mb-3">
-                    <button type="button" class="btn btn-success mr-2"
+                <div class="d-flex mb-3 flex-wrap">
+                    @if($invoice->status === 'unpaid' || $invoice->status === 'partial')
+                    <button type="button" class="btn btn-success mr-2 mb-2"
                         data-toggle="modal" data-target="#stkPushModal">
                         <i class="fe fe-smartphone mr-1"></i> Initiate M-Pesa STK Push
                     </button>
-                    <a href="{{ route('super.invoices.pay') }}?invoice_id={{ $invoice->id }}"
-                        class="btn btn-primary">
-                        <i class="fe fe-credit-card mr-1"></i> Record Manual Payment
+                    @endif
+                    <form method="POST" action="{{ route('super.invoices.message', $invoice->id) }}" class="mr-2 mb-2">
+                        @csrf
+                        <button type="submit" class="btn btn-secondary">
+                            <i class="fe fe-message-circle mr-1"></i> Send Message
+                        </button>
+                    </form>
+                    <a href="{{ route('super.invoices.pdf', $invoice->id) }}" target="_blank"
+                        class="btn btn-info mr-2 mb-2">
+                        <i class="fe fe-download mr-1"></i> Download PDF
+                    </a>
+                    <a href="{{ route('super.invoices.print', $invoice->id) }}" target="_blank"
+                        class="btn btn-dark mb-2">
+                        <i class="fe fe-printer mr-1"></i> Print Invoice
                     </a>
                 </div>
-                @endif
 
                 <div class="card-body pl-0 pr-0">
                     <div class="row">

@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\SuperAdmin;
 
 use App\Organization;
+use Barryvdh\DomPDF\Facade\Pdf;
 use App\Subscription;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -244,6 +245,82 @@ class InvoiceController extends SuperAdminController
         DB::table('subscription_invoices')->where('id', $id)->delete();
         return redirect()->route('super.invoices.list')
             ->with('success', 'Invoice deleted successfully.');
+    }
+
+
+    public function downloadPdf($id)
+    {
+        $invoice = DB::table('subscription_invoices')
+            ->join('organizations', 'subscription_invoices.organization_id', '=', 'organizations.id')
+            ->select('subscription_invoices.*', 'organizations.name as org_name',
+                     'organizations.slug as org_slug', 'organizations.phone as org_phone',
+                     'organizations.email as org_email')
+            ->where('subscription_invoices.id', $id)
+            ->first();
+        if (!$invoice) abort(404);
+        $pdf = Pdf::loadView('super_admin.invoices.pdf', compact('invoice'));
+        return $pdf->stream('Invoice-' . $invoice->invoice_number . '.pdf');
+    }
+
+    public function printInvoice($id)
+    {
+        $invoice = DB::table('subscription_invoices')
+            ->join('organizations', 'subscription_invoices.organization_id', '=', 'organizations.id')
+            ->select('subscription_invoices.*', 'organizations.name as org_name',
+                     'organizations.slug as org_slug', 'organizations.phone as org_phone',
+                     'organizations.email as org_email')
+            ->where('subscription_invoices.id', $id)
+            ->first();
+        if (!$invoice) abort(404);
+        return view('super_admin.invoices.print', compact('invoice'));
+    }
+
+    public function sendMessage($id)
+    {
+        $invoice = DB::table('subscription_invoices')
+            ->join('organizations', 'subscription_invoices.organization_id', '=', 'organizations.id')
+            ->select('subscription_invoices.*', 'organizations.name as org_name',
+                     'organizations.phone as org_phone')
+            ->where('subscription_invoices.id', $id)
+            ->first();
+        if (!$invoice) abort(404);
+
+        if (!$invoice->org_phone) {
+            return redirect()->route('super.invoices.show', $id)
+                ->with('error', 'No phone number found for this organization.');
+        }
+
+        $type    = $invoice->type === 'sms_credits' ? 'SMS Credits' : 'Subscription';
+        $message = "Dear {$invoice->org_name}, your Lipakodi {$type} invoice {$invoice->invoice_number} " .
+                   "of KES " . number_format($invoice->amount) . " is due on " .
+                   \Carbon\Carbon::parse($invoice->due_date)->format('d M Y') .
+                   ". Pay via M-Pesa Paybill " . config('services.mpesa.shortcode', '') .
+                   " Acc: {$invoice->invoice_number}. Contact support for assistance.";
+
+        $token    = config('app.sms_api_token');
+        $senderId = config('app.sms_sender_id', 'LIPAKODI');
+
+        try {
+            $client = new \GuzzleHttp\Client(['timeout' => 30, 'verify' => false]);
+            $client->post('https://sasa.ecyber.co.ke/api/v3/sms/send', [
+                'headers' => [
+                    'Authorization' => 'Bearer ' . $token,
+                    'Content-Type'  => 'application/json',
+                    'Accept'        => 'application/json',
+                ],
+                'json' => [
+                    'recipient' => $invoice->org_phone,
+                    'sender_id' => $senderId,
+                    'type'      => 'plain',
+                    'message'   => $message,
+                ],
+            ]);
+            return redirect()->route('super.invoices.show', $id)
+                ->with('success', 'Message sent successfully to ' . $invoice->org_phone);
+        } catch (\Exception $e) {
+            return redirect()->route('super.invoices.show', $id)
+                ->with('error', 'Failed to send message: ' . $e->getMessage());
+        }
     }
 
 }

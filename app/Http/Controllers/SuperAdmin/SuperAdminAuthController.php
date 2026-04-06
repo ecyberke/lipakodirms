@@ -33,6 +33,9 @@ class SuperAdminAuthController extends Controller
                 return back()->withErrors(['username' => 'You do not have super admin access.']);
             }
             $request->session()->regenerate();
+            // Clear any impersonating session on fresh login
+            $request->session()->forget('impersonating_org');
+            $request->session()->forget('impersonating_org_name');
             return redirect()->route('super.dashboard');
         }
 

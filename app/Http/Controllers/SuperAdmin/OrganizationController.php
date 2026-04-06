@@ -203,7 +203,11 @@ class OrganizationController extends SuperAdminController
             return back()->with('error', 'No admin user found for this organization');
         }
         // Store super admin session
-        session(['impersonating_org' => $id, 'super_admin_id' => Auth::id()]);
+        session([
+            'impersonating_org' => $id,
+            'impersonating_org_name' => $org->name,
+            'super_admin_id' => Auth::id()
+        ]);
         Auth::login($adminUser);
         return redirect("http://{$org->slug}.lipakodi.ecyber.co.ke/")
             ->with('success', "Logged in as {$org->name}");
@@ -212,7 +216,7 @@ class OrganizationController extends SuperAdminController
     public function stopImpersonating()
     {
         $superAdminId = session('super_admin_id');
-        session()->forget(['impersonating_org', 'super_admin_id']);
+        session()->forget(['impersonating_org', 'impersonating_org_name', 'super_admin_id']);
         $superAdmin = User::find($superAdminId);
         if ($superAdmin) Auth::login($superAdmin);
         return redirect()->route('super.dashboard');

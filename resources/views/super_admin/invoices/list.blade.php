@@ -14,11 +14,7 @@
             <div class="card">
                 <div class="card-header">
                     <h3 class="card-title">All Invoices</h3>
-                    <div class="card-options">
-                        <a href="{{ route('super.invoices.create') }}" class="btn btn-sm btn-primary">
-                            <i class="fe fe-plus"></i> Add Invoice
-                        </a>
-                    </div>
+
                 </div>
                 <div class="card-body">
                     @include('includes.messages')

@@ -2,15 +2,10 @@
 @section('title', 'Pay Invoice')
 @section('page-title', 'Pay Invoice')
 
-@section('css')
-<link href="{{URL::asset('assets/plugins/select2/select2.min.css')}}" rel="stylesheet" />
-@endsection
-
 @section('content')
 <div class="content container-fluid">
     <div class="row">
-        {{-- Record Payment --}}
-        <div class="col-md-6">
+        <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
                     <h4 class="card-title">Record Payment</h4>
@@ -19,80 +14,63 @@
                     @include('includes.messages')
                     <form action="{{ route('super.invoices.record-payment') }}" method="POST">
                         @csrf
-                        <div class="form-group">
-                            <label>Select Invoice <span class="text-danger">*</span></label>
-                            <select name="invoice_id" class="form-control select2-show-search" required>
-                                <option value="">--- Select Unpaid Invoice ---</option>
-                                @foreach($unpaidInvoices as $inv)
-                                <option value="{{ $inv->id }}" {{ request('invoice_id') == $inv->id ? 'selected' : '' }}>
-                                    {{ $inv->invoice_number }} - {{ $inv->org_name }} - KES {{ number_format($inv->amount) }}
-                                </option>
-                                @endforeach
-                            </select>
+                        <div class="form-group row">
+                            <div class="col-sm-6">
+                                <label>Organization <span class="text-danger">*</span></label>
+                                <select name="org_filter" id="org_filter" class="form-control" required>
+                                    <option value="">--- Select Organization ---</option>
+                                    @foreach($organizations as $org)
+                                    <option value="{{ $org->id }}">{{ $org->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-sm-6">
+                                <label>Select Invoice <span class="text-danger">*</span></label>
+                                <select name="invoice_id" id="invoice_select" class="form-control" required>
+                                    <option value="">--- Select Organization First ---</option>
+                                    @foreach($unpaidInvoices as $inv)
+                                    <option value="{{ $inv->id }}"
+                                        data-org="{{ $inv->organization_id }}"
+                                        data-amount="{{ $inv->amount }}"
+                                        data-type="{{ $inv->type }}">
+                                        {{ $inv->invoice_number }} —
+                                        {{ $inv->type === 'sms_credits' ? 'SMS Credits' : 'Subscription' }} —
+                                        KES {{ number_format($inv->amount) }}
+                                    </option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label>Payment Method <span class="text-danger">*</span></label>
-                            <select name="payment_method" class="form-control" required>
-                                <option value="">--- Select ---</option>
-                                <option value="mpesa">M-Pesa</option>
-                                <option value="bank">Bank Transfer</option>
-                                <option value="cash">Cash</option>
-                                <option value="cheque">Cheque</option>
-                            </select>
+                        <div class="form-group row">
+                            <div class="col-sm-4">
+                                <label>Amount (KES)</label>
+                                <input type="text" id="inv_amount" class="form-control" readonly
+                                    placeholder="Auto-filled from invoice">
+                            </div>
+                            <div class="col-sm-4">
+                                <label>Payment Method <span class="text-danger">*</span></label>
+                                <select name="payment_method" class="form-control" required>
+                                    <option value="">--- Select ---</option>
+                                    <option value="mpesa">M-Pesa</option>
+                                    <option value="bank">Bank Transfer</option>
+                                    <option value="cash">Cash</option>
+                                    <option value="cheque">Cheque</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-4">
+                                <label>Transaction Reference <span class="text-danger">*</span></label>
+                                <input type="text" name="payment_reference" class="form-control"
+                                    placeholder="e.g. QGH7K2L3M4" required>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label>Transaction Reference <span class="text-danger">*</span></label>
-                            <input type="text" name="payment_reference" class="form-control"
-                                placeholder="e.g. QGH7K2L3M4" required>
+                        <div class="row mb-4">
+                            <div class="col-sm-8">
+                                <button type="submit" class="btn btn-success waves-effect waves-light">
+                                    Record Payment
+                                </button>
+                                <a href="{{ route('super.invoices.list') }}" class="btn btn-secondary ml-2">Cancel</a>
+                            </div>
                         </div>
-                        <button type="submit" class="btn btn-success waves-effect waves-light">
-                            Record Payment
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </div>
-
-        {{-- Add SMS Credits --}}
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-header">
-                    <h4 class="card-title">Purchase SMS Credits</h4>
-                </div>
-                <div class="card-body">
-                    <form action="{{ route('super.invoices.sms-credits') }}" method="POST">
-                        @csrf
-                        <div class="form-group">
-                            <label>Organization <span class="text-danger">*</span></label>
-                            <select name="organization_id" class="form-control select2-show-search" required>
-                                <option value="">--- Select Organization ---</option>
-                                @foreach($unpaidInvoices->pluck('org_name', 'organization_id')->unique() as $id => $name)
-                                <option value="{{ $id }}">{{ $name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Amount (KES) <span class="text-danger">*</span></label>
-                            <input type="number" name="amount" class="form-control"
-                                placeholder="e.g. 1000" min="1" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Payment Method <span class="text-danger">*</span></label>
-                            <select name="payment_method" class="form-control" required>
-                                <option value="">--- Select ---</option>
-                                <option value="mpesa">M-Pesa</option>
-                                <option value="bank">Bank Transfer</option>
-                                <option value="cash">Cash</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Transaction Reference <span class="text-danger">*</span></label>
-                            <input type="text" name="payment_reference" class="form-control"
-                                placeholder="e.g. QGH7K2L3M4" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary waves-effect waves-light">
-                            Add SMS Credits
-                        </button>
                     </form>
                 </div>
             </div>
@@ -110,7 +88,7 @@
                     <table id="unpaid-table" class="table table-striped custom-table mb-0" style="width:100%;">
                         <thead>
                             <tr>
-                                <th>#</th>
+                                <th style="width:2%">#</th>
                                 <th>Invoice No.</th>
                                 <th>Organization</th>
                                 <th>Type</th>
@@ -148,11 +126,32 @@
 @endsection
 
 @section('scripts')
-<script src="{{URL::asset('assets/plugins/select2/select2.full.min.js')}}"></script>
-<script src="{{URL::asset('assets/js/select2.js')}}"></script>
 <script src="{{URL::asset('assets/plugins/datatable/js/jquery.dataTables.js')}}"></script>
 <script src="{{URL::asset('assets/plugins/datatable/js/dataTables.bootstrap4.js')}}"></script>
 <script>
-$(function() { $('#unpaid-table').DataTable({ pageLength: 25 }); });
+$(function() {
+    $('#unpaid-table').DataTable({ pageLength: 25 });
+
+    // Filter invoices by selected organization
+    $('#org_filter').on('change', function() {
+        var orgId = $(this).val();
+        $('#invoice_select').find('option').each(function() {
+            if ($(this).val() === '') return; // keep placeholder
+            if (!orgId || $(this).data('org') == orgId) {
+                $(this).show();
+            } else {
+                $(this).hide();
+            }
+        });
+        $('#invoice_select').val('');
+        $('#inv_amount').val('');
+    });
+
+    // Auto-fill amount when invoice selected
+    $('#invoice_select').on('change', function() {
+        var amount = $(this).find(':selected').data('amount');
+        $('#inv_amount').val(amount ? 'KES ' + parseFloat(amount).toLocaleString() : '');
+    });
+});
 </script>
 @endsection

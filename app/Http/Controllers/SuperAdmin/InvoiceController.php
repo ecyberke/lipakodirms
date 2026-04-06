@@ -65,7 +65,8 @@ class InvoiceController extends SuperAdminController
             ->where('subscription_invoices.status', 'unpaid')
             ->latest('subscription_invoices.created_at')
             ->get();
-        return view('super_admin.invoices.pay', compact('unpaidInvoices'));
+        $organizations = Organization::where('status', 'active')->get();
+        return view('super_admin.invoices.pay', compact('unpaidInvoices', 'organizations'));
     }
 
     public function recordPayment(Request $request)

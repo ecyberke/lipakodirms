@@ -3,8 +3,7 @@
 @section('page-title', 'Add Invoice')
 
 @section('css')
-<link href="{{URL::asset('assets/plugins/select2/select2.min.css')}}" rel="stylesheet" />
-<link href="{{URL::asset('assets/plugins/date-picker/date-picker.css')}}" rel="stylesheet" />
+
 @endsection
 
 @section('content')
@@ -24,7 +23,7 @@
                                 <div class="form-group row">
                                     <div class="col-sm-6">
                                         <label>Organization <span class="text-danger">*</span></label>
-                                        <select name="organization_id" class="form-control select2-show-search" required>
+                                        <select name="organization_id" class="form-control" required>
                                             <option value="">--- Select Organization ---</option>
                                             @foreach($organizations as $org)
                                             <option value="{{ $org->id }}" {{ old('organization_id') == $org->id ? 'selected' : '' }}>
@@ -35,7 +34,7 @@
                                     </div>
                                     <div class="col-sm-6">
                                         <label>Invoice Type <span class="text-danger">*</span></label>
-                                        <select name="type" class="form-control select2-show-search" required>
+                                        <select name="type" class="form-control" required>
                                             <option value="">--- Select Type ---</option>
                                             <option value="subscription">Subscription</option>
                                             <option value="sms_credits">SMS Credits</option>
@@ -79,7 +78,4 @@
 </div>
 @endsection
 
-@section('scripts')
-<script src="{{URL::asset('assets/plugins/select2/select2.full.min.js')}}"></script>
-<script src="{{URL::asset('assets/js/select2.js')}}"></script>
-@endsection
+

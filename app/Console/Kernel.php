@@ -14,6 +14,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         \App\Console\Commands\CheckSubscriptions::class,
+        Commands\GenerateSubscriptionInvoices::class,
         Commands\InitializeInvoices::class,
         Commands\PenalizeInvoices::class,
         Commands\PayingOwners::class,
@@ -27,6 +28,11 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
+        // Generate subscription invoices on 1st of every month
+        $schedule->command('subscription:generate-invoices')->monthlyOn(1, '08:00');
+
+        // Check subscriptions daily
+        $schedule->command('subscriptions:check')->daily();
         $schedule->command('sms:test');
     }
 

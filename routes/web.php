@@ -561,6 +561,10 @@ Route::prefix('super-admin')->name('super.')->middleware(['auth'])->group(functi
     Route::post('/invoices/pay', 'SuperAdmin\InvoiceController@recordPayment')->name('invoices.record-payment');
     Route::get('/invoices/payments', 'SuperAdmin\InvoiceController@payments')->name('invoices.payments');
     Route::post('/invoices/sms-credits', 'SuperAdmin\InvoiceController@addSmsCredits')->name('invoices.sms-credits');
+    Route::get('/invoices/{id}', 'SuperAdmin\InvoiceController@show')->name('invoices.show');
+    Route::get('/invoices/{id}/edit', 'SuperAdmin\InvoiceController@edit')->name('invoices.edit');
+    Route::put('/invoices/{id}', 'SuperAdmin\InvoiceController@update')->name('invoices.update');
+    Route::delete('/invoices/{id}', 'SuperAdmin\InvoiceController@destroy')->name('invoices.destroy');
 
     // Connections/Settings
     Route::get('/connections', 'SuperAdmin\ConnectionController@index')->name('connections');

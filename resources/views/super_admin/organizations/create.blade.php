@@ -40,7 +40,7 @@
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label>Type <span class="text-danger">*</span></label>
-                                        <select name="type" class="form-control select2-show-search" required>
+                                        <select name="type" class="form-control" required>
                                             <option value="agency">Agency (Property Management)</option>
                                             <option value="individual">Individual (Property Owner)</option>
                                         </select>
@@ -49,7 +49,7 @@
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label>Currency</label>
-                                        <select name="currency" class="form-control select2-show-search">
+                                        <select name="currency" class="form-control">
                                             <option value="KES">KES - Kenyan Shilling</option>
                                             <option value="UGX">UGX - Ugandan Shilling</option>
                                             <option value="TZS">TZS - Tanzanian Shilling</option>
@@ -120,12 +120,7 @@
                                         <input type="text" name="admin_name" class="form-control" value="{{ old('admin_name') }}" required>
                                     </div>
                                 </div>
-                                <div class="col-sm-12">
-                                    <div class="form-group">
-                                        <label>Admin Email <span class="text-danger">*</span></label>
-                                        <input type="email" name="admin_email" class="form-control" value="{{ old('admin_email') }}" required>
-                                    </div>
-                                </div>
+
                                 <div class="col-sm-12">
                                     <div class="form-group">
                                         <label>Admin Password <span class="text-danger">*</span></label>
@@ -144,18 +139,26 @@
                         <div class="card-body">
                             <div class="form-group">
                                 <label>Billing Cycle</label>
-                                <select name="billing_cycle" class="form-control select2-show-search">
+                                <select name="billing_cycle" class="form-control">
                                     <option value="monthly">Monthly</option>
                                     <option value="quarterly">Quarterly (5% discount)</option>
                                     <option value="half_yearly">Half Yearly (8% discount)</option>
                                     <option value="annual">Annual (12% discount)</option>
                                 </select>
                             </div>
+                            <div class="form-group">
+                                <label>Subscription Plan <span class="text-danger">*</span></label>
+                                <select name="subscription_plan_id" class="form-control" required>
+                                    <option value="">--- Select Plan ---</option>
+                                    @foreach($plans as $plan)
+                                    <option value="{{ $plan->id }}" {{ old('subscription_plan_id') == $plan->id ? 'selected' : '' }}>
+                                        {{ $plan->name }} — {{ $plan->units_min }}{{ $plan->units_max ? '-'.$plan->units_max : '+' }} units @ KES {{ number_format($plan->price_per_unit) }}/unit/month
+                                    </option>
+                                    @endforeach
+                                </select>
+                            </div>
                             <div class="alert alert-info mb-0">
-                                <strong>Pricing Tiers:</strong><br>
-                                @foreach($plans as $plan)
-                                    <small>{{ $plan->name }}: {{ $plan->units_min }}{{ $plan->units_max ? '-'.$plan->units_max : '+' }} units @ KES {{ number_format($plan->price_per_unit) }}/unit/month</small><br>
-                                @endforeach
+                                <strong>Note:</strong> Plan is determined by number of units. The selected plan above will be used for billing.
                             </div>
                         </div>
                     </div>
@@ -204,7 +207,4 @@
 </div>
 @endsection
 
-@section('scripts')
-<script src="{{URL::asset('assets/plugins/select2/select2.full.min.js')}}"></script>
-<script src="{{URL::asset('assets/js/select2.js')}}"></script>
-@endsection
+

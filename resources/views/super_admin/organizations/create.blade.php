@@ -37,24 +37,12 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-6">
+                                <div class="col-sm-12">
                                     <div class="form-group">
                                         <label>Type <span class="text-danger">*</span></label>
                                         <select name="type" class="form-control" required>
                                             <option value="agency">Agency (Property Management)</option>
                                             <option value="individual">Individual (Property Owner)</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label>Currency</label>
-                                        <select name="currency" class="form-control">
-                                            <option value="KES">KES - Kenyan Shilling</option>
-                                            <option value="UGX">UGX - Ugandan Shilling</option>
-                                            <option value="TZS">TZS - Tanzanian Shilling</option>
-                                            <option value="USD">USD - US Dollar</option>
-                                            <option value="GBP">GBP - British Pound</option>
                                         </select>
                                     </div>
                                 </div>
@@ -76,7 +64,7 @@
                                         <input type="email" name="email" class="form-control" value="{{ old('email') }}" required>
                                     </div>
                                 </div>
-                                <div class="col-sm-6">
+                                <div class="col-sm-12">
                                     <div class="form-group">
                                         <label>KRA PIN</label>
                                         <input type="text" name="kra_pin" class="form-control" value="{{ old('kra_pin') }}">
@@ -84,20 +72,14 @@
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label>Number of Units <span class="text-danger">*</span></label>
-                                        <input type="number" name="total_units" class="form-control" value="{{ old('total_units', 1) }}" min="1" required>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label>County</label>
-                                        <input type="text" name="county" class="form-control" value="{{ old('county') }}">
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label>Town</label>
+                                        <label>Town/City</label>
                                         <input type="text" name="town" class="form-control" value="{{ old('town') }}">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Country</label>
+                                        <input type="text" name="country" class="form-control" value="{{ old('country', 'Kenya') }}">
                                     </div>
                                 </div>
                             </div>
@@ -163,34 +145,6 @@
                         </div>
                     </div>
 
-                    {{-- Account Patterns --}}
-                    <div class="card">
-                        <div class="card-header">
-                            <h4 class="card-title"><i class="fe fe-hash mr-1"></i> Account Number Patterns</h4>
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <label>Tenant</label>
-                                        <input type="text" name="tenant_account_prefix" class="form-control" value="LKT" maxlength="5">
-                                    </div>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <label>Landlord</label>
-                                        <input type="text" name="landlord_account_prefix" class="form-control" value="LKL" maxlength="5">
-                                    </div>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <label>Property</label>
-                                        <input type="text" name="property_account_prefix" class="form-control" value="LKP" maxlength="5">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
 

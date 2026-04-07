@@ -98,9 +98,7 @@ class OrganizationController extends SuperAdminController
             'type' => 'required|in:agency,individual',
             'phone' => 'required|string',
             'email' => 'required|email',
-            'total_units' => 'required|integer|min:1',
             'admin_name' => 'required|string',
-            'admin_email' => 'required|email',
             'admin_password' => 'required|min:8',
         ]);
 
@@ -115,7 +113,7 @@ class OrganizationController extends SuperAdminController
             'kra_pin' => $request->kra_pin,
             'county' => $request->county,
             'town' => $request->town,
-            'total_units' => $request->total_units,
+            'total_units' => $request->total_units ?? 1,
             'currency' => $request->currency ?? 'KES',
             'status' => 'active',
             'currency_set' => false,
@@ -126,7 +124,7 @@ class OrganizationController extends SuperAdminController
             'org_id' => $org->id,
             'name' => $request->admin_name,
             'username' => strtolower(str_replace(' ', '', $request->admin_name)),
-            'email' => $request->admin_email,
+            'email' => $request->admin_email ?? $request->email,
             'password' => Hash::make($request->admin_password),
             'is_admin' => 1,
             'is_super' => 0,

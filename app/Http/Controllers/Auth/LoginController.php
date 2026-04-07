@@ -42,7 +42,59 @@ class LoginController extends Controller
     
     public function username()
     {
-      return 'username' ; 
-       
+        return 'username';
+    }
+
+    /**
+     * Validate login credentials and enforce org-based access.
+     */
+    protected function attemptLogin(\Illuminate\Http\Request $request)
+    {
+        $attempted = $this->guard()->attempt(
+            $this->credentials($request),
+            $request->filled('remember')
+        );
+
+        if (!$attempted) {
+            return false;
+        }
+
+        $user   = $this->guard()->user();
+        $org_id = config('app.org_id');
+
+        // If on a subdomain (org_id > 0), enforce org membership
+        if ($org_id && $org_id > 0) {
+            // Super admins can't log in via company subdomain
+            if ($user->is_super) {
+                $this->guard()->logout();
+                return false;
+            }
+            // User must belong to this org
+            if ((int)$user->org_id !== (int)$org_id) {
+                $this->guard()->logout();
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * Custom failed login message.
+     */
+    protected function sendFailedLoginResponse(\Illuminate\Http\Request $request)
+    {
+        $org_id = config('app.org_id');
+
+        if ($org_id && $org_id > 0) {
+            $org = config('app.organization');
+            $message = 'These credentials do not belong to ' . ($org->name ?? 'this organization') . '.';
+        } else {
+            $message = trans('auth.failed');
+        }
+
+        throw \Illuminate\Validation\ValidationException::withMessages([
+            $this->username() => [$message],
+        ]);
     }
 }

@@ -134,12 +134,75 @@
                                 <h4 class="card-title"><i class="fe fe-credit-card mr-1"></i> Subscription</h4>
                             </div>
                             <div class="card-body">
-                                <div class="alert alert-info mb-0">
-                                    <strong>Pricing Tiers:</strong><br>
-                                    @foreach($plans as $plan)
-                                        <small>{{ $plan->name }}: {{ $plan->units_min }}{{ $plan->units_max ? '-'.$plan->units_max : '+' }} units @ KES {{ number_format($plan->price_per_unit) }}/unit/month</small><br>
-                                    @endforeach
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label>Subscription Plan</label>
+                                            <select name="subscription_plan_id" class="form-control">
+                                                <option value="">--- Select Plan ---</option>
+                                                @foreach($plans as $plan)
+                                                <option value="{{ $plan->id }}"
+                                                    {{ ($subscription?->subscription_plan_id == $plan->id) ? 'selected' : '' }}>
+                                                    {{ $plan->name }} — KES {{ number_format($plan->price_per_unit) }}/unit/month
+                                                </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label>Billing Cycle</label>
+                                            <select name="billing_cycle" class="form-control">
+                                                <option value="monthly" {{ ($subscription?->billing_cycle === 'monthly') ? 'selected' : '' }}>Monthly</option>
+                                                <option value="quarterly" {{ ($subscription?->billing_cycle === 'quarterly') ? 'selected' : '' }}>Quarterly (5% off)</option>
+                                                <option value="half_yearly" {{ ($subscription?->billing_cycle === 'half_yearly') ? 'selected' : '' }}>Half Yearly (8% off)</option>
+                                                <option value="annual" {{ ($subscription?->billing_cycle === 'annual') ? 'selected' : '' }}>Annual (12% off)</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label>Number of Units</label>
+                                            <input type="number" name="total_units" class="form-control"
+                                                value="{{ old('total_units', $org->total_units) }}" min="1">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label>Subscription Status</label>
+                                            <select name="subscription_status" class="form-control">
+                                                <option value="active" {{ ($subscription?->status === 'active') ? 'selected' : '' }}>Active</option>
+                                                <option value="grace" {{ ($subscription?->status === 'grace') ? 'selected' : '' }}>Grace</option>
+                                                <option value="suspended" {{ ($subscription?->status === 'suspended') ? 'selected' : '' }}>Suspended</option>
+                                                <option value="cancelled" {{ ($subscription?->status === 'cancelled') ? 'selected' : '' }}>Cancelled</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label>Start Date</label>
+                                            <input type="date" name="subscription_starts_at" class="form-control"
+                                                value="{{ old('subscription_starts_at', $subscription?->starts_at ? \Carbon\Carbon::parse($subscription->starts_at)->format('Y-m-d') : '') }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label>End Date</label>
+                                            <input type="date" name="subscription_ends_at" class="form-control"
+                                                value="{{ old('subscription_ends_at', $subscription?->ends_at ? \Carbon\Carbon::parse($subscription->ends_at)->format('Y-m-d') : '') }}">
+                                        </div>
+                                    </div>
                                 </div>
+                                @if($subscription)
+                                <div class="alert alert-info mb-0">
+                                    <small>
+                                        <strong>Current:</strong> {{ $subscription->plan->name ?? 'N/A' }}
+                                        — KES {{ number_format($subscription->amount) }}/{{ str_replace('_', ' ', $subscription->billing_cycle) }}
+                                        — {{ $subscription->units }} units
+                                        — Expires: {{ $subscription->ends_at ? \Carbon\Carbon::parse($subscription->ends_at)->format('d M Y') : 'N/A' }}
+                                    </small>
+                                </div>
+                                @endif
                             </div>
                         </div>
                     </div>

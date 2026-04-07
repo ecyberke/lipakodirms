@@ -153,17 +153,50 @@ class OrganizationController extends SuperAdminController
     {
         $org = Organization::findOrFail($id);
         $plans = SubscriptionPlan::where('is_active', true)->get();
-        return view('super_admin.organizations.edit', compact('org', 'plans'));
+        $subscription = Subscription::where('organization_id', $id)->latest()->first();
+        return view('super_admin.organizations.edit', compact('org', 'plans', 'subscription'));
     }
 
     public function update(Request $request, $id)
     {
         $org = Organization::findOrFail($id);
-        $org->update($request->except(['_token', '_method', 'admin_password']));
+        $org->update($request->except([
+            '_token', '_method', 'admin_password',
+            'subscription_plan_id', 'billing_cycle', 'subscription_status',
+            'subscription_starts_at', 'subscription_ends_at'
+        ]));
 
         if ($request->filled('admin_password')) {
             User::where('org_id', $id)->where('is_admin', 1)->first()
                 ?->update(['password' => Hash::make($request->admin_password)]);
+        }
+
+        // Update subscription if fields provided
+        if ($request->filled('subscription_plan_id') || $request->filled('subscription_starts_at')) {
+            $plan = SubscriptionPlan::find($request->subscription_plan_id);
+            $units = $request->total_units ?? $org->total_units;
+            $amount = $plan ? $plan->price_per_unit * $units : 0;
+
+            $sub = Subscription::where('organization_id', $id)->latest()->first();
+            $subData = [
+                'subscription_plan_id' => $request->subscription_plan_id,
+                'billing_cycle'        => $request->billing_cycle ?? 'monthly',
+                'units'                => $units,
+                'amount'               => $amount,
+                'status'               => $request->subscription_status ?? 'active',
+                'starts_at'            => $request->subscription_starts_at ?? now(),
+                'ends_at'              => $request->subscription_ends_at ?? now()->addMonth(),
+                'grace_ends_at'        => $request->subscription_ends_at
+                                          ? \Carbon\Carbon::parse($request->subscription_ends_at)->addDays(7)
+                                          : now()->addDays(37),
+            ];
+
+            if ($sub) {
+                $sub->update($subData);
+            } else {
+                $subData['organization_id'] = $id;
+                Subscription::create($subData);
+            }
         }
 
         return redirect()->route('super.organizations.show', $id)

@@ -41,7 +41,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-12">
                                         <div class="form-group">
                                             <label>Type <span class="text-danger">*</span></label>
                                             <select name="type" class="form-control" required>
@@ -72,7 +72,7 @@
                                                 value="{{ old('email', $org->email) }}" required>
                                         </div>
                                     </div>
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-12">
                                         <div class="form-group">
                                             <label>KRA PIN</label>
                                             <input type="text" name="kra_pin" class="form-control"
@@ -92,17 +92,6 @@
                                             <label>Country</label>
                                             <input type="text" name="country" class="form-control"
                                                 value="{{ old('country', $org->country ?? 'Kenya') }}">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label>Status</label>
-                                            <select name="status" class="form-control">
-                                                <option value="active" {{ $org->status === 'active' ? 'selected' : '' }}>Active</option>
-                                                <option value="suspended" {{ $org->status === 'suspended' ? 'selected' : '' }}>Suspended</option>
-                                                <option value="pending" {{ $org->status === 'pending' ? 'selected' : '' }}>Pending</option>
-                                                <option value="cancelled" {{ $org->status === 'cancelled' ? 'selected' : '' }}>Cancelled</option>
-                                            </select>
                                         </div>
                                     </div>
                                 </div>

@@ -135,7 +135,7 @@
                             </div>
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-12">
                                         <div class="form-group">
                                             <label>Subscription Plan</label>
                                             <select name="subscription_plan_id" class="form-control">
@@ -149,7 +149,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-12">
                                         <div class="form-group">
                                             <label>Billing Cycle</label>
                                             <select name="billing_cycle" class="form-control">
@@ -160,14 +160,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label>Number of Units</label>
-                                            <input type="number" name="total_units" class="form-control"
-                                                value="{{ old('total_units', $org->total_units) }}" min="1">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-12">
                                         <div class="form-group">
                                             <label>Subscription Status</label>
                                             <select name="subscription_status" class="form-control">
@@ -176,20 +169,6 @@
                                                 <option value="suspended" {{ ($subscription?->status === 'suspended') ? 'selected' : '' }}>Suspended</option>
                                                 <option value="cancelled" {{ ($subscription?->status === 'cancelled') ? 'selected' : '' }}>Cancelled</option>
                                             </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label>Start Date</label>
-                                            <input type="date" name="subscription_starts_at" class="form-control"
-                                                value="{{ old('subscription_starts_at', $subscription?->starts_at ? \Carbon\Carbon::parse($subscription->starts_at)->format('Y-m-d') : '') }}">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label>End Date</label>
-                                            <input type="date" name="subscription_ends_at" class="form-control"
-                                                value="{{ old('subscription_ends_at', $subscription?->ends_at ? \Carbon\Carbon::parse($subscription->ends_at)->format('Y-m-d') : '') }}">
                                         </div>
                                     </div>
                                 </div>

@@ -26,8 +26,8 @@ class OrganizationController extends SuperAdminController
                 return '<span class="org-status status-'.$org->status.'">'.ucfirst($org->status).'</span>';
             })
             ->addColumn('subscription_info', function($org) {
-                if ($org->subscription) {
-                    return '<small>Ends: '.$org->subscription->ends_at->format('d M Y').'</small>';
+                if ($org->subscription && $org->subscription->ends_at) {
+                    return '<small>Ends: '.\Carbon\Carbon::parse($org->subscription->ends_at)->format('d M Y').'</small>';
                 }
                 return '<small class="text-muted">No subscription</small>';
             })

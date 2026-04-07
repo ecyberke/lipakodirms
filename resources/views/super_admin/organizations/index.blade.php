@@ -49,12 +49,19 @@
 <script src="{{URL::asset('assets/plugins/datatable/responsive.bootstrap4.min.js')}}"></script>
 <script>
 $(function() {
+    $.ajaxSetup({
+        headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') }
+    });
     $('#org-table').DataTable({
         processing: true,
         serverSide: true,
         responsive: true,
         order: [[0, 'desc']],
-        ajax: '{!! route('super.api.organizations') !!}',
+        ajax: {
+            url: '{!! route('super.api.organizations') !!}',
+            type: 'GET',
+            xhrFields: { withCredentials: true }
+        },
         columns: [
             { data: 'id', name: 'id' },
             { data: 'name_email', name: 'name', orderable: true },

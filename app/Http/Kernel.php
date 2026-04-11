@@ -65,6 +65,8 @@ class Kernel extends HttpKernel
         'subdomain' => \App\Http\Middleware\SubdomainMiddleware::class,
         'org.scope' => \App\Http\Middleware\OrgScopeMiddleware::class,
         'subscription' => \App\Http\Middleware\SubscriptionCheck::class,
+        'agency' => \App\Http\Middleware\EnsureAgency::class,
+        'individual' => \App\Http\Middleware\EnsureIndividual::class,
     ];
 
     /**

@@ -38,4 +38,14 @@ class Organization extends Model
             })->first();
         return $plan ? $plan->price_per_unit * $this->total_units : 0;
     }
+
+public function isAgency(): bool
+{
+    return $this->type === 'agency';
+}
+
+public function isIndividual(): bool
+{
+    return $this->type === 'individual';
+}
 }

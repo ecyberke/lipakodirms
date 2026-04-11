@@ -1,4 +1,4 @@
-@extends('layouts.home')
+@extends('layouts.master')
 
 @push('header_scripts')
 <!-- DataTables -->

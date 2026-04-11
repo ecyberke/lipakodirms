@@ -31,7 +31,7 @@
 		<![endif]-->		
     </head>
     <body class="account-page">
-	
+
 		<!-- Main Wrapper -->
         <div class="main-wrapper">            
             @yield('content')

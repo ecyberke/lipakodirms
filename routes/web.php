@@ -419,6 +419,9 @@ Route::post('/stk-query', 'MpesaController@stkQuery')->name('stk.query');
 
 Route::middleware(['auth'])->group(function () {
     Route::post('import-manual-payments', 'MpesaController@processImport')->name('import.excel');
+Route::post('/bank-statement/upload', 'BankStatementController@upload')->name('bank-statement.upload');
+Route::get('/bank-statement/preview', 'BankStatementController@preview')->name('bank-statement.preview');
+Route::post('/bank-statement/confirm', 'BankStatementController@confirm')->name('bank-statement.confirm');
     Route::get('download-import-template', 'MpesaController@downloadTemplate')->name('excel.template');
     Route::get('import-history', 'MpesaController@getImportHistory')->name('import.history');
     Route::get('/payment-tester', 'MpesaController@paymentTester')->name('payment.tester');

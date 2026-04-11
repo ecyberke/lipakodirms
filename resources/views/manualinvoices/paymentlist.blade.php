@@ -28,6 +28,14 @@
         <div class="col-md-12">
             @include('includes.messages')
             <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Payments</h3>
+                    <div class="card-options">
+                        <button class="btn btn-primary btn-sm waves-effect waves-light" data-toggle="modal" data-target="#bankImportModal">
+                            <i class="fe fe-upload-cloud mr-1"></i> Import Bank Statement
+                        </button>
+                    </div>
+                </div>
                 <div class="card-body">
                     <div class="table-responsive">
                         
@@ -66,6 +74,16 @@
 @endsection
 @section('js')
 <script>
+    // Bank import file label + double-submit prevention
+    document.getElementById('bank_import_file').addEventListener('change', function() {
+        this.nextElementSibling.textContent = this.files[0] ? this.files[0].name : 'Choose CSV or Excel file...';
+    });
+    document.getElementById('bankImportForm').addEventListener('submit', function() {
+        var btn = document.getElementById('bankImportBtn');
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fe fe-loader mr-1"></i> Processing...';
+    });
+
     $(function () {
         $('#invoices-table').DataTable({
             processing: true,

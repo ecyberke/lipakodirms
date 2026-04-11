@@ -28,14 +28,6 @@
         <div class="col-md-12">
             @include('includes.messages')
             <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">Payments</h3>
-                    <div class="card-options">
-                        <button class="btn btn-primary btn-sm waves-effect waves-light" data-toggle="modal" data-target="#bankImportModal">
-                            <i class="fe fe-upload-cloud mr-1"></i> Import Bank Statement
-                        </button>
-                    </div>
-                </div>
                 <div class="card-body">
                     <div class="table-responsive">
                         

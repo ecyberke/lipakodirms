@@ -43,14 +43,24 @@
                   <div class="btn-group btn-group-sm" role="group">
             <!-- Import Button -->
             <button type="button" 
-                    class="btn btn-primary" 
+                    class="btn btn-success" 
                     data-toggle="modal" 
                     data-target="#importModal"
-                    title="Import Payments">
+                    title="Import M-Pesa Payments">
                 <i class="fe fe-upload"></i>
-                <span class="button-text d-none d-md-inline ml-1">Import Payments</span>
+                <span class="button-text d-none d-md-inline ml-1">Import M-Pesa Payments</span>
             </button>
             
+            <!-- Bank Statement Import Button -->
+            <button type="button"
+                    class="btn btn-primary"
+                    data-toggle="modal"
+                    data-target="#bankImportModal"
+                    title="Import Bank Statement">
+                <i class="fe fe-upload-cloud"></i>
+                <span class="button-text d-none d-md-inline ml-1">Import Bank Statement</span>
+            </button>
+
             <!-- Synchronize Button -->
             <a href="{{ route('invoice.synch') }}" 
                class="btn btn-danger" 
@@ -166,6 +176,66 @@
     </div>
 </div>
 <!-- End Import Modal -->
+
+{{-- Bank Statement Import Modal --}}
+<div class="modal fade" id="bankImportModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="fe fe-upload-cloud mr-2"></i> Import Bank Statement
+                </h5>
+                <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+            </div>
+            <form action="{{ route('bank-statement.upload') }}" method="POST" enctype="multipart/form-data" id="bankImportForm">
+                @csrf
+                <div class="modal-body">
+                    <div class="alert alert-info">
+                        <i class="fe fe-info mr-1"></i>
+                        Upload your bank statement in <strong>CSV or Excel</strong> format.
+                        Only <strong>credit/deposit</strong> rows will be imported.
+                        <small class="d-block mt-1">
+                            Tenants are matched using their account number in the transaction description.
+                            Unmatched rows can be assigned manually on the next screen.
+                        </small>
+                    </div>
+                    <div class="form-group">
+                        <label class="font-weight-bold">Select Bank <span class="text-danger">*</span></label>
+                        <select name="bank_name" class="form-control" required>
+                            <option value="">— Select your bank —</option>
+                            <option value="equity">Equity Bank</option>
+                            <option value="kcb">KCB Bank</option>
+                            <option value="ncba">NCBA Bank</option>
+                            <option value="coop">Co-operative Bank</option>
+                            <option value="nbk">National Bank of Kenya</option>
+                            <option value="dtb">DTB Bank</option>
+                            <option value="family">Family Bank</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="font-weight-bold">Statement File <span class="text-danger">*</span></label>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="bank_import_file"
+                                   name="import_file" accept=".csv,.xlsx,.xls" required>
+                            <label class="custom-file-label" for="bank_import_file">
+                                Choose CSV or Excel file...
+                            </label>
+                        </div>
+                        <small class="text-muted">Maximum file size: 10MB. Accepted: .csv, .xlsx, .xls</small>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        <i class="fe fe-x mr-1"></i> Cancel
+                    </button>
+                    <button type="submit" class="btn btn-success waves-effect waves-light" id="bankImportBtn">
+                        <i class="fe fe-arrow-right mr-1"></i> Next: Preview
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 @endsection
 
 @section('js')
